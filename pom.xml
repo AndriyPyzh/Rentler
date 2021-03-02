@@ -35,9 +35,10 @@
 
     <modules>
         <module>config-server</module>
+        <module>registry-server</module>
+        <module>api-gateway</module>
         <module>user-service</module>
         <module>flat-service</module>
-        <module>registry-server</module>
     </modules>
 
 </project>
