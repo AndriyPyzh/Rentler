@@ -1,14 +1,13 @@
-package com.rentler;
+package com.rentler.flatservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-
 @SpringBootApplication
-public class UserServiceApplication {
+public class FlatServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(UserServiceApplication.class, args);
+        SpringApplication.run(FlatServiceApplication.class, args);
     }
 
 }
