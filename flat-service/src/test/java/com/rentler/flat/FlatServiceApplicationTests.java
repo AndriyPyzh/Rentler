@@ -1,4 +1,4 @@
-package com.rentler.flatservice;
+package com.rentler.flat;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

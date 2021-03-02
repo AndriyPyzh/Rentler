@@ -1,4 +1,4 @@
-package com.rentler;
+package com.rentler.user;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
