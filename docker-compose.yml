@@ -1,0 +1,75 @@
+version: '3.8'
+services:
+  config-server:
+    container_name: config-server
+    build:
+      context: .
+      dockerfile: ./config-server/Dockerfile
+    ports:
+      - 8888:8888
+    networks:
+      - net
+    environment:
+      eureka.client.serviceUrl.defaultZone: http://registry-server:8761/eureka
+
+  registry-server:
+    container_name: registry-server
+    build:
+      context: .
+      dockerfile: ./registry-server/Dockerfile
+    ports:
+      - 8761:8761
+    networks:
+      - net
+    depends_on:
+      - config-server
+    environment:
+      spring.cloud.config.uri: http://config-server:8888
+
+  api-gateway:
+    container_name: api-gateway
+    build:
+      context: .
+      dockerfile: ./api-gateway/Dockerfile
+    ports:
+      - 8765:8765
+    networks:
+      - net
+    depends_on:
+      - config-server
+    environment:
+      spring.cloud.config.uri: http://config-server:8888
+      eureka.client.serviceUrl.defaultZone: http://registry-server:8761/eureka
+
+  user-service:
+    container_name: user-service
+    build:
+      context: .
+      dockerfile: ./user-service/Dockerfile
+    ports:
+      - 8100:8100
+    networks:
+      - net
+    depends_on:
+      - config-server
+    environment:
+      spring.cloud.config.uri: http://config-server:8888
+      eureka.client.serviceUrl.defaultZone: http://registry-server:8761/eureka
+
+  flat-service:
+    container_name: flat-service
+    build:
+      context: .
+      dockerfile: ./flat-service/Dockerfile
+    ports:
+      - 8200:8200
+    networks:
+      - net
+    depends_on:
+      - config-server
+    environment:
+      spring.cloud.config.uri: http://config-server:8888
+      eureka.client.serviceUrl.defaultZone: http://registry-server:8761/eureka
+
+networks:
+  net:
