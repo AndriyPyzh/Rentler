@@ -14,6 +14,10 @@ http://localhost:8761
 
 http://localhost:8765
 
+### Postgres
+
+http://localhost:5432
+
 ### User service
 
 http://localhost:8100
@@ -22,7 +26,7 @@ http://localhost:8100
 
 http://localhost:8200
 
-##Export evn vars
+## Export evn vars
 
 `export $(cat .env | xargs)`
 
