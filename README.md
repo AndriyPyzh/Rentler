@@ -18,7 +18,11 @@ http://localhost:8765
 
 http://localhost:8100
 
-### Flat service 
+### Apartment service 
 
 http://localhost:8200
+
+##Export evn vars
+
+`export $(cat .env | xargs)`
 

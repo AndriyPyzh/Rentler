@@ -38,7 +38,7 @@
         <module>registry-server</module>
         <module>api-gateway</module>
         <module>user-service</module>
-        <module>flat-service</module>
+        <module>apartment-service</module>
     </modules>
 
 </project>
