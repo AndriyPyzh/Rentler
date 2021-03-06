@@ -1,2 +1,2 @@
-CREATE SCHEMA if not exists apartments;
-CREATE SCHEMA if not exists users;
+CREATE DATABASE "apartment";
+CREATE DATABASE "user";
