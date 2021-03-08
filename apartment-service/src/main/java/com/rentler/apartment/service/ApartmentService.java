@@ -2,6 +2,7 @@ package com.rentler.apartment.service;
 
 import com.rentler.apartment.dto.ApartmentDto;
 import com.rentler.apartment.entity.Apartment;
+import com.rentler.apartment.exception.exceptions.ApartmentNotFoundException;
 import com.rentler.apartment.mapper.ApartmentMapper;
 import com.rentler.apartment.repository.ApartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,9 @@ public class ApartmentService {
     }
 
     public ApartmentDto getById(Long id) {
-        return apartmentMapper.toDto(apartmentRepository.getOne(id));
+        Apartment apartment = apartmentRepository.findById(id)
+                .orElseThrow(() -> new ApartmentNotFoundException("Apartment with such id not found"));
+        return apartmentMapper.toDto(apartment);
     }
 }
 
