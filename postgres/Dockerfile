@@ -1,2 +1,2 @@
 FROM postgres:alpine
-COPY ./postgres/dump.sql /docker-entrypoint-initdb.d/
+COPY ./postgres/db-per-service.sql /docker-entrypoint-initdb.d/

@@ -1,2 +1,0 @@
-CREATE DATABASE "apartment";
-CREATE DATABASE "user";
