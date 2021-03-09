@@ -35,7 +35,7 @@ public class ApartmentController {
     @PostMapping
     public ResponseEntity<ApartmentDto> createApartment(@RequestBody @Valid ApartmentDto apartmentDto) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(apartmentService.save(apartmentDto));
+                .body(apartmentService.create(apartmentDto));
     }
 
 }

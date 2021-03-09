@@ -1,6 +1,7 @@
 package com.rentler.apartment.exception.handler;
 
 import com.rentler.apartment.exception.exceptions.ApartmentNotFoundException;
+import com.rentler.apartment.exception.exceptions.UserNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
@@ -38,4 +39,12 @@ public class CustomExceptionHandler {
         ExceptionResponse response = new ExceptionResponse(getErrorAttributes(request));
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public final ResponseEntity<Object> handleUserNotFoundException(
+            UserNotFoundException exception, WebRequest request) {
+        ExceptionResponse response = new ExceptionResponse(getErrorAttributes(request));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
 }
