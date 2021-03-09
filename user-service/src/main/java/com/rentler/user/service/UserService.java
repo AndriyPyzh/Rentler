@@ -1,5 +1,6 @@
 package com.rentler.user.service;
 
+import com.rentler.user.client.ApartmentServiceClient;
 import com.rentler.user.dto.UserDto;
 import com.rentler.user.entity.User;
 import com.rentler.user.exception.exceptions.UserNotFoundException;
@@ -7,6 +8,7 @@ import com.rentler.user.mapper.UserMapper;
 import com.rentler.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,16 +17,20 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final ApartmentServiceClient apartmentServiceClient;
 
     @Autowired
     public UserService(UserRepository userRepository,
-                       UserMapper userMapper) {
+                       UserMapper userMapper,
+                       ApartmentServiceClient apartmentServiceClient) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.apartmentServiceClient = apartmentServiceClient;
     }
 
     public UserDto create(UserDto userDto) {
         User user = userMapper.toEntity(userDto);
+        apartmentServiceClient.createUser(userDto);
         return userMapper.toDto(userRepository.save(user));
     }
 
