@@ -18,7 +18,7 @@ import java.util.Map;
 @Getter
 public class CustomExceptionHandler {
 
-    private ErrorAttributes errorAttributes;
+    private final ErrorAttributes errorAttributes;
 
     private Map<String, Object> getErrorAttributes(WebRequest webRequest) {
         return new HashMap<>(
