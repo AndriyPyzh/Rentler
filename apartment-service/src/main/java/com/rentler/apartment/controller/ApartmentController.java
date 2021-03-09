@@ -11,7 +11,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/apartments")
 public class ApartmentController {
     private final ApartmentService apartmentService;
 
@@ -26,7 +26,7 @@ public class ApartmentController {
                 .body(apartmentService.getAll());
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ApartmentDto> getApartment(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(apartmentService.getById(id));
