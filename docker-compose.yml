@@ -42,9 +42,13 @@ services:
       - net
     depends_on:
       - config-server
+      - rabbitmq
     environment:
       spring.cloud.config.uri: http://config-server:8888
       eureka.client.serviceUrl.defaultZone: http://registry-server:8761/eureka
+      spring.zipkin.base-url: http://zipkin-server:9411
+      spring.rabbitmq.host: rabbitmq
+      spring.zipkin.sender.type: rabbit
     volumes:
       - ./api-gateway/target/api-gateway.jar:/app/api-gateway.jar
 
@@ -60,9 +64,13 @@ services:
       - net
     depends_on:
       - config-server
+      - rabbitmq
     environment:
       spring.cloud.config.uri: http://config-server:8888
       eureka.client.serviceUrl.defaultZone: http://registry-server:8761/eureka
+      spring.zipkin.base-url: http://zipkin-server:9411
+      spring.rabbitmq.host: rabbitmq
+      spring.zipkin.sender.type: rabbit
     volumes:
       - ./user-service/target/user-service.jar:/app/user-service.jar
 
@@ -77,9 +85,13 @@ services:
       - net
     depends_on:
       - config-server
+      - rabbitmq
     environment:
       spring.cloud.config.uri: http://config-server:8888
       eureka.client.serviceUrl.defaultZone: http://registry-server:8761/eureka
+      spring.zipkin.base-url: http://zipkin-server:9411
+      spring.rabbitmq.host: rabbitmq
+      spring.zipkin.sender.type: rabbit
     volumes:
       - ./apartment-service/target/apartment-service.jar:/app/apartment-service.jar
 
@@ -97,8 +109,27 @@ services:
       POSTGRES_USER: "${DATASOURCE_USER}"
       POSTGRES_PASSWORD: "${DATASOURCE_PASSWORD}"
     volumes:
-    - /var/lib/postgresql/data
+      - /var/lib/postgresql/data
 
+  zipkin-server:
+    image: openzipkin/zipkin
+    ports:
+      - 9411:9411
+    networks:
+      - net
+    environment:
+      - RABBIT_ADDRESSES=rabbitmq
+      - STORAGE_TYPE=mem
+    depends_on:
+      - rabbitmq
+
+  rabbitmq:
+    image: rabbitmq:latest
+    ports:
+      - 5672:5672
+      - 15672:15672
+    networks:
+      - net
 
 networks:
   net:
