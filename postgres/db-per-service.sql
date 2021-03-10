@@ -10,8 +10,7 @@ begin
     pswrd := db || '_password';
 
     execute (format('create user %s with password ''%s'';', usr, pswrd) ||
-             format('grant all privileges on database %s to %s;', db, usr)) ||
-             format('grant all privileges on database %s to %s;', db, 'postgres');
+             format('grant all privileges on database %s to %s;', db, usr));
 end ;
 $$;
 
