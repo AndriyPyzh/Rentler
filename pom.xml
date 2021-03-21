@@ -39,6 +39,7 @@
         <module>api-gateway</module>
         <module>user-service</module>
         <module>apartment-service</module>
+        <module>auth-service</module>
     </modules>
 
 </project>
