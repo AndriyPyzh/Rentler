@@ -12,6 +12,8 @@ services:
       - net
     environment:
       eureka.client.serviceUrl.defaultZone: http://registry-server:8761/eureka
+      spring.security.user.name: "${CONFIG_SERVICE_USER}"
+      spring.security.user.password: "${CONFIG_SERVICE_PASSWORD}"
     volumes:
       - ./config-server/target/config-server.jar:/app/config-server.jar
 
@@ -28,6 +30,8 @@ services:
       - config-server
     environment:
       spring.cloud.config.uri: http://config-server:8888
+      spring.cloud.config.username: "${CONFIG_SERVICE_USER}"
+      spring.cloud.config.password: "${CONFIG_SERVICE_PASSWORD}"
     volumes:
       - ./registry-server/target/registry-server.jar:/app/registry-server.jar
 
@@ -45,6 +49,8 @@ services:
       - rabbitmq
     environment:
       spring.cloud.config.uri: http://config-server:8888
+      spring.cloud.config.username: "${CONFIG_SERVICE_USER}"
+      spring.cloud.config.password: "${CONFIG_SERVICE_PASSWORD}"
       eureka.client.serviceUrl.defaultZone: http://registry-server:8761/eureka
       spring.zipkin.base-url: http://zipkin-server:9411
       spring.rabbitmq.host: rabbitmq
@@ -67,6 +73,8 @@ services:
       - rabbitmq
     environment:
       spring.cloud.config.uri: http://config-server:8888
+      spring.cloud.config.username: "${CONFIG_SERVICE_USER}"
+      spring.cloud.config.password: "${CONFIG_SERVICE_PASSWORD}"
       eureka.client.serviceUrl.defaultZone: http://registry-server:8761/eureka
       spring.zipkin.base-url: http://zipkin-server:9411
       spring.rabbitmq.host: rabbitmq
@@ -88,6 +96,8 @@ services:
       - rabbitmq
     environment:
       spring.cloud.config.uri: http://config-server:8888
+      spring.cloud.config.username: "${CONFIG_SERVICE_USER}"
+      spring.cloud.config.password: "${CONFIG_SERVICE_PASSWORD}"
       eureka.client.serviceUrl.defaultZone: http://registry-server:8761/eureka
       spring.zipkin.base-url: http://zipkin-server:9411
       spring.rabbitmq.host: rabbitmq

@@ -14,6 +14,10 @@ http://localhost:8761
 
 http://localhost:8765
 
+### Zipkin server
+
+http://localhost:9411
+
 ### Postgres
 
 http://localhost:5432
@@ -26,7 +30,4 @@ http://localhost:8100
 
 http://localhost:8200
 
-## Export evn vars
-
-`export $(cat .env | xargs)`
 
