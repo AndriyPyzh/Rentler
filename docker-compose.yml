@@ -131,7 +131,8 @@ services:
       - RABBIT_ADDRESSES=rabbitmq
       - STORAGE_TYPE=mem
     depends_on:
-      - rabbitmq
+      rabbitmq:
+        condition: service_healthy
 
   rabbitmq:
     image: rabbitmq:latest
@@ -140,6 +141,11 @@ services:
       - 15672:15672
     networks:
       - net
+    healthcheck:
+      test: [ "CMD", "rabbitmqctl", "status" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
 
 networks:
   net:
