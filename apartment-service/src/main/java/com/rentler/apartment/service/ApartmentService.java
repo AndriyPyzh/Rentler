@@ -5,7 +5,6 @@ import com.rentler.apartment.entity.Apartment;
 import com.rentler.apartment.exception.exceptions.ApartmentNotFoundException;
 import com.rentler.apartment.mapper.ApartmentMapper;
 import com.rentler.apartment.repository.ApartmentRepository;
-import com.rentler.apartment.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

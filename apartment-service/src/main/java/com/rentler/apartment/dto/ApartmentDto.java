@@ -37,7 +37,7 @@ public class ApartmentDto {
     @NotNull
     private AddressDto address;
 
-    @NotBlank
-    private String user;
+    @NotNull
+    private Long userId;
 
 }

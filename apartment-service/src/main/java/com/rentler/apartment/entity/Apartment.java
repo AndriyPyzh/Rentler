@@ -45,9 +45,7 @@ public class Apartment {
     private Address address;
 
     @NotNull
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    private Long userId;
 
     @PrePersist
     public void prePersist() {
