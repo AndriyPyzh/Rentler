@@ -10,6 +10,8 @@ services:
       - 8888:8888
     networks:
       - net
+    healthcheck:
+      test: [ "CMD", "curl", "-I", "http://config-server:8888" ]
     environment:
       eureka.client.serviceUrl.defaultZone: http://registry-server:8761/eureka
       spring.security.user.name: "${CONFIG_SERVICE_USER}"
@@ -27,7 +29,8 @@ services:
     networks:
       - net
     depends_on:
-      - config-server
+      config-server:
+        condition: service_healthy
     environment:
       spring.cloud.config.uri: http://config-server:8888
       spring.cloud.config.username: "${CONFIG_SERVICE_USER}"
@@ -45,8 +48,10 @@ services:
     networks:
       - net
     depends_on:
-      - config-server
-      - rabbitmq
+      config-server:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
     environment:
       spring.cloud.config.uri: http://config-server:8888
       spring.cloud.config.username: "${CONFIG_SERVICE_USER}"
@@ -59,18 +64,22 @@ services:
       - ./api-gateway/target/api-gateway.jar:/app/api-gateway.jar
 
 
-  user-service:
-    container_name: user-service
+  account-service:
+    container_name: account-service
     build:
       context: .
-      dockerfile: ./user-service/Dockerfile
+      dockerfile: ./account-service/Dockerfile
     ports:
       - 8100:8100
     networks:
       - net
     depends_on:
-      - config-server
-      - rabbitmq
+      config-server:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
     environment:
       spring.cloud.config.uri: http://config-server:8888
       spring.cloud.config.username: "${CONFIG_SERVICE_USER}"
@@ -92,8 +101,12 @@ services:
     networks:
       - net
     depends_on:
-      - config-server
-      - rabbitmq
+      config-server:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
     environment:
       spring.cloud.config.uri: http://config-server:8888
       spring.cloud.config.username: "${CONFIG_SERVICE_USER}"
@@ -105,7 +118,6 @@ services:
     volumes:
       - ./apartment-service/target/apartment-service.jar:/app/apartment-service.jar
 
-
   postgres:
     image: postgres:alpine
     build:
@@ -115,6 +127,8 @@ services:
       - 5432:5432
     networks:
       - net
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
     environment:
       POSTGRES_USER: "${DATASOURCE_USER}"
       POSTGRES_PASSWORD: "${DATASOURCE_PASSWORD}"
@@ -143,9 +157,6 @@ services:
       - net
     healthcheck:
       test: [ "CMD", "rabbitmqctl", "status" ]
-      interval: 10s
-      timeout: 5s
-      retries: 10
 
 networks:
   net:

@@ -12,9 +12,9 @@ public class ApiGatewayConfig {
     public RouteLocator routes(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route(r -> r.path("/apartments/**")
-                        .uri("lb://apartment-service"))
-                .route(r -> r.path("/users/**")
-                        .uri("lb://user-service"))
+                        .uri("lb://apartment-service/apartments"))
+                .route(r -> r.path("/accounts/**")
+                        .uri("lb://account-service/accounts"))
                 .build();
 
     }

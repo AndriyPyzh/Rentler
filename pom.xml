@@ -37,7 +37,7 @@
         <module>config-server</module>
         <module>registry-server</module>
         <module>api-gateway</module>
-        <module>user-service</module>
+        <module>account-service</module>
         <module>apartment-service</module>
         <module>auth-service</module>
     </modules>

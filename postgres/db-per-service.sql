@@ -15,8 +15,8 @@ end ;
 $$;
 
 
-create database user_service;
-call create_user_for_db('user_service');
+create database account_service;
+call create_user_for_db('account_service');
 
 create database apartment_service;
 call create_user_for_db('apartment_service');

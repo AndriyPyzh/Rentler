@@ -1,4 +1,4 @@
-package com.rentler.apartment;
+package com.rentler.account;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,10 +8,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableDiscoveryClient
 @EnableFeignClients
 @SpringBootApplication
-public class ApartmentServiceApplication {
+public class AccountServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ApartmentServiceApplication.class, args);
+        SpringApplication.run(AccountServiceApplication.class, args);
     }
 
 }
