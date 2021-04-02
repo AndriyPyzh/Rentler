@@ -22,7 +22,11 @@ http://localhost:9411
 
 http://localhost:5432
 
-### User service
+### Auth service
+
+http://localhost:5000
+
+### Account service
 
 http://localhost:8100
 
