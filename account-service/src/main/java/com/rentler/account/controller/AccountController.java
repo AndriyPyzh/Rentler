@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -37,6 +38,11 @@ public class AccountController {
     public ResponseEntity<AccountDto> createAccount(@RequestBody @Valid AccountDto accountDto) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(accountService.create(accountDto));
+    }
+
+    @GetMapping("/current")
+    public Object getCurrentUser(Principal principal) {
+        return accountService.getByUsername(principal.getName());
     }
 
 }

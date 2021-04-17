@@ -1,6 +1,7 @@
 package com.rentler.auth.config;
 
 import com.rentler.auth.service.UserService;
+import com.rentler.auth.util.Jwt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,15 +24,17 @@ public class AuthorizationConfig implements AuthorizationServerConfigurer {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
-
+    private final Jwt jwt;
 
     @Autowired
     public AuthorizationConfig(PasswordEncoder passwordEncoder,
                                UserService userService,
-                               AuthenticationManager authenticationManager) {
+                               AuthenticationManager authenticationManager,
+                               Jwt jwt) {
         this.passwordEncoder = passwordEncoder;
         this.userService = userService;
         this.authenticationManager = authenticationManager;
+        this.jwt = jwt;
     }
 
 
@@ -47,9 +50,9 @@ public class AuthorizationConfig implements AuthorizationServerConfigurer {
     public void configure(ClientDetailsServiceConfigurer client) throws Exception {
         client
                 .inMemory()
-                .withClient("service")
+                .withClient("account-service")
                 .secret(passwordEncoder.encode("password"))
-                .authorizedGrantTypes("password")
+                .authorizedGrantTypes("client_credentials", "password")
                 .scopes("server");
     }
 
@@ -69,6 +72,8 @@ public class AuthorizationConfig implements AuthorizationServerConfigurer {
 
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
-        return new JwtAccessTokenConverter();
+        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+        converter.setSigningKey(jwt.getAccessTokenKey());
+        return converter;
     }
 }
