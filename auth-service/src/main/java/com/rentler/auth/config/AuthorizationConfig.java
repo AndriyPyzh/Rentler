@@ -21,11 +21,12 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 @EnableAuthorizationServer
 public class AuthorizationConfig implements AuthorizationServerConfigurer {
 
+    @Value("${rentler.secret-key}")
+    private String accessTokenKey;
+
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
-    @Value("${rentler.secret-key}")
-    private String accessTokenKey;
 
     @Autowired
     public AuthorizationConfig(PasswordEncoder passwordEncoder,

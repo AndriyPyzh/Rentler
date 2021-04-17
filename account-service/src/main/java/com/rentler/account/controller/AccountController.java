@@ -34,15 +34,15 @@ public class AccountController {
                 .body(accountService.getById(id));
     }
 
+    @GetMapping("/current")
+    public Object getCurrentAccount(Principal principal) {
+        return accountService.getByUsername(principal.getName());
+    }
+
     @PostMapping
     public ResponseEntity<AccountDto> createAccount(@RequestBody @Valid AccountDto accountDto) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(accountService.create(accountDto));
-    }
-
-    @GetMapping("/current")
-    public Object getCurrentUser(Principal principal) {
-        return accountService.getByUsername(principal.getName());
     }
 
 }

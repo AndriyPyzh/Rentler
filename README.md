@@ -30,7 +30,7 @@ http://localhost:5000
 
 http://localhost:8100
 
-### Apartment service 
+### Apartment service
 
 http://localhost:8200
 
