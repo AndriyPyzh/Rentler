@@ -28,7 +28,7 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    @Enumerated(value = EnumType.ORDINAL)
+    @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
     private Role role;
 

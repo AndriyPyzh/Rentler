@@ -21,15 +21,15 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping("/current")
+    public Principal getCurrentUser(Principal principal) {
+        return principal;
+    }
+
     @PostMapping
     public ResponseEntity<Void> create(@Valid @RequestBody UserDto dto) {
         userService.create(dto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
-
-    @GetMapping("/current")
-    public Principal getCurrentUser(Principal principal) {
-        return principal;
     }
 
 }

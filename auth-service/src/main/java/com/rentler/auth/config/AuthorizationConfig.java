@@ -16,6 +16,8 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
+import javax.sql.DataSource;
+
 
 @Configuration
 @EnableAuthorizationServer
@@ -27,14 +29,17 @@ public class AuthorizationConfig implements AuthorizationServerConfigurer {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
+    private final DataSource dataSource;
 
     @Autowired
     public AuthorizationConfig(PasswordEncoder passwordEncoder,
                                UserService userService,
-                               AuthenticationManager authenticationManager) {
+                               AuthenticationManager authenticationManager,
+                               DataSource dataSource) {
         this.passwordEncoder = passwordEncoder;
         this.userService = userService;
         this.authenticationManager = authenticationManager;
+        this.dataSource = dataSource;
     }
 
 
@@ -47,13 +52,10 @@ public class AuthorizationConfig implements AuthorizationServerConfigurer {
     }
 
     @Override
-    public void configure(ClientDetailsServiceConfigurer client) throws Exception {
-        client
-                .inMemory()
-                .withClient("account-service")
-                .secret(passwordEncoder.encode("password"))
-                .authorizedGrantTypes("client_credentials", "password")
-                .scopes("server");
+    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+        clients
+                .jdbc(dataSource)
+                .passwordEncoder(passwordEncoder);
     }
 
     @Override

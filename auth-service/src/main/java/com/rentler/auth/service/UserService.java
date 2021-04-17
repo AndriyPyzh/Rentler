@@ -23,9 +23,9 @@ public class UserService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository repository) {
+    public UserService(UserRepository repository, PasswordEncoder passwordEncoder) {
         this.repository = repository;
-        this.passwordEncoder = new BCryptPasswordEncoder();
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
