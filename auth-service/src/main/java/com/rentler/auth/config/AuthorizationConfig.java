@@ -1,8 +1,8 @@
 package com.rentler.auth.config;
 
 import com.rentler.auth.service.UserService;
-import com.rentler.auth.util.Jwt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,17 +24,16 @@ public class AuthorizationConfig implements AuthorizationServerConfigurer {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
-    private final Jwt jwt;
+    @Value("${rentler.secret-key}")
+    private String accessTokenKey;
 
     @Autowired
     public AuthorizationConfig(PasswordEncoder passwordEncoder,
                                UserService userService,
-                               AuthenticationManager authenticationManager,
-                               Jwt jwt) {
+                               AuthenticationManager authenticationManager) {
         this.passwordEncoder = passwordEncoder;
         this.userService = userService;
         this.authenticationManager = authenticationManager;
-        this.jwt = jwt;
     }
 
 
@@ -73,7 +72,7 @@ public class AuthorizationConfig implements AuthorizationServerConfigurer {
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        converter.setSigningKey(jwt.getAccessTokenKey());
+        converter.setSigningKey(accessTokenKey);
         return converter;
     }
 }

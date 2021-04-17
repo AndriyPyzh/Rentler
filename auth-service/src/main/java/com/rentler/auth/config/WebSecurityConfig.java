@@ -2,8 +2,8 @@ package com.rentler.auth.config;
 
 import com.rentler.auth.filter.JwtTokenFilter;
 import com.rentler.auth.service.UserService;
-import com.rentler.auth.util.Jwt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -25,13 +25,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
-    private final Jwt jwt;
+    @Value("${rentler.secret-key}")
+    private String accessTokenKey;
 
     @Autowired
-    public WebSecurityConfig(Jwt jwt,
-                             UserService userService,
+    public WebSecurityConfig(UserService userService,
                              PasswordEncoder passwordEncoder) {
-        this.jwt = jwt;
         this.passwordEncoder = passwordEncoder;
         this.userService = userService;
     }
@@ -45,13 +44,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .addFilterBefore(new JwtTokenFilter(jwt), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtTokenFilter(accessTokenKey), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling()
                 .authenticationEntryPoint((req, resp, exc) -> resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Authorize first."))
                 .accessDeniedHandler((req, resp, exc) -> resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "You don't have authorities."))
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/login", "/users").permitAll()
+                .antMatchers(HttpMethod.POST, "/users").permitAll()
                 .anyRequest()
                 .authenticated();
     }
