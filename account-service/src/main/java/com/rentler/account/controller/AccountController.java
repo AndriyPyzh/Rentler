@@ -3,6 +3,7 @@ package com.rentler.account.controller;
 
 import com.rentler.account.dto.AccountCreateDto;
 import com.rentler.account.dto.AccountDto;
+import com.rentler.account.dto.AccountUpdateDto;
 import com.rentler.account.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,10 +30,10 @@ public class AccountController {
                 .body(accountService.getAll());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<AccountDto> getAccount(@PathVariable Long id) {
+    @GetMapping("/{username}")
+    public ResponseEntity<AccountDto> getAccount(@PathVariable String username) {
         return ResponseEntity.status(HttpStatus.OK)
-                .body(accountService.getById(id));
+                .body(accountService.getByUsername(username));
     }
 
     @GetMapping("/current")
@@ -44,5 +45,12 @@ public class AccountController {
     public ResponseEntity<AccountDto> createAccount(@RequestBody @Valid AccountCreateDto accountCreateDto) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(accountService.create(accountCreateDto));
+    }
+
+    @PutMapping
+    public ResponseEntity<AccountDto> updateAccount(@RequestBody @Valid AccountUpdateDto accountUpdateDto,
+                                                    Principal principal) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(accountService.update(accountUpdateDto, principal.getName()));
     }
 }

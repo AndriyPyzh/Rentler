@@ -3,6 +3,7 @@ package com.rentler.account.service;
 import com.rentler.account.client.AuthServiceClient;
 import com.rentler.account.dto.AccountCreateDto;
 import com.rentler.account.dto.AccountDto;
+import com.rentler.account.dto.AccountUpdateDto;
 import com.rentler.account.entity.Account;
 import com.rentler.account.exception.AccountAlreadyExistsException;
 import com.rentler.account.exception.AccountNotFoundException;
@@ -52,13 +53,7 @@ public class AccountService {
 
     public AccountDto getByUsername(String username) {
         Account account = accountRepository.findByUsername(username)
-                .orElseThrow(() -> new AccountNotFoundException("Account with such username not found"));
-        return accountMapper.toDto(account);
-    }
-
-    public AccountDto getById(Long id) {
-        Account account = accountRepository.findById(id)
-                .orElseThrow(() -> new AccountNotFoundException("Account with such id not found"));
+                .orElseThrow(() -> new AccountNotFoundException("Account with such username not found: " + username));
         return accountMapper.toDto(account);
     }
 
@@ -67,6 +62,25 @@ public class AccountService {
                 .stream()
                 .map(accountMapper::toDto)
                 .collect(Collectors.toList());
+    }
+
+    public AccountDto update(AccountUpdateDto updateDto, String username) {
+        Account account = accountRepository
+                .findByUsername(username)
+                .orElseThrow(() -> new AccountNotFoundException("Account with such username not found: " + username));
+
+        Optional<Account> existing = accountRepository
+                .findByPhoneNumber(updateDto.getPhoneNumber());
+
+        existing.ifPresent(acc -> {
+            throw new AccountAlreadyExistsException("Account with such phone number already exists: " + updateDto.getPhoneNumber());
+        });
+
+        account.setFirstName(updateDto.getFirstName());
+        account.setLastName(updateDto.getLastName());
+        account.setPhoneNumber(updateDto.getPhoneNumber());
+
+        return accountMapper.toDto(accountRepository.save(account));
     }
 }
 
