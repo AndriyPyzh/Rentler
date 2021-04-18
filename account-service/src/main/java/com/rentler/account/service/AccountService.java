@@ -1,8 +1,8 @@
 package com.rentler.account.service;
 
 import com.rentler.account.client.AuthServiceClient;
+import com.rentler.account.dto.AccountCreateDto;
 import com.rentler.account.dto.AccountDto;
-import com.rentler.account.dto.UserDto;
 import com.rentler.account.entity.Account;
 import com.rentler.account.exception.exceptions.AccountAlreadyExistsException;
 import com.rentler.account.exception.exceptions.AccountNotFoundException;
@@ -11,6 +11,7 @@ import com.rentler.account.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -30,17 +31,20 @@ public class AccountService {
         this.authServiceClient = authServiceClient;
     }
 
-    public AccountDto create(UserDto user) {
-        Optional<Account> existing = accountRepository.findByUsername(user.getUsername());
+    public AccountDto create(AccountCreateDto accountCreateDto) {
+        Optional<Account> existing = accountRepository
+                .findByUsernameOrEmail(accountCreateDto.getUsername(), accountCreateDto.getEmail());
 
         existing.ifPresent(account -> {
-            throw new AccountAlreadyExistsException("Account already exists: " + account.getUsername());
+            throw new AccountAlreadyExistsException("Account already exists");
         });
 
-        authServiceClient.createUser(user);
+        authServiceClient.createUser(accountCreateDto);
 
         Account account = Account.builder()
-                .username(user.getUsername())
+                .username(accountCreateDto.getUsername())
+                .email(accountCreateDto.getEmail())
+                .dateOfRegistration(LocalDateTime.now())
                 .build();
 
         return accountMapper.toDto(accountRepository.save(account));

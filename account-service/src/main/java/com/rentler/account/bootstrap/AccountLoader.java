@@ -9,6 +9,8 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 @Component
 public class AccountLoader implements ApplicationListener<ApplicationReadyEvent> {
     private final AccountRepository accountRepository;
@@ -25,6 +27,8 @@ public class AccountLoader implements ApplicationListener<ApplicationReadyEvent>
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
         Account account = Account.builder()
                 .username("andriy")
+                .email("andriy@mail.com")
+                .dateOfRegistration(LocalDateTime.now())
                 .build();
 
         accountRepository.save(account);

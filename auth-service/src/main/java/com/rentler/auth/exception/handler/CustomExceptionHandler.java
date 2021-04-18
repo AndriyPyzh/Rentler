@@ -1,7 +1,5 @@
 package com.rentler.auth.exception.handler;
 
-import com.rentler.auth.exception.exceptions.BadUsernameOrPasswordException;
-import com.rentler.auth.exception.exceptions.UserAlreadyExistsException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
@@ -48,25 +46,11 @@ public class CustomExceptionHandler {
 
         List<String> errorMessages = ((List<FieldError>) errorAttributes.get("errors"))
                 .stream()
-                .map(e -> String.format("'%s' - %s", e.getField(), e.getDefaultMessage()))
+                .map(e -> String.format("%s - %s", e.getField(), e.getDefaultMessage()))
                 .collect(Collectors.toList());
 
         response.setErrors(errorMessages);
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-    }
-
-    @ExceptionHandler(UserAlreadyExistsException.class)
-    public final ResponseEntity<Object> handleUserAlreadyExistsException(
-            UserAlreadyExistsException exception, WebRequest request) {
-        ExceptionResponse response = new ExceptionResponse(getErrorAttributes(request));
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-    }
-
-    @ExceptionHandler(BadUsernameOrPasswordException.class)
-    public final ResponseEntity<Object> handleBadUsernameOrPasswordException(
-            BadUsernameOrPasswordException exception, WebRequest request) {
-        ExceptionResponse response = new ExceptionResponse(getErrorAttributes(request));
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
