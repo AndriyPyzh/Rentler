@@ -1,4 +1,4 @@
-package com.rentler.account.config;
+package com.rentler.helper.mapper;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration.AccessLevel;

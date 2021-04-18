@@ -3,7 +3,7 @@ package com.rentler.auth.service;
 import com.rentler.auth.dto.UserDto;
 import com.rentler.auth.entity.User;
 import com.rentler.auth.enums.Role;
-import com.rentler.auth.exception.exceptions.UserAlreadyExistsException;
+import com.rentler.auth.exception.UserAlreadyExistsException;
 import com.rentler.auth.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

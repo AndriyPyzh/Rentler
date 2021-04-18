@@ -3,7 +3,7 @@ package com.rentler.apartment.service;
 import com.rentler.apartment.client.AccountServiceClient;
 import com.rentler.apartment.dto.ApartmentDto;
 import com.rentler.apartment.entity.Apartment;
-import com.rentler.apartment.exception.exceptions.ApartmentNotFoundException;
+import com.rentler.apartment.exception.ApartmentNotFoundException;
 import com.rentler.apartment.mapper.ApartmentMapper;
 import com.rentler.apartment.repository.ApartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;

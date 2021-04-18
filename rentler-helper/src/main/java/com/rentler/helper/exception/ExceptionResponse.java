@@ -1,4 +1,4 @@
-package com.rentler.account.exception.handler;
+package com.rentler.helper.exception;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;

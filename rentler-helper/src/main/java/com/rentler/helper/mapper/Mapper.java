@@ -1,4 +1,4 @@
-package com.rentler.apartment.mapper;
+package com.rentler.helper.mapper;
 
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
@@ -8,13 +8,12 @@ import java.util.Objects;
 
 public abstract class Mapper<E, D> {
 
+    private final Class<E> entityClass;
+    private final Class<D> dtoClass;
     @Autowired
     ModelMapper mapper;
 
-    private final Class<E> entityClass;
-    private final Class<D> dtoClass;
-
-    Mapper(Class<E> entityClass, Class<D> dtoClass) {
+    public Mapper(Class<E> entityClass, Class<D> dtoClass) {
         this.entityClass = entityClass;
         this.dtoClass = dtoClass;
     }

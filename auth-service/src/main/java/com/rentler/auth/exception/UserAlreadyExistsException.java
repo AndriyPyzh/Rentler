@@ -1,4 +1,4 @@
-package com.rentler.auth.exception.exceptions;
+package com.rentler.auth.exception;
 
 public class UserAlreadyExistsException extends RuntimeException {
     public UserAlreadyExistsException(String message) {
