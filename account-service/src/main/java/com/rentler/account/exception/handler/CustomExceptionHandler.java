@@ -1,6 +1,6 @@
 package com.rentler.account.exception.handler;
 
-import com.rentler.account.exception.exceptions.UserNotFoundException;
+import com.rentler.account.exception.exceptions.AccountNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
@@ -32,9 +32,9 @@ public class CustomExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
-    @ExceptionHandler(UserNotFoundException.class)
+    @ExceptionHandler(AccountNotFoundException.class)
     public final ResponseEntity<Object> handleUserNotFoundException(
-            UserNotFoundException exception, WebRequest request) {
+            AccountNotFoundException exception, WebRequest request) {
         ExceptionResponse response = new ExceptionResponse(getErrorAttributes(request));
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }

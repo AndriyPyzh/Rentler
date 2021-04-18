@@ -25,8 +25,6 @@ public class AccountLoader implements ApplicationListener<ApplicationReadyEvent>
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
         Account account = Account.builder()
                 .username("andriy")
-                .email("andriy@gmail.com")
-                .password("1111")
                 .build();
 
         accountRepository.save(account);

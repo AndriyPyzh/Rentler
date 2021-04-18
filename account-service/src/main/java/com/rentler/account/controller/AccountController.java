@@ -2,6 +2,7 @@ package com.rentler.account.controller;
 
 
 import com.rentler.account.dto.AccountDto;
+import com.rentler.account.dto.UserDto;
 import com.rentler.account.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,9 +41,8 @@ public class AccountController {
     }
 
     @PostMapping
-    public ResponseEntity<AccountDto> createAccount(@RequestBody @Valid AccountDto accountDto) {
+    public ResponseEntity<AccountDto> createAccount(@RequestBody @Valid UserDto userDto) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(accountService.create(accountDto));
+                .body(accountService.create(userDto));
     }
-
 }

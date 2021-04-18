@@ -23,11 +23,10 @@ import javax.servlet.http.HttpServletResponse;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Value("${rentler.secret-key}")
-    private String accessTokenKey;
-
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
+    @Value("${rentler.secret-key}")
+    private String accessTokenKey;
 
     @Autowired
     public WebSecurityConfig(UserService userService,

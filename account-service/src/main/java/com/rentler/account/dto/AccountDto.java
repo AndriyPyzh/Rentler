@@ -5,9 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Email;
+import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 @Data
 @Builder
@@ -20,10 +21,17 @@ public class AccountDto {
     @NotBlank
     private String username;
 
-    @NotBlank
-    @Email(message = "Email should be valid")
-    private String email;
+//    @NotBlank
+//    @Email(message = "Email should be valid")
+//    private String email;
 
-    private String password;
+    private String firstName;
+
+    private String lastName;
+
+    @Column(unique = true, nullable = false)
+    private String phoneNumber;
+
+    private Date lastSeen;
 
 }

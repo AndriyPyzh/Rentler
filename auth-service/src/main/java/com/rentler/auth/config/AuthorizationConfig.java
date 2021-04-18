@@ -23,13 +23,12 @@ import javax.sql.DataSource;
 @EnableAuthorizationServer
 public class AuthorizationConfig implements AuthorizationServerConfigurer {
 
-    @Value("${rentler.secret-key}")
-    private String accessTokenKey;
-
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
     private final DataSource dataSource;
+    @Value("${rentler.secret-key}")
+    private String accessTokenKey;
 
     @Autowired
     public AuthorizationConfig(PasswordEncoder passwordEncoder,
