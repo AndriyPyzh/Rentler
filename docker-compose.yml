@@ -221,11 +221,11 @@ services:
         limits:
           memory: 300M
 
-  client:
-    container_name: client
+  web-client:
+    container_name: web-client
     build:
       context: .
-      dockerfile: ./client/Dockerfile
+      dockerfile: web-client/Dockerfile
     ports:
       - 3000:3000
     networks:

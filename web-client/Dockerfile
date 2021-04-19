@@ -1,6 +1,6 @@
 FROM node:alpine
-WORKDIR /app/client
-COPY ./client ./
+WORKDIR /app/web-client
+COPY ./web-client ./
 RUN npm install --silent
 ENTRYPOINT ["npm", "start"]
 EXPOSE 3000
