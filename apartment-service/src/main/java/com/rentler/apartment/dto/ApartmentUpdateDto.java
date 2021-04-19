@@ -9,9 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -26,6 +24,7 @@ public class ApartmentUpdateDto {
     private String name;
 
     @NotNull
+    @Positive
     private Long price;
 
     @NotNull
@@ -35,18 +34,18 @@ public class ApartmentUpdateDto {
     private ApartmentType type;
 
     @NotNull
-    @Min(0)
+    @PositiveOrZero
     private Integer beds;
 
     @NotNull
-    @Min(0)
+    @PositiveOrZero
     private Integer bath;
 
     @NotNull
     private Integer floor;
 
     @NotNull
-    @Min(0)
+    @Positive
     private Double squareMeters;
 
     @NotNull
@@ -59,5 +58,6 @@ public class ApartmentUpdateDto {
     private List<Amenities> amenities;
 
     @NotNull
+    @Future
     private LocalDate availableFrom;
 }

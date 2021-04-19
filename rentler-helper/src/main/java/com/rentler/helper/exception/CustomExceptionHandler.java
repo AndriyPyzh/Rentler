@@ -1,5 +1,6 @@
 package com.rentler.helper.exception;
 
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import feign.FeignException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,6 +8,7 @@ import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,7 +65,36 @@ public class CustomExceptionHandler {
             FeignException exception, WebRequest request) throws IOException {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(exception.contentUTF8());
+                .body(new ExceptionResponse(exception.contentUTF8()));
     }
 
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public final ResponseEntity<Object> handleHttpMessageNotReadableException(
+            HttpMessageNotReadableException exception, WebRequest request) throws IOException {
+
+        if (exception.getCause() instanceof InvalidFormatException) {
+            InvalidFormatException ex = (InvalidFormatException) exception.getCause();
+
+            String fieldName = ex.getPath().get(0).getFieldName();
+            String fieldValue = ex.getValue().toString();
+
+            String message = String.format("%s - is invalid value for field '%s'.\n",
+                    fieldValue, fieldName);
+
+            if (ex.getTargetType().getPackageName().endsWith(".enums")) {
+                message += "Possible values: " +
+                        Arrays.stream(ex.getTargetType().getEnumConstants())
+                                .map(Object::toString)
+                                .reduce((a, b) -> String.format("%s, %s", a, b))
+                                .get();
+            }
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(new ExceptionResponse(message));
+        }
+
+        return handleRuntimeException(exception, request);
+
+    }
 }
