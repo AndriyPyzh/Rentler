@@ -1,14 +1,20 @@
 package com.rentler.apartment.service;
 
-import com.rentler.apartment.client.AccountServiceClient;
 import com.rentler.apartment.dto.ApartmentDto;
+import com.rentler.apartment.dto.ApartmentUpdateDto;
+import com.rentler.apartment.entity.Address;
 import com.rentler.apartment.entity.Apartment;
+import com.rentler.apartment.enums.Amenities;
+import com.rentler.apartment.enums.ApartmentType;
 import com.rentler.apartment.exception.ApartmentNotFoundException;
 import com.rentler.apartment.mapper.ApartmentMapper;
 import com.rentler.apartment.repository.ApartmentRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,27 +22,19 @@ import java.util.stream.Collectors;
 public class ApartmentService {
     private final ApartmentRepository apartmentRepository;
     private final ApartmentMapper apartmentMapper;
-    private final AccountServiceClient accountService;
+    private final ModelMapper modelMapper;
 
     @Autowired
     public ApartmentService(ApartmentRepository apartmentRepository,
                             ApartmentMapper apartmentMapper,
-                            AccountServiceClient accountService) {
+                            ModelMapper modelMapper) {
         this.apartmentRepository = apartmentRepository;
         this.apartmentMapper = apartmentMapper;
-        this.accountService = accountService;
+        this.modelMapper = modelMapper;
     }
 
-    public ApartmentDto create(ApartmentDto apartmentDto) {
-        // check if account exists
-        accountService.getAccount(apartmentDto.getUserId());
-
-        Apartment apartment = apartmentMapper.toEntity(apartmentDto);
-        return apartmentMapper.toDto(apartmentRepository.save(apartment));
-    }
-
-    public List<ApartmentDto> getAll() {
-        return apartmentRepository.findAll()
+    public List<ApartmentDto> getByPage(Pageable pageable) {
+        return apartmentRepository.findAll(pageable)
                 .stream()
                 .map(apartmentMapper::toDto)
                 .collect(Collectors.toList());
@@ -44,8 +42,46 @@ public class ApartmentService {
 
     public ApartmentDto getById(Long id) {
         Apartment apartment = apartmentRepository.findById(id)
-                .orElseThrow(() -> new ApartmentNotFoundException("Apartment with such id not found"));
+                .orElseThrow(() -> new ApartmentNotFoundException("Apartment with such id not found: " + id));
         return apartmentMapper.toDto(apartment);
+    }
+
+    public List<String> getAmenities() {
+        return Arrays.stream(Amenities.values())
+                .map(Amenities::toString)
+                .collect(Collectors.toList());
+    }
+
+    public List<String> getApartmentTypes() {
+        return Arrays.stream(ApartmentType.values())
+                .map(ApartmentType::toString)
+                .collect(Collectors.toList());
+    }
+
+    public ApartmentDto create(ApartmentUpdateDto apartmentDto, String username) {
+        Apartment apartment = modelMapper.map(apartmentDto, Apartment.class);
+        apartment.setOwner(username);
+        return apartmentMapper.toDto(apartmentRepository.save(apartment));
+    }
+
+    public ApartmentDto update(ApartmentUpdateDto apartmentDto, String username) {
+        Apartment apartment = apartmentRepository.findByIdAndOwner(apartmentDto.getId(), username)
+                .orElseThrow(() -> new ApartmentNotFoundException("Apartment with such id not found: " + apartmentDto.getId()));
+
+        apartment.setName(apartmentDto.getName());
+        apartment.setPrice(apartmentDto.getPrice());
+        apartment.setAddress(modelMapper.map(apartmentDto.getAddress(), Address.class));
+        apartment.setType(apartmentDto.getType());
+        apartment.setBeds(apartmentDto.getBeds());
+        apartment.setBath(apartmentDto.getBath());
+        apartment.setFloor(apartmentDto.getFloor());
+        apartment.setSquareMeters(apartmentDto.getSquareMeters());
+        apartment.setPetPolicy(apartmentDto.getPetPolicy());
+        apartment.setDescription(apartmentDto.getDescription());
+        apartment.setAmenities(apartmentDto.getAmenities());
+        apartment.setAvailableFrom(apartmentDto.getAvailableFrom());
+
+        return apartmentMapper.toDto(apartmentRepository.save(apartment));
     }
 }
 

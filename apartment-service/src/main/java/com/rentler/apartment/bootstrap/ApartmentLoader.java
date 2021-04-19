@@ -1,44 +1,57 @@
 package com.rentler.apartment.bootstrap;
 
-import com.rentler.apartment.entity.Address;
-import com.rentler.apartment.entity.Apartment;
+import com.rentler.apartment.dto.AddressDto;
+import com.rentler.apartment.dto.ApartmentUpdateDto;
+import com.rentler.apartment.enums.Amenities;
+import com.rentler.apartment.enums.ApartmentType;
+import com.rentler.apartment.enums.PetPolicy;
 import com.rentler.apartment.repository.ApartmentRepository;
+import com.rentler.apartment.service.ApartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.Arrays;
+
 @Component
 public class ApartmentLoader implements ApplicationListener<ApplicationReadyEvent> {
     private final ApartmentRepository apartmentRepository;
+    private final ApartmentService apartmentService;
 
     @Autowired
-    public ApartmentLoader(ApartmentRepository apartmentRepository) {
+    public ApartmentLoader(ApartmentRepository apartmentRepository,
+                           ApartmentService apartmentService) {
         this.apartmentRepository = apartmentRepository;
+        this.apartmentService = apartmentService;
     }
 
     @Override
     @Transactional
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
-        Address address = Address.builder()
-                .city("lviv")
-                .street("shevchenka")
-                .houseNumber(80)
+
+        ApartmentUpdateDto apartment = ApartmentUpdateDto.builder()
+                .name("My Apartment")
+                .price(10000L)
+                .address(AddressDto.builder()
+                        .city("Lviv")
+                        .street("Shevchenka")
+                        .houseNumber(80)
+                        .build())
+                .type(ApartmentType.APARTMENT)
+                .beds(2)
+                .bath(2)
+                .floor(4)
+                .squareMeters(55.5)
+                .petPolicy(PetPolicy.NO_PETS)
+                .description("Some description...")
+                .amenities(Arrays.asList(Amenities.GYM, Amenities.PARKING))
+                .availableFrom(LocalDate.now())
                 .build();
 
-
-        Apartment apartment = Apartment.builder()
-                .title("my flat")
-                .description("some desc..")
-                .price(10000)
-                .rooms(3)
-                .floor(5)
-                .address(address)
-                .userId(1L)
-                .build();
-
-        apartmentRepository.save(apartment);
+        apartmentService.create(apartment, "andriy");
 
     }
 }

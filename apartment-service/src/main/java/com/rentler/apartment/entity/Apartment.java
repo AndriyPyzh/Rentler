@@ -1,14 +1,16 @@
 package com.rentler.apartment.entity;
 
+import com.rentler.apartment.enums.Amenities;
+import com.rentler.apartment.enums.ApartmentType;
+import com.rentler.apartment.enums.PetPolicy;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
@@ -22,31 +24,51 @@ public class Apartment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
-    private LocalDate creationDate;
+    @Column(nullable = false)
+    private String name;
 
-    @NotNull
-    private String title;
+    @Column(nullable = false)
+    private Long price;
 
-    @NotNull
-    private String description;
+    @Column(nullable = false)
+    private String owner;
 
-    @NotNull
-    private Integer price;
-
-    @NotNull
-    private Integer rooms;
-
-    @NotNull
-    private Integer floor;
-
-    @NotNull
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
-    @NotNull
-    private Long userId;
+    @Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
+    private ApartmentType type;
+
+    @Column(nullable = false)
+    private Integer beds;
+
+    @Column(nullable = false)
+    private Integer bath;
+
+    @Column(nullable = false)
+    private Integer floor;
+
+    @Column(nullable = false)
+    private Double squareMeters;
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
+    private PetPolicy petPolicy;
+
+    @Column(nullable = false)
+    private String description;
+
+    @ElementCollection(targetClass = Amenities.class)
+    @Enumerated(value = EnumType.STRING)
+    private List<Amenities> amenities;
+
+    @Column(nullable = false)
+    private LocalDate availableFrom;
+
+    @Column(nullable = false)
+    private LocalDate creationDate;
 
     @PrePersist
     public void prePersist() {

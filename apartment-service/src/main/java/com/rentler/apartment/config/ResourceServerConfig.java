@@ -1,8 +1,6 @@
-package com.rentler.account.config;
+package com.rentler.apartment.config;
 
 import feign.RequestInterceptor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.security.oauth2.client.feign.OAuth2FeignRequestInterceptor;
 import org.springframework.context.annotation.Bean;
@@ -40,7 +38,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/").permitAll()
+                .antMatchers(HttpMethod.GET, "/**").permitAll()
                 .anyRequest()
                 .authenticated();
     }
