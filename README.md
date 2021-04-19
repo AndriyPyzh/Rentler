@@ -2,6 +2,10 @@
 
 ## URLs
 
+### Web Client
+
+http://localhost:3000
+
 ### Config server
 
 http://localhost:8888

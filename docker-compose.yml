@@ -221,5 +221,19 @@ services:
         limits:
           memory: 300M
 
+  client:
+    container_name: client
+    build:
+      context: .
+      dockerfile: ./client/Dockerfile
+    ports:
+      - 3000:3000
+    networks:
+      - net
+    deploy:
+      resources:
+        limits:
+          memory: 300M
+
 networks:
   net:
