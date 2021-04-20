@@ -1,23 +1,37 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 
 class NavBar extends Component {
     state = {};
 
     render() {
         return (
-            <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top">
-                <a className="navbar-brand ml-3" href="#">
+            <nav className="navbar navbar-expand-xl navbar-light bg-light border-bottom sticky-top">
+                <Link className="navbar-brand ml-3" to="/">
                     <img src="../logo.svg" width="30" height="30"
                          className="d-inline-block align-top" alt=""/>
                     <span className="font-weight-bold m-2">Rentler</span>
-                </a>
-                <div className="collapse navbar-collapse">
-                    <div className="navbar-nav ">
-                        <a className="nav-item nav-link active" href="#">Rent</a>
-                        <a className="nav-item nav-link" href="#">Buy</a>
+                </Link>
+                <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                    <div className="navbar-nav border-right">
+                        <Link className="nav-item nav-link m-1 mx-2" to="/apartments">Rent</Link>
+                        <Link className="nav-item nav-link m-1 mx-2" to="/apartments">Buy</Link>
+                    </div>
+                    <form className="form-inline mx-4 mr-auto">
+                        <input className="form-control"
+                               type="search"
+                               placeholder="&#xF002; Where do you want to leave?"
+                               style={ { fontFamily: "FontAwesome, sans-serif", width: "650px" } }
+                        />
+                    </form>
+                    <div className="navbar-nav d-flex align-items-center border-left">
+                        <Link className="btn btn-outline-warning ml-4"
+                              to="/add-apartment"
+                              style={ { fontSize: 14, height: '35px' } }>List a Property</Link>
+                        <Link className="nav-item nav-link m-1 mx-2" to="/login">Log In</Link>
+                        <Link className="nav-item nav-link m-1 mx-2" to="/signup">Sign Up</Link>
                     </div>
                 </div>
-
             </nav>
         );
     }
