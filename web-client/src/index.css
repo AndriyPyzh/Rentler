@@ -36,3 +36,12 @@ code {
     font-weight: 700;
     font-size: 70px;
 }
+
+.list-property-button{
+    font-size: 14px !important;
+    height: 35px !important;
+}
+
+.fw-icon{
+    font-family: FontAwesome, sans-serif;
+}

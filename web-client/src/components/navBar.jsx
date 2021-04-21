@@ -15,19 +15,17 @@ class NavBar extends Component {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <div className="navbar-nav border-right">
                         <Link className="nav-item nav-link m-1 mx-2" to="/apartments">Rent</Link>
-                        <Link className="nav-item nav-link m-1 mx-2" to="/apartments">Buy</Link>
+                        <Link className="nav-item nav-link m-1 mx-2 mr-3" to="/apartments">Buy</Link>
                     </div>
-                    <form className="form-inline mx-4 mr-auto">
-                        <input className="form-control"
-                               type="search"
+                    <form className="input-group px-4 mr-auto">
+                        <input className="form-control w-100 fw-icon"
+                               type="text"
                                placeholder="&#xF002; Where do you want to leave?"
-                               style={ { fontFamily: "FontAwesome, sans-serif", width: "650px" } }
                         />
                     </form>
-                    <div className="navbar-nav d-flex align-items-center border-left">
-                        <Link className="btn btn-outline-warning ml-4"
-                              to="/add-apartment"
-                              style={ { fontSize: 14, height: '35px' } }>List a Property</Link>
+                    <div className="navbar-nav d-flex align-items-center border-left" style={{ width: '540px'}}>
+                        <Link className="btn btn-outline-warning ml-4 mr-2 list-property-button"
+                              to="/add-apartment">List a Property</Link>
                         <Link className="nav-item nav-link m-1 mx-2" to="/login">Log In</Link>
                         <Link className="nav-item nav-link m-1 mx-2" to="/signup">Sign Up</Link>
                     </div>
