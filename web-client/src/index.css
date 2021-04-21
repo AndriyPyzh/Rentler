@@ -5,43 +5,15 @@ body {
     sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    color: #323138 !important;
 }
 
+html,body{
+    height: 100% !important;
+
+}
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
 
-.not-found {
-    position: relative !important;
-    height: 600px;
-}
-
-.four-zero-four {
-    position: absolute !important;
-
-    text-align: center;
-    font-weight: 700;
-    color: #fff;
-    text-shadow: 0 20px 15px #efefef, 0 0 15px #efefef;
-    height: 550px;
-    font-size: 370px;
-}
-
-.page-not-found {
-    position: absolute !important;
-    top: 300px;
-
-    text-align: center;
-    font-weight: 700;
-    font-size: 70px;
-}
-
-.list-property-button{
-    font-size: 14px !important;
-    height: 35px !important;
-}
-
-.fw-icon{
-    font-family: FontAwesome, sans-serif;
-}

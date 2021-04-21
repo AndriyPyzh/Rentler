@@ -1,0 +1,29 @@
+import React from "react";
+
+const Input = ({ name, label, type, placeholder, value, onChange, error, showMessage }) => {
+    let borderColor = showMessage && (error ? "#f44336" : '#28a745');
+    let message = showMessage && (error || 'Looks good!');
+
+    return (
+        <div style={ { marginBottom: '0.5rem' } }>
+            <label htmlFor={ name }>{ label }</label>
+            <input
+                value={ value }
+                onChange={ onChange }
+                type={ type }
+                id={ name }
+                name={ name }
+                className="form-control"
+                placeholder={ placeholder }
+                style={ { borderColor: borderColor } }/>
+            <div className="mt-1"
+                 style={ {
+                     fontSize: 13,
+                     color: borderColor,
+                     height: 19
+                 } }>{ message }</div>
+        </div>
+    );
+};
+
+export default Input;

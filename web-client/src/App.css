@@ -1,0 +1,131 @@
+footer {
+    background-color: #323138 !important;
+    color: white;
+    height: auto !important;
+}
+
+.not-found {
+    position: relative !important;
+    height: 700px;
+}
+
+.four-zero-four {
+    position: absolute !important;
+
+    text-align: center;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 20px 15px #efefef, 0 0 15px #efefef;
+    height: 550px;
+    font-size: 370px;
+}
+
+.page-not-found {
+    position: absolute !important;
+    top: 300px;
+
+    text-align: center;
+    font-weight: 700;
+    font-size: 70px;
+}
+
+.list-property-button {
+    font-size: 14px !important;
+    height: 35px !important;
+}
+
+.fw-icon {
+    font-family: FontAwesome, sans-serif;
+}
+
+.close {
+    position: absolute;
+    right: 32px;
+    top: 32px;
+    width: 50px;
+    height: 50px;
+    color: #9696b4;
+    border-radius: 50%;
+    background-color: white !important;
+}
+
+.close:hover {
+    background-color: #6446b4 !important;
+}
+
+.close:before, .close:after {
+    position: absolute;
+    left: 25px;
+    bottom: 14px;
+    content: ' ';
+    height: 22px;
+    width: 2px;
+    background-color: #333;
+    border-radius: 10px;
+}
+
+.close:before {
+    transform: rotate(45deg);
+}
+
+.close:after {
+    transform: rotate(-45deg);
+}
+
+.close:hover:before {
+    background-color: white;
+}
+
+.close:hover:after {
+    background-color: white;
+}
+
+.auth-form {
+    height: 100vh !important;
+}
+
+.auth-card {
+    border: none !important;
+    width: 420px;
+}
+
+.auth-card:before {
+    content: "";
+    display: block;
+    background: url(img/auth-bg.svg) no-repeat 50%;
+    position: absolute;
+    height: 320px;
+    width: 150px;
+    top: 50%;
+    left: -75px;
+    transform: translateY(-50%);
+    z-index: -1;
+}
+
+.auth-form-title {
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.auth-button {
+    font-size: 24px !important;
+    font-weight: bold !important;
+    height: 60px !important;
+    border-radius: 0 0 0.25rem 0.25rem !important;
+    color: #fff;
+    background-color: #7055be !important;
+    border: none !important;
+    width: 100% !important;
+}
+
+.auth-button:focus {
+    box-shadow: 0 0 0 0.2rem #c2b3e9 !important;
+}
+
+.auth-button:hover {
+    background-color: #6446b4 !important;
+}
+
+.auth-button:disabled {
+    background-color: #8c88ab !important;
+}
