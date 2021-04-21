@@ -6,8 +6,12 @@ class EmptyPage extends Component {
         this.props.hideFooter();
     }
 
+    componentWillUnmount() {
+        this.close();
+    }
+
     close = () => {
-        this.props.showNavBar();
+        this.props.showNavbar();
         this.props.showFooter();
         this.props.history.goBack();
     };

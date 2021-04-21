@@ -3,7 +3,9 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import './App.css';
 import AddApartment from "./components/apartments/addApartment";
 import Apartments from "./components/apartments/apartments";
+import ConfirmForm from "./components/auth/confirmForm";
 import LoginForm from "./components/auth/loginForm";
+import ResetPassword from "./components/auth/resetPassword";
 import SignupForm from "./components/auth/signupForm";
 import Home from "./components/pages/home";
 import NotFound from "./components/pages/notFound";
@@ -15,10 +17,6 @@ class App extends Component {
         navbar: true,
         footer: true
     };
-
-    componentDidMount() {
-        console.log("mount app");
-    }
 
     hideNavbar = () => {
         this.setState({ navbar: false });
@@ -39,6 +37,12 @@ class App extends Component {
 
     render() {
         const { navbar, footer } = this.state;
+        const clearFuncs = {
+            hideNavbar: this.hideNavbar,
+            showNavbar: this.showNavbar,
+            hideFooter: this.hideFooter,
+            showFooter: this.showFooter
+        };
 
         return (
             <React.Fragment>
@@ -48,21 +52,13 @@ class App extends Component {
                         <Route path="/apartments" component={ Apartments }/>
                         <Route path="/add-apartment" component={ AddApartment }/>
                         <Route path="/login"
-                               render={ props =>
-                                   <LoginForm { ...props }
-                                              hideNavbar={ this.hideNavbar }
-                                              showNavbar={ this.showNavbar }
-                                              hideFooter={ this.hideFooter }
-                                              showFooter={ this.showFooter }
-                                   /> }/>
+                               render={ props => <LoginForm { ...props }{ ...clearFuncs }/> }/>
                         <Route path="/signup"
-                               render={ props =>
-                                   <SignupForm { ...props }
-                                               hideNavbar={ this.hideNavbar }
-                                               showNavBar={ this.showNavbar }
-                                               hideFooter={ this.hideFooter }
-                                               showFooter={ this.showFooter }
-                                   /> }/>/>
+                               render={ props => <SignupForm { ...props }{ ...clearFuncs }/> }/>
+                        <Route path="/confirm"
+                               render={ props => <ConfirmForm { ...props }{ ...clearFuncs }/> }/>
+                        <Route path="/reset-password"
+                               render={ props => <ResetPassword { ...props }{ ...clearFuncs }/> }/>
                         <Route path="/not-found" component={ NotFound }/>
                         <Route path="/" exact component={ Home }/>
                         <Redirect to="/not-found"/>

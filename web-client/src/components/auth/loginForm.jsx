@@ -8,7 +8,6 @@ class LoginForm extends Form {
     state = {
         data: {
             username: '',
-            email: '',
             password: ''
         },
         errors: {},
@@ -17,7 +16,6 @@ class LoginForm extends Form {
 
     schema = {
         username: Joi.string().alphanum().min(4).max(15).required().label('Username'),
-        email: Joi.string().email().required().label('Email'),
         password: Joi.string().alphanum().min(8).max(30).required().label('Password')
     };
 
@@ -27,27 +25,25 @@ class LoginForm extends Form {
     };
 
     render() {
-        const { data, errors, showMessages } = this.state;
-
         return (
             <AuthPage
                 title={ "Log In" }
-                footer={ <span>Don’t have Rentler account? <Link to={ "/signup" }>Sign up</Link></span> }
-                hideNavbar={ this.props.hideNavbar }
-                showNavbar={ this.props.showNavbar }
-                hideFooter={ this.props.hideFooter }
-                showFooter={ this.props.showFooter }
+                footer={ <span>Don’t have Rentler account? <Link to={ "/signup" } className="text-purple">Sign up</Link></span> }
+                { ...this.props }
             >
                 <form onSubmit={ this.handleSubmit }>
                     <div className="card-body" style={ { padding: 40 } }>
                         { super.renderInput("username", "Username", "enter username") }
-                        { super.renderInput("email", "Email", "enter email", "email") }
                         { super.renderInput("password", "Password", "enter password", "password") }
+                        <div className="text-right " style={ { fontSize: 14 } }>
+                            <Link to="/reset-password" className="text-purple">
+                                Forgot your password?
+                            </Link>
+                        </div>
                     </div>
                     { super.renderButton("Log In", "btn btn-primary auth-button") }
                 </form>
             </AuthPage>
-
         );
     }
 }

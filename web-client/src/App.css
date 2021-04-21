@@ -4,6 +4,10 @@ footer {
     height: auto !important;
 }
 
+.text-purple {
+    color: #6446b4 !important;
+}
+
 .not-found {
     position: relative !important;
     height: 700px;
@@ -128,4 +132,34 @@ footer {
 
 .auth-button:disabled {
     background-color: #8c88ab !important;
+}
+
+.auth-label {
+    font-weight: 500;
+    font-size: 20px;
+    padding-bottom: 30px;
+    text-align: center !important;
+}
+
+.avatar {
+    background: url(img/avatar.svg) no-repeat 50%;
+    background-size: 120px, 120px;
+    width: 120px;
+    height: 120px;
+    padding-left: 50%;
+    padding-right: 50%;
+    text-align: center !important;
+
+}
+
+input[type=file] {
+    display: none;
+}
+
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 14px;
 }
