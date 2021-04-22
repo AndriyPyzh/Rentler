@@ -1,14 +1,18 @@
 import Joi from 'joi-browser';
 import React from 'react';
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import logger from "../../services/logService";
+import * as userService from "../../services/userService";
 import Form from "../shared/form";
 import AuthPage from "./authPage";
+
 
 class ConfirmForm extends Form {
     state = {
         data: {
-            firstname: '',
-            lastname: '',
+            firstName: '',
+            lastName: '',
             phone: ''
         },
         errors: {},
@@ -16,15 +20,19 @@ class ConfirmForm extends Form {
     };
 
     schema = {
-        firstname: Joi.string().regex(/^[a-zA-Z]*$/).max(20).required().label('First Name'),
-        lastname: Joi.string().regex(/^[a-zA-Z]*$/).max(20).required().label('Last Name'),
+        firstName: Joi.string().regex(/^[a-zA-Z]*$/).max(20).required().label('First Name'),
+        lastName: Joi.string().regex(/^[a-zA-Z]*$/).max(20).required().label('Last Name'),
         phone: Joi.string().regex(/^\+(?:[0-9] ?){6,14}[0-9]$/).required().label('Phone Number')
     };
 
-    doSubmit = () => {
-        console.log('submitted');
-        console.log(this.state.data);
-        this.props.history.replace("/apartments")
+    doSubmit = async () => {
+        try {
+            await userService.updateInfo(this.state.data);
+            this.props.history.replace("/apartments");
+        } catch (ex) {
+            logger.log(ex);
+            toast.error(`${ ex.response.data }`);
+        }
     };
 
     render() {
@@ -44,8 +52,8 @@ class ConfirmForm extends Form {
                             </label>
                             <input type="file" id="img" name="img" accept="image/*"/>
                         </div>
-                        { super.renderInput("firstname", "First Name", "enter first name") }
-                        { super.renderInput("lastname", "Last Name", "enter last name") }
+                        { super.renderInput("firstName", "First Name", "enter first name") }
+                        { super.renderInput("lastName", "Last Name", "enter last name") }
                         { super.renderInput("phone", "Phone Number", "enter phone number") }
                     </div>
                     { super.renderButton("Confirm", "btn btn-primary auth-button") }

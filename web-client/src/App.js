@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect, Route, Switch } from "react-router-dom";
-import './App.css';
+import { ToastContainer } from "react-toastify";
 import AddApartment from "./components/apartments/addApartment";
 import Apartments from "./components/apartments/apartments";
 import ConfirmForm from "./components/auth/confirmForm";
@@ -11,6 +11,8 @@ import Home from "./components/pages/home";
 import NotFound from "./components/pages/notFound";
 import Footer from "./components/shared/footer";
 import NavBar from "./components/shared/navBar";
+import "react-toastify/dist/ReactToastify.css";
+import './App.css';
 
 class App extends Component {
     state = {
@@ -46,6 +48,7 @@ class App extends Component {
 
         return (
             <React.Fragment>
+                <ToastContainer position="top-center" pauseOnHover/>
                 { navbar && <NavBar/> }
                 <main className="container">
                     <Switch>

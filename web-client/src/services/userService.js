@@ -1,0 +1,20 @@
+import { apiUrl } from "../config.json";
+import http from "./httpService";
+
+const apiEndpoint = apiUrl + '/accounts/';
+
+export function register(user) {
+    return http.post(apiEndpoint, {
+        username: user.username,
+        email: user.email,
+        password: user.password
+    });
+}
+
+export function updateInfo(info) {
+    return http.put(apiEndpoint, {
+        firstName: info.firstName,
+        lastName: info.lastName,
+        phoneNumber: info.phone
+    });
+}

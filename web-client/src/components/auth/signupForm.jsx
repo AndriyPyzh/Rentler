@@ -1,6 +1,9 @@
 import Joi from 'joi-browser';
 import React from 'react';
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import logger from "../../services/logService";
+import * as userService from "../../services/userService";
 import Form from "../shared/form";
 import AuthPage from "./authPage";
 
@@ -16,15 +19,19 @@ class SignupForm extends Form {
     };
 
     schema = {
-        username: Joi.string().alphanum().min(4).max(15).required().label('Username'),
+        username: Joi.string().alphanum().min(2).max(15).required().label('Username'),
         email: Joi.string().email().required().label('Email'),
         password: Joi.string().min(8).max(30).required().label('Password')
     };
 
-    doSubmit = () => {
-        console.log('submitted');
-        console.log(this.state.data);
-        this.props.history.replace('/confirm');
+    doSubmit = async () => {
+        try {
+            await userService.register(this.state.data);
+            this.props.history.replace('/confirm');
+        } catch (ex) {
+            logger.log(ex);
+            toast.error(`${ ex.response.data }`);
+        }
     };
 
     render() {
