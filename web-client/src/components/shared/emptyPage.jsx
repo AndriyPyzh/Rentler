@@ -7,7 +7,8 @@ class EmptyPage extends Component {
     }
 
     componentWillUnmount() {
-        this.close();
+        this.props.showNavbar();
+        this.props.showFooter();
     }
 
     close = () => {

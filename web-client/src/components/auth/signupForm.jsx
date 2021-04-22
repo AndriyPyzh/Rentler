@@ -1,5 +1,5 @@
-import React from 'react';
 import Joi from 'joi-browser';
+import React from 'react';
 import { Link } from "react-router-dom";
 import Form from "../shared/form";
 import AuthPage from "./authPage";
@@ -18,20 +18,21 @@ class SignupForm extends Form {
     schema = {
         username: Joi.string().alphanum().min(4).max(15).required().label('Username'),
         email: Joi.string().email().required().label('Email'),
-        password: Joi.string().alphanum().min(8).max(30).required().label('Password')
+        password: Joi.string().min(8).max(30).required().label('Password')
     };
 
     doSubmit = () => {
         console.log('submitted');
         console.log(this.state.data);
-        this.props.history.replace('/confirm')
+        this.props.history.replace('/confirm');
     };
 
     render() {
         return (
             <AuthPage
                 title={ "Sign Up" }
-                footer={ <span>Already have Rentberry account? <Link to={ "/login" } className="text-purple">Log in</Link></span> }
+                footer={ <span>Already have Rentberry account? <Link to={ "/login" }
+                                                                     className="text-purple">Log in</Link></span> }
                 { ...this.props }
             >
                 <form onSubmit={ this.handleSubmit }>

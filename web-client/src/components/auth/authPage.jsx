@@ -8,6 +8,7 @@ class AuthPage extends EmptyPage {
     }
 
     componentWillUnmount() {
+        super.componentWillUnmount();
         document.body.style.backgroundColor = "white";
     }
 
