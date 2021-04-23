@@ -36,6 +36,7 @@ footer {
 .list-property-button {
     font-size: 14px !important;
     height: 35px !important;
+    width: 125px;
 }
 
 .fw-icon {
@@ -59,13 +60,13 @@ footer {
 
 .close:before, .close:after {
     position: absolute;
-    left: 25px;
+    left: 24px;
     bottom: 14px;
     content: ' ';
     height: 22px;
     width: 2px;
     background-color: #333;
-    border-radius: 10px;
+    border-radius: 20px;
 }
 
 .close:before {
@@ -149,7 +150,18 @@ footer {
     padding-left: 50%;
     padding-right: 50%;
     text-align: center !important;
+}
 
+.navbar-avatar {
+    background: url(img/avatar.svg) no-repeat 100% !important;
+    background-size: 40px, 40px !important;
+    width: 40px;
+    height: 40px;
+}
+
+.no-button{
+    border: none;
+    background: none;
 }
 
 input[type=file] {

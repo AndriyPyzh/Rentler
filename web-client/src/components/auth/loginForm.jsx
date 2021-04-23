@@ -1,6 +1,9 @@
 import Joi from 'joi-browser';
 import React from 'react';
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { login } from "../../services/authService";
+import logger from "../../services/logService";
 import Form from "../shared/form";
 import AuthPage from "./authPage";
 
@@ -19,10 +22,19 @@ class LoginForm extends Form {
         password: Joi.string().min(8).max(30).required().label('Password')
     };
 
-    doSubmit = () => {
-        console.log('submitted');
-        console.log(this.state.data);
-        this.props.history.replace("/apartments");
+    doSubmit = async () => {
+        try {
+            const { username, password } = this.state.data;
+            const { data } = await login(username, password);
+            localStorage.setItem('token', data.access_token);
+            window.location = '/';
+        } catch (ex) {
+            logger.log(ex);
+            if (ex.response && ex.response.status === 400)
+                toast.error("Invalid Username or Password");
+            else
+                toast.error(ex.message);
+        }
     };
 
     render() {
