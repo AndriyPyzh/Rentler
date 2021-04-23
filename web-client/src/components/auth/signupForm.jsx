@@ -2,7 +2,7 @@ import Joi from 'joi-browser';
 import React from 'react';
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { login } from "../../services/authService";
+import authService from "../../services/authService";
 import logger from "../../services/logService";
 import * as userService from "../../services/userService";
 import Form from "../shared/form";
@@ -29,8 +29,7 @@ class SignupForm extends Form {
         try {
             const { data: user } = this.state;
             await userService.register(user);
-            const { data } = await login(user.username, user.password);
-            localStorage.setItem('token', data.access_token);
+            await authService.login(user.username, user.password);
             window.location = '/confirm';
         } catch (ex) {
             logger.log(ex);

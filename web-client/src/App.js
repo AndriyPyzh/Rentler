@@ -1,4 +1,3 @@
-import jwtDecode from "jwt-decode";
 import React, { Component } from 'react';
 import { Redirect, Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -17,6 +16,7 @@ import NotFound from "./components/pages/notFound";
 import Profile from "./components/pages/profile";
 import Footer from "./components/shared/footer";
 import NavBar from "./components/shared/navBar";
+import authService from "./services/authService";
 
 class App extends Component {
     state = {
@@ -24,19 +24,10 @@ class App extends Component {
         footer: true
     };
 
-
     componentDidMount() {
-        try {
-            const jwt = localStorage.getItem('token');
-            console.log(jwt);
-            const user = jwtDecode(jwt);
-            console.log(user);
-            this.setState({ user });
-            console.log(this.state);
-        } catch (ex) {
-        }
+        const user = authService.getCurrentUser();
+        this.setState({ user });
     }
-
 
     hideNavbar = () => {
         this.setState({ navbar: false });
@@ -53,7 +44,6 @@ class App extends Component {
     showFooter = () => {
         this.setState({ footer: true });
     };
-
 
     render() {
         const { navbar, footer } = this.state;

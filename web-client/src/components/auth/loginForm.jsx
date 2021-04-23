@@ -2,7 +2,7 @@ import Joi from 'joi-browser';
 import React from 'react';
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { login } from "../../services/authService";
+import authService from "../../services/authService";
 import logger from "../../services/logService";
 import Form from "../shared/form";
 import AuthPage from "./authPage";
@@ -25,8 +25,7 @@ class LoginForm extends Form {
     doSubmit = async () => {
         try {
             const { username, password } = this.state.data;
-            const { data } = await login(username, password);
-            localStorage.setItem('token', data.access_token);
+            await authService.login(username, password);
             window.location = '/';
         } catch (ex) {
             logger.log(ex);
