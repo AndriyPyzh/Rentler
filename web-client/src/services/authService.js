@@ -1,9 +1,12 @@
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { apiUrl, authName, authPassword } from "../config.json";
+import httpService from "./httpService";
 
 const apiEndpoint = apiUrl + '/auth';
 const tokenKey = 'token';
+
+httpService.setToken(getToken());
 
 export async function login(username, password) {
     const bodyFormData = new FormData();
@@ -26,7 +29,6 @@ export async function login(username, password) {
     localStorage.setItem(tokenKey, data.access_token);
 }
 
-
 export function logout() {
     localStorage.removeItem(tokenKey);
 }
@@ -40,7 +42,7 @@ export function getCurrentUser() {
     }
 }
 
-export function getJwt() {
+export function getToken() {
     return localStorage.getItem(tokenKey);
 }
 
@@ -48,5 +50,5 @@ export default {
     login,
     logout,
     getCurrentUser,
-    getJwt
+    getToken
 };

@@ -31,7 +31,7 @@ class ConfirmForm extends Form {
             this.props.history.replace("/apartments");
         } catch (ex) {
             logger.log(ex);
-            toast.error(`${ ex.response.data }`);
+            toast.error(`${ ex.response.data.message }`);
         }
     };
 
