@@ -75,19 +75,30 @@ public class AccountService {
                 .findByUsername(username)
                 .orElseThrow(() -> new AccountNotFoundException("Account with such username not found: " + username));
 
-        Optional<Account> existing = accountRepository
-                .findByPhoneNumber(updateDto.getPhoneNumber());
+        if (updateDto.getEmail() != null && !account.getEmail().equals(updateDto.getEmail())) {
+            Optional<Account> existing = accountRepository.findByEmail(updateDto.getEmail());
+            existing.ifPresent(acc -> {
+                throw new AccountAlreadyExistsException("Account with such email already exists: " + updateDto.getEmail());
+            });
+            account.setEmail(updateDto.getEmail());
+        }
 
-        existing.ifPresent(acc -> {
-            throw new AccountAlreadyExistsException("Account with such phone number already exists: " + updateDto.getPhoneNumber());
-        });
+        if (updateDto.getPhoneNumber() != null && !account.getPhoneNumber().equals(updateDto.getPhoneNumber())) {
+            Optional<Account> existing = accountRepository.findByPhoneNumber(updateDto.getPhoneNumber());
+            existing.ifPresent(acc -> {
+                throw new AccountAlreadyExistsException("Account with such phone number already exists: " + updateDto.getPhoneNumber());
+            });
+            account.setPhoneNumber(updateDto.getPhoneNumber());
+        }
+
+        if (updateDto.getPassword() != null)
+            authServiceClient.updatePassword(updateDto, username);
+
+        if (updateDto.getDateOfBirth() != null)
+            account.setDateOfBirth(updateDto.getDateOfBirth());
 
         account.setFirstName(updateDto.getFirstName());
         account.setLastName(updateDto.getLastName());
-        account.setPhoneNumber(updateDto.getPhoneNumber());
-        if (account.getDateOfBirth() != null) {
-            account.setDateOfBirth(updateDto.getDateOfBirth());
-        }
 
         return accountMapper.toDto(accountRepository.save(account));
     }

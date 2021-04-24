@@ -1,9 +1,11 @@
 package com.rentler.auth.service;
 
+import com.rentler.auth.dto.PasswordDto;
 import com.rentler.auth.dto.UserDto;
 import com.rentler.auth.entity.User;
 import com.rentler.auth.enums.Role;
 import com.rentler.auth.exception.UserAlreadyExistsException;
+import com.rentler.auth.exception.UserNotFoundException;
 import com.rentler.auth.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,7 +31,8 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return repository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username));
+        return repository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(username));
     }
 
     @Transactional
@@ -45,6 +48,15 @@ public class UserService implements UserDetailsService {
                 .password(passwordEncoder.encode(userDto.getPassword()))
                 .role(Role.ROLE_USER)
                 .build();
+
+        repository.save(user);
+    }
+
+    public void updatePassword(PasswordDto passwordDto, String username) {
+        User user = repository.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException("User with such username not exists: " + username));
+
+        user.setPassword(passwordEncoder.encode(passwordDto.getPassword()));
 
         repository.save(user);
     }

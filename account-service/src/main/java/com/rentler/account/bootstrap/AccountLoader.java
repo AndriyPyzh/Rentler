@@ -26,6 +26,9 @@ public class AccountLoader implements ApplicationListener<ApplicationReadyEvent>
         Account account = Account.builder()
                 .username("andriy")
                 .email("andriy@mail.com")
+                .firstName("Andriy")
+                .lastName("Pyzh")
+                .phoneNumber("+380672568301")
                 .dateOfBirth(LocalDate.of(2000, 12, 24))
                 .dateOfRegistration(LocalDateTime.now())
                 .build();

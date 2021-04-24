@@ -30,6 +30,12 @@ public class AccountController {
                 .body(accountService.getAll());
     }
 
+    @PostMapping
+    public ResponseEntity<AccountDto> createAccount(@RequestBody @Valid AccountCreateDto accountCreateDto) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(accountService.create(accountCreateDto));
+    }
+
     @GetMapping("/{username}")
     public ResponseEntity<AccountDto> getAccount(@PathVariable String username) {
         return ResponseEntity.status(HttpStatus.OK)
@@ -41,13 +47,7 @@ public class AccountController {
         return accountService.getByUsername(principal.getName());
     }
 
-    @PostMapping
-    public ResponseEntity<AccountDto> createAccount(@RequestBody @Valid AccountCreateDto accountCreateDto) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(accountService.create(accountCreateDto));
-    }
-
-    @PutMapping
+    @PutMapping("/current")
     public ResponseEntity<AccountDto> updateAccount(@RequestBody @Valid AccountUpdateDto accountUpdateDto,
                                                     Principal principal) {
         return ResponseEntity.status(HttpStatus.OK)
