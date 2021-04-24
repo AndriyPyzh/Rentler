@@ -34,10 +34,16 @@ public class AccountService {
 
     public AccountDto create(AccountCreateDto accountCreateDto) {
         Optional<Account> existing = accountRepository
-                .findByUsernameOrEmail(accountCreateDto.getUsername(), accountCreateDto.getEmail());
+                .findByUsername(accountCreateDto.getUsername());
 
         existing.ifPresent(account -> {
-            throw new AccountAlreadyExistsException("Account already exists");
+            throw new AccountAlreadyExistsException("Account with such username already exists");
+        });
+
+        existing = accountRepository.findByEmail(accountCreateDto.getEmail());
+
+        existing.ifPresent(account -> {
+            throw new AccountAlreadyExistsException("Account with such email already exists");
         });
 
         authServiceClient.createUser(accountCreateDto);
