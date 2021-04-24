@@ -20,9 +20,15 @@ class ConfirmForm extends Form {
     };
 
     schema = {
-        firstName: Joi.string().regex(/^[a-zA-Z]*$/).max(20).required().label('First Name'),
-        lastName: Joi.string().regex(/^[a-zA-Z]*$/).max(20).required().label('Last Name'),
-        phone: Joi.string().regex(/^\+(?:[0-9] ?){6,14}[0-9]$/).required().label('Phone Number')
+        firstName: Joi.string().regex(/^[a-zA-Z]*$/).max(20).required().label('First Name').options({
+            language: { string: { regex: { base: 'can contain only letters' } } }
+        }),
+        lastName: Joi.string().regex(/^[a-zA-Z]*$/).max(20).required().label('Last Name').options({
+            language: { string: { regex: { base: 'can contain only letters' } } }
+        }),
+        phone: Joi.string().regex(/^\+(?:[0-9] ?){6,14}[0-9]$/).required().label('Phone Number').options({
+            language: { string: { regex: { base: 'should be a valid phone number' } } }
+        })
     };
 
     doSubmit = async () => {

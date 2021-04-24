@@ -33,7 +33,7 @@ class SignupForm extends Form {
             window.location = '/confirm';
         } catch (ex) {
             logger.log(ex);
-            toast.error(`${ ex.response.data }`);
+            toast.error(`${ ex.response.data.message }`);
         }
     };
 
