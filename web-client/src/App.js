@@ -7,7 +7,7 @@ import AddApartment from "./components/apartments/addApartment";
 import Apartments from "./components/apartments/apartments";
 import Applications from "./components/apartments/applications";
 import Properties from "./components/apartments/properties";
-import ConfirmForm from "./components/auth/confirmForm";
+import AddInfoForm from "./components/auth/addInfoForm";
 import LoginForm from "./components/auth/loginForm";
 import ResetPassword from "./components/auth/resetPassword";
 import SignupForm from "./components/auth/signupForm";
@@ -70,7 +70,7 @@ class App extends Component {
                         <Route path="/signup"
                                render={ props => <SignupForm { ...props }{ ...clearFuncs }/> }/>
                         <Route path="/confirm"
-                               render={ props => <ConfirmForm { ...props }{ ...clearFuncs }/> }/>
+                               render={ props => <AddInfoForm { ...props }{ ...clearFuncs }/> }/>
                         <Route path="/reset-password"
                                render={ props => <ResetPassword { ...props }{ ...clearFuncs }/> }/>
                         <Route path="/not-found" component={ NotFound }/>

@@ -142,7 +142,7 @@ footer {
     text-align: center !important;
 }
 
-.avatar {
+.empty-avatar {
     background: url(img/avatar.svg) no-repeat 50%;
     background-size: 120px, 120px;
     width: 120px;
@@ -152,6 +152,13 @@ footer {
     text-align: center !important;
 }
 
+.avatar {
+    height: 120px;
+    width: 120px;
+    object-fit: cover;
+    border-radius: 100%;
+}
+
 .navbar-avatar {
     background: url(img/avatar.svg) no-repeat 100% !important;
     background-size: 40px, 40px !important;
@@ -159,19 +166,46 @@ footer {
     height: 40px;
 }
 
-.no-button{
+.no-button {
     border: none;
     background: none;
 }
 
-input[type=file] {
-    display: none;
+input[type="file"] {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
 }
 
-.custom-file-upload {
-    border: 1px solid #ccc;
+input[type="file"] + label {
+    cursor: pointer !important;
     display: inline-block;
-    padding: 6px 12px;
-    cursor: pointer;
     font-size: 14px;
+    margin: 15px 0;
+}
+
+.link {
+    color: #7b53c1;
+    text-decoration: none;
+    padding: 1px 0;
+    position: relative;
+}
+
+.link:after {
+    content: "";
+    display: block;
+    height: 1px;
+    left: 50%;
+    position: absolute;
+    background: #7b53c1;
+    transition: width 0.3s ease 0s, left 0.3s ease 0s;
+    width: 0;
+}
+
+.link:hover:after {
+    width: 100%;
+    left: 0;
 }

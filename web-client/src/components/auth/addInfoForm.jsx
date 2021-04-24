@@ -8,9 +8,10 @@ import Form from "../shared/form";
 import AuthPage from "./authPage";
 
 
-class ConfirmForm extends Form {
+class AddInfoForm extends Form {
     state = {
         data: {
+            avatar: null,
             firstName: '',
             lastName: '',
             phone: ''
@@ -42,22 +43,21 @@ class ConfirmForm extends Form {
     };
 
     render() {
+        const { avatar } = this.state.data;
         return (
             <AuthPage
-                title={ "Confirm Information" }
+                title={ "Add Information" }
                 footer={ <span>Already have Rentberry account? <Link to={ "/signup" }
                                                                      className="text-purple">Log in</Link></span> }
                 { ...this.props }
             >
                 <form onSubmit={ this.handleSubmit }>
                     <div className="card-body" style={ { padding: 40 } }>
-                        <div className="avatar d-flex justify-content-center"/>
-                        <div className="text-center">
-                            <label htmlFor="file-upload" className="custom-file-upload" style={ { fontSize: 14 } }>
-                                Change Photo
-                            </label>
-                            <input type="file" id="img" name="img" accept="image/*"/>
+                        <div className="d-flex justify-content-center">
+                            { !avatar && <div className="empty-avatar d-flex justify-content-center"/> }
+                            { avatar && <img src={ this.state.data.avatar } alt="avatar uploaded" className="avatar"/> }
                         </div>
+                        { super.renderImageInput("avatar", "Change Photo", "link") }
                         { super.renderInput("firstName", "First Name", "enter first name") }
                         { super.renderInput("lastName", "Last Name", "enter last name") }
                         { super.renderInput("phone", "Phone Number", "enter phone number") }
@@ -69,5 +69,5 @@ class ConfirmForm extends Form {
     }
 }
 
-export default ConfirmForm;
+export default AddInfoForm;
 

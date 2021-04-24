@@ -1,5 +1,6 @@
 import Joi from "joi-browser";
 import React, { Component } from 'react';
+import ImageInput from "./imageInput";
 import Input from "./input";
 
 class Form extends Component {
@@ -41,6 +42,13 @@ class Form extends Component {
         this.doSubmit();
     };
 
+    handleFileChange = ({ target }) => {
+        const img = URL.createObjectURL(target.files[0]);
+        const { data } = { ...this.state };
+        data[target.name] = img;
+        this.setState({ data });
+    };
+
     handleChange = ({ currentTarget: input }) => {
         const { errors, showMessages } = { ...this.state };
         const errorMessages = this.validateProperty(input);
@@ -72,14 +80,25 @@ class Form extends Component {
         );
     }
 
+    renderImageInput(name, label, classes = "") {
+        return (
+            <ImageInput
+                name={ name }
+                label={ label }
+                onChange={ this.handleFileChange }
+                classes={ classes }
+            />
+        );
+    }
+
     renderButton(label, classes = "btn btn-primary") {
-        return(
+        return (
             <button type="submit"
-                    className={classes}
+                    className={ classes }
                     disabled={ this.validate() }>
-                {label}
+                { label }
             </button>
-        )
+        );
     }
 }
 
