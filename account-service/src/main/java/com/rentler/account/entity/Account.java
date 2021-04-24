@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -35,6 +36,8 @@ public class Account {
     @Pattern(regexp = "^\\+(?:[0-9] ?){6,14}[0-9]$")
     @Column(unique = true)
     private String phoneNumber;
+
+    private LocalDate dateOfBirth;
 
     @Column(nullable = false)
     private LocalDateTime dateOfRegistration;

@@ -1,7 +1,6 @@
 package com.rentler.account.bootstrap;
 
 import com.rentler.account.entity.Account;
-import com.rentler.account.mapper.AccountMapper;
 import com.rentler.account.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -9,17 +8,16 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Component
 public class AccountLoader implements ApplicationListener<ApplicationReadyEvent> {
     private final AccountRepository accountRepository;
-    private final AccountMapper accountMapper;
 
     @Autowired
-    public AccountLoader(AccountRepository accountRepository, AccountMapper accountMapper) {
+    public AccountLoader(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
-        this.accountMapper = accountMapper;
     }
 
     @Override
@@ -28,6 +26,7 @@ public class AccountLoader implements ApplicationListener<ApplicationReadyEvent>
         Account account = Account.builder()
                 .username("andriy")
                 .email("andriy@mail.com")
+                .dateOfBirth(LocalDate.of(2000, 12, 24))
                 .dateOfRegistration(LocalDateTime.now())
                 .build();
 

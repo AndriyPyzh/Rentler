@@ -85,6 +85,9 @@ public class AccountService {
         account.setFirstName(updateDto.getFirstName());
         account.setLastName(updateDto.getLastName());
         account.setPhoneNumber(updateDto.getPhoneNumber());
+        if (account.getDateOfBirth() != null) {
+            account.setDateOfBirth(updateDto.getDateOfBirth());
+        }
 
         return accountMapper.toDto(accountRepository.save(account));
     }

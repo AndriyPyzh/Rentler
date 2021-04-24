@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
+import java.time.LocalDate;
 
 @Data
 @Builder
@@ -27,5 +29,8 @@ public class AccountUpdateDto {
 
     @Pattern(regexp = "^\\+(?:[0-9] ?){6,14}[0-9]$", message = "Not valid format of phone number")
     private String phoneNumber;
+
+    @Past
+    private LocalDate dateOfBirth;
 
 }
