@@ -33,7 +33,8 @@ class SignupForm extends Form {
             window.location = '/confirm';
         } catch (ex) {
             logger.log(ex);
-            toast.error(`${ ex.response.data.message }`);
+            if (ex.response)
+                toast.error(`${ ex.response.data.message }`);
         }
     };
 
@@ -47,9 +48,9 @@ class SignupForm extends Form {
             >
                 <form onSubmit={ this.handleSubmit }>
                     <div className="card-body" style={ { padding: 40 } }>
-                        { super.renderInput("username", "Username", "enter username") }
-                        { super.renderInput("email", "Email", "enter email", "email") }
-                        { super.renderInput("password", "Password", "enter password", "password") }
+                        { super.renderInput("username", "Username", "enter username...") }
+                        { super.renderInput("email", "Email", "enter email...", "email") }
+                        { super.renderInput("password", "Password", "enter password...", "password") }
                     </div>
                     { super.renderButton("Sign Up", "btn btn-primary auth-button") }
                 </form>

@@ -209,3 +209,61 @@ input[type="file"] + label {
     width: 100%;
     left: 0;
 }
+
+.link.red-link {
+    color: #df495d !important;
+}
+
+.red-link:after {
+    background: #df495d !important;
+}
+
+.link.gray-link {
+    color: #9c99b6 !important;
+}
+
+.gray-link:after {
+    background: #9c99b6 !important;
+}
+
+.profile {
+    width: 960px;
+    margin-top: 60px;
+    padding-right: 320px;
+    margin-bottom: 60px;
+}
+
+.avatar-section {
+    width: 140px;
+    margin: 0 10px;
+}
+
+.info-section {
+    width: 380px;
+    margin-left: 90px;
+    margin-right: 10px;
+    padding-top: 50px;
+}
+
+.profile-button {
+    font-size: 24px !important;
+    font-weight: bold !important;
+    height: 60px !important;
+    border-radius: 6px !important;
+    color: #fff;
+    background-color: #53c160 !important;
+    border: none !important;
+    width: 100% !important;
+}
+
+.profile-button:focus {
+    box-shadow: 0 0 0 0.2rem #c2b3e9 !important;
+}
+
+.profile-button:hover {
+    background-color: #4cb358 !important;
+}
+
+.profile-button:disabled {
+    background-color: #8e8aab !important;
+}

@@ -23,7 +23,7 @@ const NavPopover = ({ title, text, classes, children }) => {
             >
                 <Popover id="popover-contained">
                     <Popover.Title as="h3">{ title }</Popover.Title>
-                    <Popover.Content>
+                    <Popover.Content onClick={ handleClick }>
                         { children }
                     </Popover.Content>
                 </Popover>

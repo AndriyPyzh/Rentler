@@ -1,6 +1,6 @@
 import React from "react";
 
-const Input = ({ name, label, type, placeholder, value, onChange, error, showMessage }) => {
+const Input = ({ name, label, type, placeholder, value, onChange, error, showMessage, attributes = {} }) => {
     let borderColor = showMessage && (error ? "#f44336" : '#28a745');
     let message = showMessage && (error || 'Looks good!');
 
@@ -15,7 +15,8 @@ const Input = ({ name, label, type, placeholder, value, onChange, error, showMes
                 name={ name }
                 className="form-control"
                 placeholder={ placeholder }
-                style={ { borderColor: borderColor } }/>
+                style={ { borderColor: borderColor } }
+                { ...attributes }/>
             <div className="mt-1"
                  style={ {
                      fontSize: 13,

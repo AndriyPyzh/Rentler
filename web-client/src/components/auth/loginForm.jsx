@@ -45,8 +45,8 @@ class LoginForm extends Form {
             >
                 <form onSubmit={ this.handleSubmit }>
                     <div className="card-body" style={ { padding: 40 } }>
-                        { super.renderInput("username", "Username", "enter username") }
-                        { super.renderInput("password", "Password", "enter password", "password") }
+                        { super.renderInput("username", "Username", "enter username...") }
+                        { super.renderInput("password", "Password", "enter password...", "password") }
                         <div className="text-right " style={ { fontSize: 14 } }>
                             <Link to="/reset-password" className="text-purple">
                                 Forgot your password?

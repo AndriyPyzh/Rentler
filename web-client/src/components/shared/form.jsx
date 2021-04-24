@@ -63,7 +63,7 @@ class Form extends Component {
         this.setState({ data, errors, showMessages });
     };
 
-    renderInput(name, label, placeholder, type = "text") {
+    renderInput(name, label, placeholder, type = "text",...attributes) {
         const { data, errors, showMessages } = this.state;
 
         return (
@@ -76,6 +76,7 @@ class Form extends Component {
                 onChange={ this.handleChange }
                 error={ errors[name] }
                 showMessage={ showMessages[name] }
+                attributes={attributes[0]}
             />
         );
     }

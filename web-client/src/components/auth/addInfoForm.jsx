@@ -38,7 +38,8 @@ class AddInfoForm extends Form {
             this.props.history.replace("/apartments");
         } catch (ex) {
             logger.log(ex);
-            toast.error(`${ ex.response.data.message }`);
+            if (ex.response)
+                toast.error(`${ ex.response.data.message }`);
         }
     };
 
@@ -58,9 +59,9 @@ class AddInfoForm extends Form {
                             { avatar && <img src={ this.state.data.avatar } alt="avatar uploaded" className="avatar"/> }
                         </div>
                         { super.renderImageInput("avatar", "Change Photo", "link") }
-                        { super.renderInput("firstName", "First Name", "enter first name") }
-                        { super.renderInput("lastName", "Last Name", "enter last name") }
-                        { super.renderInput("phone", "Phone Number", "enter phone number") }
+                        { super.renderInput("firstName", "First Name", "enter first name...") }
+                        { super.renderInput("lastName", "Last Name", "enter last name...") }
+                        { super.renderInput("phone", "Phone Number", "enter phone number...") }
                     </div>
                     { super.renderButton("Confirm", "btn btn-primary auth-button") }
                 </form>

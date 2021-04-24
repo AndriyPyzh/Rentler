@@ -35,7 +35,7 @@ class ResetPassword extends Form {
                         <div className="auth-label">
                             We’ll send you new password
                         </div>
-                        { super.renderInput("email", "Email", "enter email", "email") }
+                        { super.renderInput("email", "Email", "enter email...", "email") }
                     </div>
                     { super.renderButton("Send Password", "btn btn-primary auth-button") }
                 </form>

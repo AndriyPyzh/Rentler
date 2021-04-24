@@ -47,7 +47,7 @@ const NavBar = (props) => {
                         <NavPopover title={ user.user_name } classes="nav-item navbar-avatar no-button m-1 mr-3 ml-4">
                             <NavLink className="nav-item nav-link border-bottom"
                                      to="/profile">Account & Settings</NavLink>
-                            <Logout classes="nav-item nav-link no-button">Logout</Logout>
+                            <Logout classes="nav-item nav-link no-button">Log Out</Logout>
                         </NavPopover>
                     </React.Fragment> }
 
