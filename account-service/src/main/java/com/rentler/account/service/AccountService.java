@@ -76,6 +76,7 @@ public class AccountService {
                 .orElseThrow(() -> new AccountNotFoundException("Account with such username not found: " + username));
 
         if (updateDto.getEmail() != null && !account.getEmail().equals(updateDto.getEmail())) {
+
             Optional<Account> existing = accountRepository.findByEmail(updateDto.getEmail());
             existing.ifPresent(acc -> {
                 throw new AccountAlreadyExistsException("Account with such email already exists: " + updateDto.getEmail());
@@ -83,12 +84,20 @@ public class AccountService {
             account.setEmail(updateDto.getEmail());
         }
 
-        if (updateDto.getPhoneNumber() != null && !account.getPhoneNumber().equals(updateDto.getPhoneNumber())) {
-            Optional<Account> existing = accountRepository.findByPhoneNumber(updateDto.getPhoneNumber());
-            existing.ifPresent(acc -> {
-                throw new AccountAlreadyExistsException("Account with such phone number already exists: " + updateDto.getPhoneNumber());
-            });
-            account.setPhoneNumber(updateDto.getPhoneNumber());
+        if (updateDto.getPhoneNumber() != null) {
+
+            if (account.getPhoneNumber() == null) {
+
+                account.setPhoneNumber(updateDto.getPhoneNumber());
+
+            } else if (!account.getPhoneNumber().equals(updateDto.getPhoneNumber())) {
+
+                Optional<Account> existing = accountRepository.findByPhoneNumber(updateDto.getPhoneNumber());
+                existing.ifPresent(acc -> {
+                    throw new AccountAlreadyExistsException("Account with such phone number already exists: " + updateDto.getPhoneNumber());
+                });
+                account.setPhoneNumber(updateDto.getPhoneNumber());
+            }
         }
 
         if (updateDto.getPassword() != null)
@@ -103,4 +112,3 @@ public class AccountService {
         return accountMapper.toDto(accountRepository.save(account));
     }
 }
-
