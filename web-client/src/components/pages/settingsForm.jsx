@@ -3,15 +3,16 @@ import React from 'react';
 import Logout from "../auth/logout";
 import Form from "../shared/form";
 
-class Profile extends Form {
+class SettingsForm extends Form {
     state = {
         data: {
             avatar: null,
+            username: '',
             firstName: '',
             lastName: '',
             email: '',
             phone: '',
-            dateOfBirth: Date.now(),
+            dateOfBirth: "1950-01-01",
             newPassword: ''
         },
         errors: {},
@@ -19,6 +20,7 @@ class Profile extends Form {
     };
 
     schema = {
+        username: Joi.string().alphanum().min(4).max(15).required().label('Username'),
         firstName: Joi.string().regex(/^[a-zA-Z]*$/).max(20).required().label('First Name').options({
             language: { string: { regex: { base: 'can contain only letters' } } }
         }),
@@ -48,6 +50,7 @@ class Profile extends Form {
                     </div>
                     <div className="info-section">
                         <form>
+                            { super.renderInput("username", "Username", "enter username...") }
                             { super.renderInput("firstName", "First Name", "enter first name...") }
                             { super.renderInput("lastName", "Last Name", "enter last name...") }
                             { super.renderInput("email", "Email", "enter email...") }
@@ -63,10 +66,10 @@ class Profile extends Form {
                                 }) }
                             </div>
                             <div style={ { marginTop: 30 } }>
-                                <label style={ { fontWeight: "bold", fontSize: 24 } }>Phone Number</label>
+                                <label style={ { fontWeight: "bold", fontSize: 24 } }>Create Password</label>
                                 { super.renderInput("newPassword", "Create Password", "enter new password...") }
                             </div>
-                            <div style={ { marginTop: 30 } }>
+                            <div style={ { marginTop: 50 } }>
                                 { super.renderButton("Save Changes", "btn btn-primary profile-button shadow-lg") }
                                 <div className="w-100 text-center" style={ { marginTop: 10 } }>
                                     <button className="no-button link gray-link">Discard changes</button>
@@ -84,4 +87,4 @@ class Profile extends Form {
     }
 }
 
-export default Profile;
+export default SettingsForm;

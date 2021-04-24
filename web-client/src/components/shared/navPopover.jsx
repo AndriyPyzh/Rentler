@@ -1,15 +1,28 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Overlay, Popover } from "react-bootstrap";
 
 const NavPopover = ({ title, text, classes, children }) => {
     const [show, setShow] = useState(false);
     const [target, setTarget] = useState(null);
-    const ref = useRef(null);
+    const ref = useRef();
 
     const handleClick = (event) => {
         setShow(!show);
         setTarget(event.target);
     };
+
+    const handleClickOutside = e => {
+        if (ref.current.contains(e.target))
+            return;
+        setShow(false);
+    };
+
+    useEffect(() => {
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
 
     return (
         <div ref={ ref }>
@@ -22,7 +35,7 @@ const NavPopover = ({ title, text, classes, children }) => {
                 containerPadding={ 20 }
             >
                 <Popover id="popover-contained">
-                    <Popover.Title as="h3">{ title }</Popover.Title>
+                    <Popover.Title as="h3" className="text-center">{ title }</Popover.Title>
                     <Popover.Content onClick={ handleClick }>
                         { children }
                     </Popover.Content>
