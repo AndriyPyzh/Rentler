@@ -1,3 +1,12 @@
+html, #root {
+    height: 100%;
+    margin: 0;
+}
+
+main {
+    min-height: 100%;
+}
+
 footer {
     background-color: #323138 !important;
     color: white;
@@ -15,19 +24,17 @@ footer {
 
 .four-zero-four {
     position: absolute !important;
-
     text-align: center;
     font-weight: 700;
     color: #fff;
-    text-shadow: 0 20px 15px #efefef, 0 0 15px #efefef;
+    text-shadow: 0 14px 24px rgba(50, 48, 58, 0.1);
     height: 550px;
-    font-size: 370px;
+    font-size: 400px;
 }
 
 .page-not-found {
     position: absolute !important;
     top: 300px;
-
     text-align: center;
     font-weight: 700;
     font-size: 70px;
@@ -242,7 +249,6 @@ input[type="file"] + label {
     width: 380px;
     margin-left: 90px;
     margin-right: 10px;
-    padding-top: 50px;
 }
 
 .profile-button {
@@ -254,6 +260,7 @@ input[type="file"] + label {
     background-color: #53c160 !important;
     border: none !important;
     width: 100% !important;
+    box-shadow: 0 14px 24px 0 rgba(50, 48, 58, 0.25) !important;
 }
 
 .profile-button:focus {
@@ -266,4 +273,21 @@ input[type="file"] + label {
 
 .profile-button:disabled {
     background-color: #8e8aab !important;
+}
+
+.mt-10 {
+    margin-top: 10px;
+}
+
+.mt-30 {
+    margin-top: 30px;
+}
+
+.mt-50 {
+    margin-top: 50px;
+}
+
+.settings-label {
+    font-weight: bold;
+    font-size: 24px;
 }

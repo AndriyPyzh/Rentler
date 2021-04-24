@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import authService from "../../services/authService";
 import logger from "../../services/logService";
-import * as userService from "../../services/userService";
+import userService from "../../services/userService";
 import Form from "../shared/form";
 import AuthPage from "./authPage";
 
@@ -34,7 +34,9 @@ class SignupForm extends Form {
         } catch (ex) {
             logger.log(ex);
             if (ex.response)
-                toast.error(`${ ex.response.data.message }`);
+                toast.error(ex.response.data.message.toString());
+            else
+                toast.error(ex.toString());
         }
     };
 

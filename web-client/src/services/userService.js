@@ -12,9 +12,22 @@ export function register(user) {
 }
 
 export function updateInfo(info) {
-    return http.put(apiEndpoint, {
+    return http.put(`${ apiEndpoint }current`, {
+        email: info.email,
+        password: info.password,
         firstName: info.firstName,
         lastName: info.lastName,
-        phoneNumber: info.phone
+        phoneNumber: info.phone,
+        dateOfBirth: info.dateOfBirth
     });
 }
+
+export function getCurrentAccount() {
+    return http.get(`${ apiEndpoint }current`);
+}
+
+export default {
+    register,
+    updateInfo,
+    getCurrentAccount
+};

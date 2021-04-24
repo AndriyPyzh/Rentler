@@ -3,10 +3,9 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import logger from "../../services/logService";
-import * as userService from "../../services/userService";
+import userService from "../../services/userService";
 import Form from "../shared/form";
 import AuthPage from "./authPage";
-
 
 class AddInfoForm extends Form {
     state = {
@@ -21,6 +20,7 @@ class AddInfoForm extends Form {
     };
 
     schema = {
+        avatar: Joi.any(),
         firstName: Joi.string().regex(/^[a-zA-Z]*$/).max(20).required().label('First Name').options({
             language: { string: { regex: { base: 'can contain only letters' } } }
         }),
@@ -39,7 +39,9 @@ class AddInfoForm extends Form {
         } catch (ex) {
             logger.log(ex);
             if (ex.response)
-                toast.error(`${ ex.response.data.message }`);
+                toast.error(ex.response.data.message.toString());
+            else
+                toast.error(ex.toString());
         }
     };
 
@@ -56,7 +58,7 @@ class AddInfoForm extends Form {
                     <div className="card-body" style={ { padding: 40 } }>
                         <div className="d-flex justify-content-center">
                             { !avatar && <div className="empty-avatar d-flex justify-content-center"/> }
-                            { avatar && <img src={ this.state.data.avatar } alt="avatar uploaded" className="avatar"/> }
+                            { avatar && <img src={ avatar } alt="avatar uploaded" className="avatar"/> }
                         </div>
                         { super.renderImageInput("avatar", "Change Photo", "link") }
                         { super.renderInput("firstName", "First Name", "enter first name...") }

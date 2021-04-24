@@ -1,26 +1,29 @@
 import Joi from "joi-browser";
 import React from 'react';
+import { toast } from "react-toastify";
+import authService from "../../services/authService";
+import logger from "../../services/logService";
+import userService from "../../services/userService";
 import Logout from "../auth/logout";
 import Form from "../shared/form";
 
 class SettingsForm extends Form {
     state = {
+        username: null,
         data: {
             avatar: null,
-            username: '',
             firstName: '',
             lastName: '',
             email: '',
             phone: '',
-            dateOfBirth: "1950-01-01",
-            newPassword: ''
+            dateOfBirth: '2000-01-01',
+            password: ''
         },
         errors: {},
         showMessages: {}
     };
 
     schema = {
-        username: Joi.string().alphanum().min(4).max(15).required().label('Username'),
         firstName: Joi.string().regex(/^[a-zA-Z]*$/).max(20).required().label('First Name').options({
             language: { string: { regex: { base: 'can contain only letters' } } }
         }),
@@ -31,8 +34,36 @@ class SettingsForm extends Form {
         phone: Joi.string().regex(/^\+(?:[0-9] ?){6,14}[0-9]$/).required().label('Phone Number').options({
             language: { string: { regex: { base: 'should be a valid phone number' } } }
         }),
-        dateOfBirth: Joi.date(),
-        password: Joi.string().min(8).max(30).required().label('New Password')
+        dateOfBirth: Joi.date().allow(null),
+        password: Joi.string().min(8).max(30).label('New Password')
+    };
+
+    async populateInfo() {
+        const { user_name: username } = authService.getCurrentUser();
+        this.setState({ username });
+
+        const { data: account } = await userService.getCurrentAccount();
+        let { firstName, lastName, email, phoneNumber: phone, dateOfBirth } = account;
+        const data = { firstName, lastName, email, phone, dateOfBirth };
+        this.setState({ data });
+    }
+
+    async componentDidMount() {
+        await this.populateInfo();
+    }
+
+    doSubmit = async () => {
+        try {
+            const { data: user } = this.state;
+            await userService.updateInfo(user);
+            window.location = '/profile';
+        } catch (ex) {
+            logger.log(ex);
+            if (ex.response)
+                toast.error(ex.response.data.message.toString());
+            else
+                toast.error(ex.toString());
+        }
     };
 
     render() {
@@ -49,34 +80,34 @@ class SettingsForm extends Form {
                         { super.renderImageInput("avatar", "Change Photo", "link") }
                     </div>
                     <div className="info-section">
-                        <form>
-                            { super.renderInput("username", "Username", "enter username...") }
+                        <form onSubmit={ this.handleSubmit }>
+                            <div className="mt-30 mb-3">
+                                <label style={ { fontWeight: "bold", fontSize: 48 } }>{ this.state.username }</label>
+                            </div>
                             { super.renderInput("firstName", "First Name", "enter first name...") }
                             { super.renderInput("lastName", "Last Name", "enter last name...") }
                             { super.renderInput("email", "Email", "enter email...") }
-                            <div style={ { marginTop: 30 } }>
-                                <label style={ { fontWeight: "bold", fontSize: 24 } }>Phone Number</label>
+                            <div className="mt-30">
+                                <label className="settings-label">Phone Number</label>
                                 { super.renderInput("phone", "Phone Number", "enter phone number...") }
                             </div>
-                            <div style={ { marginTop: 30 } }>
-                                <label style={ { fontWeight: "bold", fontSize: 24 } }>Date of Birth</label>
-                                { super.renderInput("dateOfBirth", "Date of Birth", "enter date of birth...", "date", {
-                                    min: "1950-01-01",
-                                    max: "2004-01-01"
-                                }) }
+                            <div className="mt-30">
+                                <label className="settings-label">Date of Birth</label>
+                                { super.renderInput("dateOfBirth", "Date of Birth", "enter date of birth...",
+                                    "date", { min: "1950-01-01", max: "2004-01-01" }) }
                             </div>
-                            <div style={ { marginTop: 30 } }>
-                                <label style={ { fontWeight: "bold", fontSize: 24 } }>Create Password</label>
-                                { super.renderInput("newPassword", "Create Password", "enter new password...") }
+                            <div className="mt-30">
+                                <label className="settings-label">Create Password</label>
+                                { super.renderInput("password", "Create Password", "enter new password...", "password") }
                             </div>
-                            <div style={ { marginTop: 50 } }>
-                                { super.renderButton("Save Changes", "btn btn-primary profile-button shadow-lg") }
-                                <div className="w-100 text-center" style={ { marginTop: 10 } }>
+                            <div className="mt-50">
+                                { super.renderButton("Save Changes", "btn btn-primary profile-button") }
+                                <div className="w-100 text-center mt-10">
                                     <button className="no-button link gray-link">Discard changes</button>
                                 </div>
                             </div>
                         </form>
-                        <div style={ { marginTop: 30, marginBottom: 30 } }>
+                        <div style={ { marginTop: 40, marginBottom: 60 } }>
                             <Logout classes="no-button link red-link">Log Out</Logout>
                         </div>
                     </div>

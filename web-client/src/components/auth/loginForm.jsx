@@ -32,7 +32,7 @@ class LoginForm extends Form {
             if (ex.response && ex.response.status === 400)
                 toast.error("Invalid Username or Password");
             else
-                toast.error(ex.message);
+                toast.error(ex.message.toString());
         }
     };
 

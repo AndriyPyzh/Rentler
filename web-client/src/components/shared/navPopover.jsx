@@ -4,7 +4,7 @@ import { Overlay, Popover } from "react-bootstrap";
 const NavPopover = ({ title, text, classes, children }) => {
     const [show, setShow] = useState(false);
     const [target, setTarget] = useState(null);
-    const ref = useRef();
+    const ref = useRef(null);
 
     const handleClick = (event) => {
         setShow(!show);

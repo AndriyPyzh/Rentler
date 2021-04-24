@@ -13,6 +13,7 @@ import ResetPassword from "./components/auth/resetPassword";
 import SignupForm from "./components/auth/signupForm";
 import Home from "./components/pages/home";
 import NotFound from "./components/pages/notFound";
+import Profile from "./components/pages/profile";
 import SettingsForm from "./components/pages/settingsForm";
 import Footer from "./components/shared/footer";
 import NavBar from "./components/shared/navBar";
@@ -62,7 +63,8 @@ class App extends Component {
                     <Switch>
                         <Route path="/apartments" component={ Apartments }/>
                         <Route path="/add-apartment" component={ AddApartment }/>
-                        <Route path="/profile" component={ SettingsForm }/>
+                        <Route path="/settings" component={ SettingsForm }/>
+                        <Route path="/profile" component={ Profile }/>
                         <Route path="/applications" component={ Applications }/>
                         <Route path="/properties" component={ Properties }/>
                         <Route path="/login"
