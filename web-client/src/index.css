@@ -8,10 +8,10 @@ body {
     color: #323138 !important;
 }
 
-html,body{
+html, body {
     height: 100% !important;
-
 }
+
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

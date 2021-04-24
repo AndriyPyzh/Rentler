@@ -14,7 +14,7 @@ class ResetPassword extends Form {
     };
 
     schema = {
-        email: Joi.string().email().required().label('Email'),
+        email: Joi.string().email().required().label('Email')
     };
 
     doSubmit = () => {

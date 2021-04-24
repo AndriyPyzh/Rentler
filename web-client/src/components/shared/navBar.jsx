@@ -36,7 +36,8 @@ const NavBar = (props) => {
                     { user &&
                     <React.Fragment>
                         <NavPopover text="Properties" classes="nav-item nav-link no-button m-1 mx-2 ml-3 ">
-                            <NavLink className="nav-item nav-link border-bottom" to="/applications">Application</NavLink>
+                            <NavLink className="nav-item nav-link border-bottom"
+                                     to="/applications">Application</NavLink>
                             <NavLink className="nav-item nav-link" to="/properties">My Properties</NavLink>
                         </NavPopover>
 
@@ -44,7 +45,8 @@ const NavBar = (props) => {
                                  to="/add-apartment">List a Property</NavLink>
 
                         <NavPopover title={ user.user_name } classes="nav-item navbar-avatar no-button m-1 mr-3 ml-4">
-                            <NavLink className="nav-item nav-link border-bottom" to="/profile">Account & Settings</NavLink>
+                            <NavLink className="nav-item nav-link border-bottom"
+                                     to="/profile">Account & Settings</NavLink>
                             <Logout classes="nav-item nav-link no-button">Logout</Logout>
                         </NavPopover>
                     </React.Fragment> }
