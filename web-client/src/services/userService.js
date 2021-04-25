@@ -26,8 +26,13 @@ export function getCurrentAccount() {
     return http.get(`${ apiEndpoint }current`);
 }
 
+export function getByUsername(username) {
+    return http.get(`${ apiEndpoint + username }`);
+}
+
 export default {
     register,
     updateInfo,
-    getCurrentAccount
+    getCurrentAccount,
+    getByUsername
 };

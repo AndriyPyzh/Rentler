@@ -7,7 +7,7 @@ const NavBar = (props) => {
     const { user } = props;
 
     return (
-        <nav className="navbar navbar-expand-xl navbar-light bg-light border-bottom sticky-top">
+        <nav className="navbar navbar-expand-xl navbar-light bg-light border-bottom fixed-top">
             <Link className="navbar-brand ml-3" to="/">
                 <img src="../../logo.svg" width="30" height="30"
                      className="d-inline-block align-top" alt=""/>
@@ -46,7 +46,7 @@ const NavBar = (props) => {
 
                         <NavPopover title={ user.user_name } classes="nav-item navbar-avatar no-button m-1 mr-3 ml-4">
                             <NavLink className="nav-item nav-link border-bottom"
-                                     to="/profile">Account & Settings</NavLink>
+                                     to="/settings">Account & Settings</NavLink>
                             <Logout classes="nav-item nav-link no-button">Log Out</Logout>
                         </NavPopover>
                     </React.Fragment> }

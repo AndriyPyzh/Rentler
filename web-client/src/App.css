@@ -291,3 +291,93 @@ input[type="file"] + label {
     font-weight: bold;
     font-size: 24px;
 }
+
+.profile-back {
+    font-size: 230px;
+    position: absolute;
+    color: white;
+    text-shadow: 0 14px 24px rgba(46, 45, 54, 0.25);
+}
+
+.profile-info {
+    width: 480px;
+    margin-left: 10px;
+    margin-right: 10px;
+    position: absolute;
+}
+
+.profile-name {
+    font-size: 45px;
+    margin-top: 10px
+}
+
+.filter-bar {
+    position: fixed;
+    top: 66px;
+    right: 0;
+    left: 0;
+}
+
+.full-width {
+    position: fixed;
+    right: 0;
+    left: 0;
+}
+
+.filter-icon {
+    background: url(img/filter-btn.svg) no-repeat 50%;
+    padding-left: 50px;
+    padding-right: 0;
+    padding-top: 5px;
+    margin-left: 50px;
+    background-size: 26px, 26px;
+    height: 26px;
+}
+
+.hide-filter-icon {
+    background: url(img/hide-icon.svg) no-repeat 50%;
+    padding-left: 40px;
+    padding-right: 0;
+    padding-top: 5px;
+    background-size: 20px, 20px;
+    height: 26px;
+}
+
+.filter-button {
+    font-size: 24px !important;
+    font-weight: bold !important;
+    height: 60px !important;
+    color: #fff;
+    background-color: #53c160 !important;
+    border: none !important;
+    width: 100% !important;
+    border-radius: 0 0 0 0 !important;
+}
+
+.loader {
+    border-radius: 50%;
+    border: 5px solid #7B53C1;
+    border-left-color: white;
+    width: 40px;
+    height: 40px;
+    -webkit-animation: spin 1.3s linear infinite; /* Safari */
+    animation: spin 1.3s linear infinite;
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

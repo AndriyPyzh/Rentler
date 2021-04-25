@@ -61,12 +61,13 @@ class App extends Component {
                 { navbar && <NavBar user={ this.state.user }/> }
                 <main className="container">
                     <Switch>
-                        <Route path="/apartments" component={ Apartments }/>
+                        <Route path="/profile/:username" component={ Profile }/>
                         <Route path="/add-apartment" component={ AddApartment }/>
                         <Route path="/settings" component={ SettingsForm }/>
-                        <Route path="/profile" component={ Profile }/>
                         <Route path="/applications" component={ Applications }/>
                         <Route path="/properties" component={ Properties }/>
+                        <Route path="/apartments"
+                               render={ props => <Apartments { ...props }{ ...clearFuncs }/> }/>
                         <Route path="/login"
                                render={ props => <LoginForm { ...props }{ ...clearFuncs }/> }/>
                         <Route path="/signup"

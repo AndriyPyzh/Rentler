@@ -9,6 +9,7 @@ import Form from "../shared/form";
 
 class SettingsForm extends Form {
     state = {
+        initState: null,
         username: null,
         data: {
             avatar: null,
@@ -45,7 +46,7 @@ class SettingsForm extends Form {
         const { data: account } = await userService.getCurrentAccount();
         let { firstName, lastName, email, phoneNumber: phone, dateOfBirth } = account;
         const data = { firstName, lastName, email, phone, dateOfBirth };
-        this.setState({ data });
+        this.setState({ data, initState: { ...data } });
     }
 
     async componentDidMount() {
@@ -54,9 +55,9 @@ class SettingsForm extends Form {
 
     doSubmit = async () => {
         try {
-            const { data: user } = this.state;
+            const { data: user, username } = this.state;
             await userService.updateInfo(user);
-            window.location = '/profile';
+            window.location = `/profile/${ username }`;
         } catch (ex) {
             logger.log(ex);
             if (ex.response)
@@ -64,6 +65,12 @@ class SettingsForm extends Form {
             else
                 toast.error(ex.toString());
         }
+    };
+
+    discardChanges = (e) => {
+        e.preventDefault();
+        const initState = { ...this.state.initState };
+        this.setState({ data: initState, errors: {}, showMessages: {} });
     };
 
     render() {
@@ -103,7 +110,9 @@ class SettingsForm extends Form {
                             <div className="mt-50">
                                 { super.renderButton("Save Changes", "btn btn-primary profile-button") }
                                 <div className="w-100 text-center mt-10">
-                                    <button className="no-button link gray-link">Discard changes</button>
+                                    <button className="no-button link gray-link" onClick={ this.discardChanges }>
+                                        Discard changes
+                                    </button>
                                 </div>
                             </div>
                         </form>
