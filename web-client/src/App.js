@@ -4,6 +4,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import './App.css';
 import AddApartment from "./components/apartments/addApartment";
+import ApartmentDetails from "./components/apartments/apartmentDetails";
 import Apartments from "./components/apartments/apartments";
 import Applications from "./components/apartments/applications";
 import Properties from "./components/apartments/properties";
@@ -66,6 +67,8 @@ class App extends Component {
                         <Route path="/settings" component={ SettingsForm }/>
                         <Route path="/applications" component={ Applications }/>
                         <Route path="/properties" component={ Properties }/>
+                        <Route path="/apartments/:id"
+                               render={ props => <ApartmentDetails { ...props }/> }/>
                         <Route path="/apartments"
                                render={ props => <Apartments { ...props }{ ...clearFuncs }/> }/>
                         <Route path="/login"

@@ -34,10 +34,10 @@ class Apartments extends Component {
                     </div>
                     <div style={ { marginRight: 50 } } className="dropdown">
                         { showFilter &&
-                        <div className="d-flex align-items-center" style={{marginRight: 28}}>
+                        <div className="d-flex align-items-center" style={ { marginRight: 28 } }>
                             <button className="hide-filter-icon no-button" onClick={ this.handleFilterClick }/>
                             <button className="no-button text-purple"
-                                    style={{padding: 0}}
+                                    style={ { padding: 0 } }
                                     onClick={ this.handleFilterClick }>
                                 Hide Filters
                             </button>
@@ -56,7 +56,7 @@ class Apartments extends Component {
                     </div>
                 </div>
                 <div style={ { marginTop: 50 } }>
-                    { showFilter && <ApartmentsFilter afterSubmit={this.handleFilterClick}/> }
+                    { showFilter && <ApartmentsFilter afterSubmit={ this.handleFilterClick }/> }
                     { !showFilter && <ApartmentsList/> }
                 </div>
             </div>

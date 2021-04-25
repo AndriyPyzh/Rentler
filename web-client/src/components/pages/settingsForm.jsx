@@ -77,7 +77,7 @@ class SettingsForm extends Form {
         const { avatar } = this.state.data;
 
         return (
-            <div className="d-flex justify-content-center">
+            <div className="d-flex justify-content-center" style={ { marginTop: 65 } }>
                 <div className="row profile">
                     <div className="avatar-section">
                         <div className="d-flex justify-content-center">

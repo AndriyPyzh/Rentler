@@ -1,8 +1,5 @@
 import Joi from "joi-browser";
 import React from 'react';
-import { toast } from "react-toastify";
-import logger from "../../services/logService";
-import userService from "../../services/userService";
 import Form from "../shared/form";
 
 class ApartmentsFilter extends Form {
@@ -33,7 +30,7 @@ class ApartmentsFilter extends Form {
 
     render() {
         return (
-            <form className="bg-light" onSubmit={this.handleSubmit}>
+            <form className="bg-light" onSubmit={ this.handleSubmit }>
                 <h1>Filters</h1>
                 { super.renderButton("Find Properties", "btn btn-primary filter-button full-width fixed-bottom") }
             </form>

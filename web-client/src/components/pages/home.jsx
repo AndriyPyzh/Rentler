@@ -6,7 +6,7 @@ class Home extends Component {
     render() {
         return (
             <React.Fragment>
-                <h1>Home page</h1>
+                <h1 style={ { marginTop: 65 } }>Home page</h1>
             </React.Fragment>
         );
     }

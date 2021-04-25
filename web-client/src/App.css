@@ -17,6 +17,10 @@ footer {
     color: #6446b4 !important;
 }
 
+.text-purple-white {
+    color: #9c99b6 !important;
+}
+
 .not-found {
     position: relative !important;
     height: 700px;
@@ -313,9 +317,10 @@ input[type="file"] + label {
 
 .filter-bar {
     position: fixed;
-    top: 66px;
+    top: 65px;
     right: 0;
     left: 0;
+    z-index: 100;
 }
 
 .full-width {
@@ -380,4 +385,76 @@ input[type="file"] + label {
     100% {
         transform: rotate(360deg);
     }
+}
+
+.no-apartment-image {
+    background: #e8e9ef;
+    background-size: 200px, 200px;
+    height: 200px;
+    border-radius: 0.2rem 0.2rem 0 0;
+}
+
+.apt-initials {
+    width: auto;
+    height: 80px !important;
+    padding: 15px 20px;
+    color: #2e2d36 !important;
+}
+
+.apt-internals {
+    height: 60px;
+    padding: 20px 0;
+    margin: 0 20px;
+    border-top: 1px solid #dee2e6 !important;
+}
+
+.beds-icon {
+    background: url(img/beds-icon.svg) no-repeat 50%;
+    background-size: 20px, 20px;
+    height: 20px;
+    width: 20px;
+    margin-right: 5px;
+}
+
+.bath-icon {
+    background: url(img/bath-icon.svg) no-repeat 50%;
+    background-size: 20px, 20px;
+    height: 20px;
+    width: 20px;
+    margin-right: 5px;
+    margin-left: 15px;
+}
+
+.sqft-icon {
+    background: url(img/sqft-icon.svg) no-repeat 50%;
+    background-size: 20px, 20px;
+    height: 20px;
+    width: 20px;
+    margin-right: 5px;
+}
+
+.price {
+    top: 20px;
+    left: 20px;
+    font-weight: bold;
+    position: absolute;
+    padding: 4px 10px;
+    z-index: 50;
+    background: #f7a31d;
+    color: white;
+    border-radius: 100px;
+}
+
+.apartment-card {
+    transition: transform .2s; /* Animation */
+}
+
+.apartment-card:hover {
+    transform: scale(1.06);
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+}
+
+a.no-style:link {
+    text-decoration: none;
+    cursor: pointer;
 }

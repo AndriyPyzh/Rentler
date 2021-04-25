@@ -1,63 +1,52 @@
 import React, { Component } from 'react';
+import { toast } from "react-toastify";
+import apartmentService from "../../services/apartmentService";
+import logger from "../../services/logService";
+import Apartment from "./apartment";
 
 class ApartmentsList extends Component {
     state = {
         apartments: [],
-        showBottomLoader: false
+        showBottomLoader: false,
+        pageable: {
+            page: 0,
+            size: 9
+        }
     };
 
-    loadApartments = () => {
-        const apartments = [
-            <h1>Apartment1</h1>,
-            <h1>Apartment2</h1>,
-            <h1>Apartment3</h1>,
-            <h1>Apartment4</h1>,
-            <h1>Apartment5</h1>,
-            <h1>Apartment6</h1>,
-            <h1>Apartment7</h1>,
-            <h1>Apartment8</h1>,
-            <h1>Apartment9</h1>,
-            <h1>Apartment</h1>,
-            <h1>Apartment</h1>,
-            <h1>Apartment</h1>,
-            <h1>Apartment</h1>,
-            <h1>Apartment</h1>,
-            <h1>Apartment</h1>,
-            <h1>Apartment</h1>,
-            <h1>Apartment</h1>,
-            <h1>Apartment</h1>
-        ];
-        this.setState({ apartments, showBottomLoader: true });
+    loadApartments = async () => {
+        try {
+            const { page, size } = this.state.pageable;
+            const { data: newApartments } = await apartmentService.getApartments(page, size);
+            if (newApartments.length) {
+                const apartments = [...this.state.apartments, ...newApartments];
+                this.setState({ apartments, showBottomLoader: true, pageable: { page: page + 1, size } });
+            } else {
+                this.setState({ showBottomLoader: false });
+            }
+        } catch (ex) {
+            logger.log(ex);
+            if (ex.response)
+                toast.error(ex.response.data.toString());
+            else
+                toast.error(ex.toString());
+        }
     };
 
-    componentWillMount() {
+    loadMore = async () => {
+        if (window.innerHeight + document.documentElement.scrollTop === document.scrollingElement.scrollHeight) {
+            await this.loadApartments();
+        }
+    };
+
+    async componentWillMount() {
         window.addEventListener('scroll', this.loadMore);
-        setTimeout(this.loadApartments, 3000);
+        await this.loadApartments();
     }
 
     componentWillUnmount() {
         window.removeEventListener('scroll', this.loadMore);
     }
-
-
-    loadMore = () => {
-        if (window.innerHeight + document.documentElement.scrollTop === document.scrollingElement.scrollHeight) {
-            let apartments = [...this.state.apartments];
-            for (let i = 0; i < 100000; i++) {
-                for (let j = 0; j < 100000; j++) {
-                    let k = i * j;
-                }
-            }
-            apartments.push(<h1>New Apartment</h1>);
-            apartments.push(<h1>New Apartment</h1>);
-            apartments.push(<h1>New Apartment</h1>);
-            apartments.push(<h1>New Apartment</h1>);
-            apartments.push(<h1>New Apartment</h1>);
-            apartments.push(<h1>New Apartment</h1>);
-            apartments.push(<h1>New Apartment</h1>);
-            this.setState({ apartments });
-        }
-    };
 
     render() {
         const { apartments, showBottomLoader } = this.state;
@@ -70,7 +59,17 @@ class ApartmentsList extends Component {
                 </div>
                 }
 
-                { !showLoader && apartments }
+                { !showLoader &&
+                apartments.map(apartment =>
+                    <Apartment id={ apartment.id }
+                               title={ apartment.name }
+                               address={ apartment.address }
+                               amenties={ apartment.amenities }
+                               beds={ apartment.beds }
+                               bath={ apartment.bath }
+                               squareMeters={ apartment.squareMeters }
+                               price={ apartment.price }/>)
+                }
 
                 { showBottomLoader &&
                 <div className="d-flex justify-content-center">
