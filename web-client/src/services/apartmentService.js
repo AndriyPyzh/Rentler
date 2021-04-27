@@ -8,10 +8,15 @@ export function getApartments(page = 0, size = 9, sort = 'id') {
 }
 
 export function getById(id) {
-    return http.get(`${apiEndpoint + id}`);
+    return http.get(`${ apiEndpoint + id }`);
+}
+
+export function getByUsername(username) {
+    return http.get(`${ apiEndpoint }search`, { params: { owner: username } });
 }
 
 export default {
     getApartments,
-    getById
+    getById,
+    getByUsername
 };

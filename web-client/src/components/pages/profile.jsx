@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { toast } from "react-toastify";
 import apartmentService from "../../services/apartmentService";
+import logger from "../../services/logService";
 import userService from "../../services/userService";
 import Apartment from "../apartments/apartment";
 
@@ -28,22 +30,32 @@ class Profile extends Component {
     };
 
     populateProperties = async () => {
-        const { data: apartments } = await apartmentService.getById(1);
-        this.setState({ apartments: [apartments] });
+        const { username } = this.props.match.params;
+        const { data: apartments } = await apartmentService.getByUsername(username);
+        this.setState({ apartments });
     };
 
     async componentDidMount() {
-        await this.populateInfo();
-        await this.populateProperties();
+        try {
+            await this.populateInfo();
+            await this.populateProperties();
+        }catch (ex){
+            logger.log(ex);
+            if (ex.response && ex.response.status === 400) {
+                toast.error(ex.response.data.message.toString());
+                window.location = '/not-found';
+            } else
+                toast.error(ex.message.toString());
+        }
     }
 
     render() {
         const { avatar, email, initials, firstName, lastName, phoneNumber, apartments } = this.state;
-        const showProperties = false;
+        const showProperties = apartments.length !== 0;
 
         return (
-            <div style={ { marginTop: 65 } }>
-                <div className="d-flex justify-content-center">
+            <div className="row d-flex justify-content-center" style={ { marginTop: 65 } }>
+                <div className="d-flex justify-content-center" style={ { width: 600 } }>
                     <div className="font-weight-bold profile-back">{ initials }</div>
                     <div className="text-center profile-info">
                         <div style={ { marginTop: 120 } }>
@@ -58,17 +70,20 @@ class Profile extends Component {
                         <div style={ { fontSize: 14, marginTop: 5 } }>{ phoneNumber }</div>
                     </div>
                 </div>
-                { showProperties && <div>
-                    <h1>{ firstName }'s Properties</h1>
-                    { apartments.map(apartment => <Apartment id={ apartment.id }
-                                                             title={ apartment.name }
-                                                             address={ apartment.address }
-                                                             amenties={ apartment.amenities }
-                                                             beds={ apartment.beds }
-                                                             bath={ apartment.bath }
-                                                             squareMeters={ apartment.squareMeters }
-                                                             price={ apartment.price }/>)
-                    }
+                { showProperties &&
+                <div style={ { width: 540 } }>
+                    <div style={ { width: 370, marginTop: 100, marginBottom: 100 } }>
+                        <h4 className="font-weight-bold text-center">{ firstName }'s Properties</h4>
+                        { apartments.map(apartment => <Apartment id={ apartment.id }
+                                                                 title={ apartment.name }
+                                                                 address={ apartment.address }
+                                                                 amenties={ apartment.amenities }
+                                                                 beds={ apartment.beds }
+                                                                 bath={ apartment.bath }
+                                                                 squareMeters={ apartment.squareMeters }
+                                                                 price={ apartment.price }/>)
+                        }
+                    </div>
                 </div>
                 }
             </div>
