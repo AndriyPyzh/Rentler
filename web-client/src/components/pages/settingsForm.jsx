@@ -103,7 +103,7 @@ class SettingsForm extends Form {
                             <div className="mt-30">
                                 <label className="settings-label">Date of Birth</label>
                                 { super.renderInput("dateOfBirth", "Date of Birth", "enter date of birth...",
-                                    "date", true,{ min: "1950-01-01", max: "2004-01-01" }) }
+                                    "date", true, { min: "1950-01-01", max: "2004-01-01" }) }
                             </div>
                             <div className="mt-30">
                                 <label className="settings-label">Create Password</label>

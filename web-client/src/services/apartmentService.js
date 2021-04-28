@@ -15,13 +15,25 @@ export function getByUsername(username) {
     return http.get(`${ apiEndpoint }search`, { params: { owner: username } });
 }
 
-export function getAmenities(){
-    return http.get(`${apiEndpoint}amenities`)
+export function getAmenities() {
+    return http.get(`${ apiEndpoint }amenities`);
+}
+
+export function getTypes() {
+    return http.get(`${ apiEndpoint }types`);
+}
+
+export function addApartment(apartment) {
+    return http.post(`${ apiEndpoint }`, {
+        ...apartment
+    });
 }
 
 export default {
     getApartments,
     getById,
     getByUsername,
-    getAmenities
+    getAmenities,
+    getTypes,
+    addApartment
 };

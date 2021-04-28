@@ -77,13 +77,13 @@ class ApartmentDetails extends Component {
         const { petPolicy } = this.state.apartment;
         let classes = '';
         switch (petPolicy) {
-            case 'Dogs allowed':
+            case 'Dogs Allowed':
                 classes = 'dogs-icon-white d-inline-flex';
                 break;
-            case 'Cats allowed':
+            case 'Cats Allowed':
                 classes = 'cats-icon-white d-inline-flex';
                 break;
-            case 'No pets':
+            case 'No Pets':
                 classes = 'no-pets-icon-white d-inline-flex';
                 break;
             default:

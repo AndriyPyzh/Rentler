@@ -17,12 +17,13 @@ class AddApartment extends Form {
             bath: '',
             squareMeters: '',
             description: '',
-            petPolicy: 'No Pets',
-            amenities: [],
             availableFrom: new Date().toISOString().split('T')[0],
             price: ''
         },
+        selectedAmenities: [],
+        petPolicy: 'No Pets',
         amenities: [],
+        types: [],
         errors: {},
         showMessages: {}
     };
@@ -41,7 +42,7 @@ class AddApartment extends Form {
         price: Joi.number()
     };
 
-    async componentDidMount() {
+    populateAmenities = async () => {
         try {
             const { data: amenities } = await apartmentService.getAmenities();
             this.setState({ amenities });
@@ -51,7 +52,26 @@ class AddApartment extends Form {
             } else
                 toast.error(ex.message.toString());
         }
+    };
 
+    populateTypes = async () => {
+        try {
+            let { data: types } = await apartmentService.getTypes();
+            types = types.map(t => {
+                return { _id: t, name: t };
+            });
+            this.setState({ types });
+        } catch (ex) {
+            if (ex.response && ex.response.status === 400) {
+                toast.error(ex.response.data.message.toString());
+            } else
+                toast.error(ex.message.toString());
+        }
+    };
+
+    async componentDidMount() {
+        await this.populateAmenities();
+        await this.populateTypes();
     }
 
     getAmenitiesHeight() {
@@ -60,37 +80,31 @@ class AddApartment extends Form {
     }
 
     onCatsClicked = () => {
-        const data = { ...this.state.data };
-        data.petPolicy = 'Cats Allowed';
-        this.setState({ data });
+        this.setState({ petPolicy: 'Cats Allowed' });
     };
 
     onDogsClicked = () => {
-        const data = { ...this.state.data };
-        data.petPolicy = 'Dogs Allowed';
-        this.setState({ data });
+        this.setState({ petPolicy: 'Dogs Allowed' });
     };
 
     onNoPetsClicked = () => {
-        const data = { ...this.state.data };
-        data.petPolicy = 'No Pets';
-        this.setState({ data });
+        this.setState({ petPolicy: 'No Pets' });
     };
 
     onAmenityClick = (amenity) => {
-        const data = { ...this.state.data };
-        if (data.amenities.includes(amenity)) {
-            const index = data.amenities.indexOf(amenity);
-            data.amenities.splice(index, 1);
+        const selectedAmenities = this.state.selectedAmenities;
+        if (selectedAmenities.includes(amenity)) {
+            const index = selectedAmenities.indexOf(amenity);
+            selectedAmenities.splice(index, 1);
         } else {
-            data.amenities.push(amenity);
+            selectedAmenities.push(amenity);
         }
-        this.setState({ data });
+        this.setState({ selectedAmenities });
     };
 
     getAmenity = (amenity) => {
-        const cl1 = "col " + (this.state.data.amenities.includes(amenity) ? "text-purple" : "option");
-        const cl2 = "amenitie d-inline-flex " + (this.state.data.amenities.includes(amenity) ? "amenitie-selected" : "");
+        const cl1 = "col " + (this.state.selectedAmenities.includes(amenity) ? "text-purple" : "option");
+        const cl2 = "amenitie d-inline-flex " + (this.state.selectedAmenities.includes(amenity) ? "amenitie-selected" : "");
         return (
             <div key={ amenity } className={ cl1 }
                  style={ { fontSize: 14, height: 40, fontWeight: 500, cursor: "pointer" } }
@@ -101,15 +115,31 @@ class AddApartment extends Form {
         );
     };
 
+    doSubmit = async () => {
+        const apartment = { ...this.state.data };
+        apartment.amenities = this.state.selectedAmenities;
+        apartment.petPolicy = this.state.petPolicy;
+        apartment.address = { street: apartment.street, city: apartment.city, houseNumber: apartment.houseNumber };
+        apartment.floor = -1;
+        try {
+            await apartmentService.addApartment(apartment);
+            this.props.history.push('/properties');
+        } catch (ex) {
+            if (ex.response && ex.response.status === 400) {
+                toast.error(ex.response.data.message.toString());
+            } else
+                toast.error(ex.message.toString());
+        }
+    };
+
     render() {
-        const { amenities } = this.state;
-        const { petPolicy } = this.state.data;
+        const { amenities, petPolicy } = this.state;
         return (
             <div className="d-flex justify-content-center" style={ { marginTop: 60 } }>
                 <ScrollToTop/>
                 <div style={ { width: 940 } }>
                     <div className="apt-det-back"/>
-                    <div className="row" style={ { marginLeft: 0, marginRight: 0 } }>
+                    <form onSubmit={ this.handleSubmit } className="row" style={ { marginLeft: 0, marginRight: 0 } }>
                         <div style={ { width: 700, paddingLeft: 10, paddingRight: 10, fontWeight: "bold" } }>
                             <div className="d-flex align-items-center" style={ { height: 300 } }>
                                 <div style={ {
@@ -139,8 +169,11 @@ class AddApartment extends Form {
                             </div>
                             <div style={ { height: 100, color: "white" } }>
                                 <div className="d-flex align-items-center">
-                                    <div className="d-inline-flex" style={ { marginRight: 20 } }>
-                                        { this.renderInput('type', "Type", "enter type...", 'text', false) }
+                                    <div className="d-inline-flex"
+                                         style={ { marginRight: 20, marginBottom: 23, width: 190 } }>
+                                        <div className="w-100">
+                                            { this.renderSelect("type", "Type", this.state.types) }
+                                        </div>
                                     </div>
                                     <div className="d-inline-flex" style={ { marginRight: 20, width: 180 } }>
                                         { this.renderInput('beds', "Beds", "enter beds...", 'number', false, { min: 0 }) }
@@ -216,7 +249,8 @@ class AddApartment extends Form {
                             </div>
                         </div>
                         <div style={ { width: 240, paddingLeft: 10, paddingRight: 10, marginTop: 75 } }>
-                            <div className="apt-det-card text-center d-flex justify-content-center align-items-center">
+                            <div
+                                className="apt-det-card text-center d-flex justify-content-center align-items-center">
                                 <div style={ { width: 180, marginTop: 20, fontWeight: "bold" } }>
                                     { this.renderInput('price', "Price", "enter price...", 'number', false, { min: 0 }) }
                                     { this.renderInput("availableFrom", "Available From", "enter available from...", "date", true, {
@@ -236,8 +270,7 @@ class AddApartment extends Form {
                                 </div>
                             </div>
                         </div>
-
-                    </div>
+                    </form>
                 </div>
             </div>
         );

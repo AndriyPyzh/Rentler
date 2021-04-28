@@ -672,14 +672,14 @@ a.no-style:link {
     margin-bottom: 25px;
 }
 
-.amenitie{
+.amenitie {
     background: url(img/amenitie.svg) no-repeat 100% !important;
     background-size: 20px, 20px;
     height: 20px;
     width: 20px;
 }
 
-.amenitie-selected{
+.amenitie-selected {
     background: url(img/amenitie-purple.svg) no-repeat 100% !important;
     background-size: 20px, 20px;
     height: 20px;
@@ -688,11 +688,44 @@ a.no-style:link {
 }
 
 
-.option{
+.option {
     opacity: 30%;
     cursor: pointer;
 }
 
-.option:hover{
+.option:hover {
     opacity: 100%;
+}
+
+.plus {
+    background: url(img/remove-btn.svg) no-repeat 100% !important;
+    background-size: 30px, 30px;
+    height: 30px;
+    width: 30px;
+    padding-top: 70px;
+    margin-left: 20px;
+}
+
+.plus-button {
+    margin-left: 140px;
+    margin-top: 108px;
+    background: #7b53c1;
+    height: 70px;
+    width: 70px;
+    border-radius: 70px;
+}
+
+.plus-label {
+    margin-left: 127px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #2e2d36;
+    margin-top: 10px;
+}
+
+.plus-text {
+    height: 68px;
+    color: #9c99b6;
+    font-size: 14px;
+    margin-left: 100px;
 }

@@ -2,6 +2,7 @@ import Joi from "joi-browser";
 import React, { Component } from 'react';
 import ImageInput from "./imageInput";
 import Input from "./input";
+import Select from "./select";
 
 class Form extends Component {
     state = {
@@ -89,6 +90,20 @@ class Form extends Component {
                 label={ label }
                 onChange={ this.handleFileChange }
                 classes={ classes }
+            />
+        );
+    }
+
+    renderSelect(name, label, options) {
+        const { data } = this.state;
+
+        return (
+            <Select
+                name={ name }
+                value={ data[name] }
+                label={ label }
+                options={ options }
+                onChange={ this.handleChange }
             />
         );
     }
