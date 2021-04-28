@@ -25,7 +25,7 @@ public class Address {
     @NotNull
     private String street;
 
-    private Integer houseNumber;
+    private String houseNumber;
 
     @OneToOne(mappedBy = "address", cascade = CascadeType.ALL)
     private Apartment apartment;

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -57,12 +57,12 @@ public class Apartment {
     @Column(nullable = false)
     private PetPolicy petPolicy;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
     @ElementCollection(targetClass = Amenities.class)
     @Enumerated(value = EnumType.STRING)
-    private List<Amenities> amenities;
+    private Set<Amenities> amenities;
 
     @Column(nullable = false)
     private LocalDate availableFrom;

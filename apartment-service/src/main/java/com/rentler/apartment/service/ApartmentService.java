@@ -2,6 +2,7 @@ package com.rentler.apartment.service;
 
 import com.rentler.apartment.dto.ApartmentDto;
 import com.rentler.apartment.dto.ApartmentUpdateDto;
+import com.rentler.apartment.dto.SearchParams;
 import com.rentler.apartment.entity.Address;
 import com.rentler.apartment.entity.Apartment;
 import com.rentler.apartment.enums.Amenities;
@@ -44,6 +45,13 @@ public class ApartmentService {
         Apartment apartment = apartmentRepository.findById(id)
                 .orElseThrow(() -> new ApartmentNotFoundException("Apartment with such id not found: " + id));
         return apartmentMapper.toDto(apartment);
+    }
+
+    public List<ApartmentDto> getByParams(SearchParams params) {
+        return apartmentRepository.findAllByOwner(params.getOwner())
+                .stream()
+                .map(apartmentMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     public List<String> getAmenities() {

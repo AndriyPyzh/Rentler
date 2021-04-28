@@ -20,5 +20,5 @@ public class AddressDto {
     @NotBlank
     private String street;
 
-    private Integer houseNumber;
+    private String houseNumber;
 }

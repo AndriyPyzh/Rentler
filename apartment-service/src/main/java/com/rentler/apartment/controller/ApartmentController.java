@@ -2,6 +2,7 @@ package com.rentler.apartment.controller;
 
 import com.rentler.apartment.dto.ApartmentDto;
 import com.rentler.apartment.dto.ApartmentUpdateDto;
+import com.rentler.apartment.dto.SearchParams;
 import com.rentler.apartment.service.ApartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -33,6 +34,12 @@ public class ApartmentController {
     public ResponseEntity<ApartmentDto> getApartment(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(apartmentService.getById(id));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<ApartmentDto>> getByOwner(SearchParams params) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(apartmentService.getByParams(params));
     }
 
     @GetMapping("/amenities")

@@ -11,7 +11,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -55,9 +55,9 @@ public class ApartmentUpdateDto {
     @Length(min = 10, max = 1000)
     private String description;
 
-    private List<Amenities> amenities;
+    private Set<Amenities> amenities;
 
     @NotNull
-    @Future
+    @FutureOrPresent
     private LocalDate availableFrom;
 }

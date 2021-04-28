@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Set;
 
 @Component
 public class ApartmentLoader implements ApplicationListener<ApplicationReadyEvent> {
@@ -38,7 +39,7 @@ public class ApartmentLoader implements ApplicationListener<ApplicationReadyEven
                 .address(AddressDto.builder()
                         .city("Lviv")
                         .street("Shevchenka")
-                        .houseNumber(80)
+                        .houseNumber("80")
                         .build())
                 .type(ApartmentType.APARTMENT)
                 .beds(2)
@@ -47,7 +48,7 @@ public class ApartmentLoader implements ApplicationListener<ApplicationReadyEven
                 .squareMeters(55.5)
                 .petPolicy(PetPolicy.NO_PETS)
                 .description("Some description...")
-                .amenities(Arrays.asList(Amenities.GYM, Amenities.PARKING))
+                .amenities(Set.of(Amenities.GYM, Amenities.PARKING))
                 .availableFrom(LocalDate.now())
                 .build();
 

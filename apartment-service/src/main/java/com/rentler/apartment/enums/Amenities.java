@@ -12,8 +12,17 @@ public enum Amenities {
     GYM("Gym"),
     PARKING("Parking Spot"),
     FIREPLACE("Fireplace"),
-    CONDITIONER("Air conditioning");
-
+    CONDITIONER("Air Conditioning"),
+    DISHWASHER("Dishwasher"),
+    STORAGE("Storage"),
+    WHEEL("Wheelchair Accessible"),
+    HARDWOOD_FLOORS("Hardwood Floors"),
+    BALCONY("Balcony"),
+    FURNISHED("Furnished"),
+    VIEW("View"),
+    HIGH_RISE("High Rise"),
+    STUDENT_FRIENDLY("Student Friendly"),
+    UTILITIES("Utilities Included");
 
     private final String text;
 

@@ -3,9 +3,9 @@ package com.rentler.apartment.enums;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum PetPolicy {
-    DOGS_ALLOWED("Dogs allowed"),
-    CAT_ALLOWED("Cats allowed"),
-    NO_PETS("No pets");
+    DOGS_ALLOWED("Dogs Allowed"),
+    CATS_ALLOWED("Cats Allowed"),
+    NO_PETS("No Pets");
 
     private final String text;
 
