@@ -1,8 +1,8 @@
 import React from "react";
 
-const Input = ({ name, label, type, placeholder, value, onChange, error, showMessage, attributes = {} }) => {
+const Input = ({ name, label, type, placeholder, value, onChange, error, showMessage, showText, attributes = {} }) => {
     let borderColor = showMessage && (error ? "#f44336" : '#28a745');
-    let message = showMessage && (error || 'Looks good!');
+    let message = showMessage && (error || 'Looks good!') && showText;
 
     return (
         <div style={ { marginBottom: '0.5rem' } }>

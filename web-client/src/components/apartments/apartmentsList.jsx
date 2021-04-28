@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { toast } from "react-toastify";
 import apartmentService from "../../services/apartmentService";
 import logger from "../../services/logService";
+import ScrollToTop from "../shared/scrollToTop";
 import Apartment from "./apartment";
 
 class ApartmentsList extends Component {
@@ -53,6 +54,7 @@ class ApartmentsList extends Component {
         const showLoader = apartments.length === 0;
         return (
             <div style={ { marginTop: 130 } }>
+                <ScrollToTop/>
                 { showLoader &&
                 <div className="d-flex justify-content-center" style={ { paddingTop: 300 } }>
                     <div className="loader"/>

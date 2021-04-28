@@ -15,8 +15,13 @@ export function getByUsername(username) {
     return http.get(`${ apiEndpoint }search`, { params: { owner: username } });
 }
 
+export function getAmenities(){
+    return http.get(`${apiEndpoint}amenities`)
+}
+
 export default {
     getApartments,
     getById,
-    getByUsername
+    getByUsername,
+    getAmenities
 };

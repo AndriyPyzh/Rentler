@@ -6,6 +6,7 @@ import logger from "../../services/logService";
 import userService from "../../services/userService";
 import Logout from "../auth/logout";
 import Form from "../shared/form";
+import ScrollToTop from "../shared/scrollToTop";
 
 class SettingsForm extends Form {
     state = {
@@ -78,6 +79,7 @@ class SettingsForm extends Form {
 
         return (
             <div className="d-flex justify-content-center" style={ { marginTop: 65 } }>
+                <ScrollToTop/>
                 <div className="row profile">
                     <div className="avatar-section">
                         <div className="d-flex justify-content-center">
@@ -101,7 +103,7 @@ class SettingsForm extends Form {
                             <div className="mt-30">
                                 <label className="settings-label">Date of Birth</label>
                                 { super.renderInput("dateOfBirth", "Date of Birth", "enter date of birth...",
-                                    "date", { min: "1950-01-01", max: "2004-01-01" }) }
+                                    "date", true,{ min: "1950-01-01", max: "2004-01-01" }) }
                             </div>
                             <div className="mt-30">
                                 <label className="settings-label">Create Password</label>

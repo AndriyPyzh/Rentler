@@ -4,6 +4,7 @@ import apartmentService from "../../services/apartmentService";
 import logger from "../../services/logService";
 import userService from "../../services/userService";
 import Apartment from "../apartments/apartment";
+import ScrollToTop from "../shared/scrollToTop";
 
 class Profile extends Component {
     state = {
@@ -39,7 +40,7 @@ class Profile extends Component {
         try {
             await this.populateInfo();
             await this.populateProperties();
-        }catch (ex){
+        } catch (ex) {
             logger.log(ex);
             if (ex.response && ex.response.status === 400) {
                 toast.error(ex.response.data.message.toString());
@@ -55,6 +56,13 @@ class Profile extends Component {
 
         return (
             <div className="row d-flex justify-content-center" style={ { marginTop: 65 } }>
+                <ScrollToTop/>
+                { !email &&
+                <div className="d-flex justify-content-center" style={ { paddingTop: 300 } }>
+                    <div className="loader"/>
+                </div>
+                }
+                { email &&
                 <div className="d-flex justify-content-center" style={ { width: 600 } }>
                     <div className="font-weight-bold profile-back">{ initials }</div>
                     <div className="text-center profile-info">
@@ -70,6 +78,7 @@ class Profile extends Component {
                         <div style={ { fontSize: 14, marginTop: 5 } }>{ phoneNumber }</div>
                     </div>
                 </div>
+                }
                 { showProperties &&
                 <div style={ { width: 540 } }>
                     <div style={ { width: 370, marginTop: 100, marginBottom: 100 } }>

@@ -21,6 +21,10 @@ footer {
     color: #9c99b6 !important;
 }
 
+.text-gray {
+    color: #9c99b6 !important;
+}
+
 .not-found {
     position: relative !important;
     height: 700px;
@@ -235,6 +239,15 @@ input[type="file"] + label {
 
 .gray-link:after {
     background: #9c99b6 !important;
+}
+
+.link.black-link {
+    color: #323138 !important;
+    text-decoration: none;
+}
+
+.black-link:after {
+    background: #323138 !important;
 }
 
 .profile {
@@ -467,6 +480,86 @@ input[type="file"] + label {
     margin-left: 40px;
 }
 
+.cats-icon-white {
+    background: url(img/cats-allowed-white.svg) no-repeat 50%;
+    background-size: 20px, 20px;
+    height: 20px;
+    width: 20px;
+    margin-right: 10px;
+    margin-left: 40px;
+}
+
+.dogs-icon-white {
+    background: url(img/dogs-allowed-white.svg) no-repeat 50%;
+    background-size: 20px, 20px;
+    height: 20px;
+    width: 20px;
+    margin-right: 10px;
+    margin-left: 40px;
+}
+
+.no-pets-icon-white {
+    background: url(img/no-pets-white.svg) no-repeat 50%;
+    background-size: 20px, 20px;
+    height: 20px;
+    width: 20px;
+    margin-right: 10px;
+    margin-left: 40px;
+}
+
+.cats-icon-black {
+    background: url(img/cats-allowed-black.svg) no-repeat 50%;
+    background-size: 20px, 20px;
+    height: 20px;
+    width: 20px;
+    margin-right: 10px;
+}
+
+.dogs-icon-black {
+    background: url(img/dogs-allowed-black.svg) no-repeat 50%;
+    background-size: 20px, 20px;
+    height: 20px;
+    width: 20px;
+    margin-right: 10px;
+    margin-left: 40px;
+}
+
+.no-pets-icon-black {
+    background: url(img/no-pets-black.svg) no-repeat 50%;
+    background-size: 20px, 20px;
+    height: 20px;
+    width: 20px;
+    margin-right: 10px;
+    margin-left: 40px;
+}
+
+.cats-icon-purple {
+    background: url(img/cats-allowed-purple.svg) no-repeat 50%;
+    background-size: 20px, 20px;
+    height: 20px;
+    width: 20px;
+    margin-right: 10px;
+}
+
+.dogs-icon-purple {
+    background: url(img/dogs-allowed-purple.svg) no-repeat 50%;
+    background-size: 20px, 20px;
+    height: 20px;
+    width: 20px;
+    margin-right: 10px;
+    margin-left: 40px;
+}
+
+.no-pets-icon-purple {
+    background: url(img/no-pets-purple.svg) no-repeat 50%;
+    background-size: 20px, 20px;
+    height: 20px;
+    width: 20px;
+    margin-right: 10px;
+    margin-left: 40px;
+}
+
+
 .price {
     top: 20px;
     left: 20px;
@@ -500,6 +593,7 @@ a.no-style:link {
     font-size: 20px;
     font-weight: 400;
     padding: 8px 18px;
+    margin: 0 10px;
 }
 
 .apt-det-back {
@@ -509,6 +603,15 @@ a.no-style:link {
     height: 600px;
     min-width: 100%;
     left: 0;
+}
+
+.amenities-back {
+    background: #f4f5f7;
+    height: 100px;
+    left: 0;
+    right: calc(100vw / 2 + 460px);
+    position: absolute;
+    z-index: -10;
 }
 
 .apt-name {
@@ -534,19 +637,62 @@ a.no-style:link {
     height: 250px;
     background: white;
     margin-top: 80px;
-    border-radius: 7px ;
+    border-radius: 7px;
     box-shadow: 0 14px 24px 0 rgba(50, 48, 58, 0.25);
 }
 
-.available-from{
+.available-from {
     width: 100%;
     font-size: 14px;
 }
 
-.save{
+.save {
     width: 100%;
 }
 
-.save:hover{
+.save:hover {
     cursor: pointer;
+}
+
+.amenities {
+    background: #f4f5f7;
+}
+
+.apt-avatar {
+    background: url(img/avatar.svg) no-repeat 100% !important;
+    background-size: 50px, 50px !important;
+    width: 50px;
+    height: 50px;
+}
+
+
+.apt-h {
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+.amenitie{
+    background: url(img/amenitie.svg) no-repeat 100% !important;
+    background-size: 20px, 20px;
+    height: 20px;
+    width: 20px;
+}
+
+.amenitie-selected{
+    background: url(img/amenitie-purple.svg) no-repeat 100% !important;
+    background-size: 20px, 20px;
+    height: 20px;
+    width: 20px;
+    opacity: 100% !important;
+}
+
+
+.option{
+    opacity: 30%;
+    cursor: pointer;
+}
+
+.option:hover{
+    opacity: 100%;
 }
