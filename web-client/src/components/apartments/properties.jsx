@@ -40,7 +40,7 @@ class Properties extends Component {
         const { apartments } = this.state;
         const showLoader = apartments.length === 0;
         return (
-            <div style={ { marginTop: 130 } }>
+            <div style={ { marginTop: 130, marginBottom: 80 } }>
                 <ScrollToTop/>
                 { showLoader &&
                 <div className="d-flex justify-content-center" style={ { paddingTop: 300 } }>
@@ -57,7 +57,8 @@ class Properties extends Component {
                                beds={ apartment.beds }
                                bath={ apartment.bath }
                                squareMeters={ apartment.squareMeters }
-                               price={ apartment.price }/>)
+                               price={ apartment.price }
+                               photo={ apartment.photos[0] }/>)
                 }
                 { !showLoader &&
                 <Link className="no-style" to={ `/add-apartment` }>

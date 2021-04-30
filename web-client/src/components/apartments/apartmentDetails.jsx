@@ -11,8 +11,7 @@ class ApartmentDetails extends Component {
     state = {
         apartment: {},
         addressStr: '',
-        user: {},
-        photos: [{}, {}, {}]
+        user: {}
     };
 
     async populateApartment() {
@@ -98,14 +97,22 @@ class ApartmentDetails extends Component {
     }
 
     render() {
-        const { name, type, beds, bath, squareMeters, price, description, owner } = this.state.apartment;
+        const { name, type, beds, bath, squareMeters, price, description, owner, photos } = this.state.apartment;
         const { firstName, lastName, phoneNumber, avatar } = this.state.user;
-        const { addressStr, photos } = this.state;
+        const { addressStr } = this.state;
+        let mt = 100;
+        if (photos && photos.length !== 0) {
+            mt = 50;
+        }
+
         return (
             <div className="d-flex justify-content-center" style={ { marginTop: 60 } }>
                 <ScrollToTop/>
                 <div style={ { width: 940 } }>
-                    <div className="apt-det-back"/>
+                    { }
+                    <div className={ !(photos && photos[0]) ? "apt-det-back" : "apt-add-back"}>
+                        { photos && photos[0] && <img src={ photos[0] } className="apt-photo-back"/> }
+                    </div>
                     <div className="d-flex justify-content-between" style={ { marginTop: 105 } }>
                         <span className="apt-badge">{ type }</span>
                         <span className="apt-badge">{ addressStr }</span>
@@ -129,14 +136,16 @@ class ApartmentDetails extends Component {
                                 </div>
                             </div>
                             <div className="row">
-                                { photos.map(p =>  {
-                                    return (
-                                        <div className="add-photo">
-
-                                        </div>);
+                                { photos && photos.map(p => {
+                                    if (p) {
+                                        return (
+                                            <div className="add-photo">
+                                                <img src={ p } className="apt-photo"/>
+                                            </div>);
+                                    } else return '';
                                 }) }
                             </div>
-                            <div style={ { marginTop: 50, marginBottom: 100 } }>
+                            <div style={ { marginTop: mt, marginBottom: 100 } }>
                                 <div className="apt-h">{ type } Description</div>
                                 <div style={ { fontSize: 20 } }>{ description }</div>
                             </div>
