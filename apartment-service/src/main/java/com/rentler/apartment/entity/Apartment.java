@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -69,6 +70,10 @@ public class Apartment {
 
     @Column(nullable = false)
     private LocalDate creationDate;
+
+    @ElementCollection
+    @Column(columnDefinition="TEXT")
+    private List<String> photos;
 
     @PrePersist
     public void prePersist() {

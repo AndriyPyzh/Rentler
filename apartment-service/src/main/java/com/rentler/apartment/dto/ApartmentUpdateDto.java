@@ -11,6 +11,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -60,4 +61,6 @@ public class ApartmentUpdateDto {
     @NotNull
     @FutureOrPresent
     private LocalDate availableFrom;
+
+    private List<String> photos;
 }
