@@ -1,5 +1,20 @@
 # Rentler
 
+Rentler is the real estate platform that offers a digital rental journey. It automates the standard rental tasks making the whole experience contact-free. All can be done in one place, hassle-free, and with no face-to-face contact.
+
+## How to run all the things?
+
+Keep in mind, that you are going to start 8 Spring Boot applications, Postgres instance, RabbitMq and React App. 
+Make sure you have `4 Gb` RAM available on your machine.
+
+#### Before you start
+- Install Docker and Docker Compose.
+- Change environment variable values in `.env` file for more security or leave it as it is.
+- Make sure to build the project: `mvn install -DskipTests`
+
+#### To Launch
+Run `docker-compose up ` to start all things.
+
 ## URLs
 
 ### Web Client
@@ -38,16 +53,7 @@ http://localhost:8100
 
 http://localhost:8200
 
-## How to run all the things?
 
-Keep in mind, that you are going to start 7 Spring Boot applications, 1 Postgres instance and RabbitMq. Make sure you have `4 Gb` RAM available on your machine. You can always run just vital services though: Gateway, Registry, Config, Auth Service and Account Service.
-
-#### Before you start
-- Install Docker and Docker Compose.
-- Change environment variable values in `.env` file for more security or leave it as it is.
-- Make sure to build the project: `mvn install -DskipTests`
-
-Run `docker-compose up ` to start all things.
 
 
 
