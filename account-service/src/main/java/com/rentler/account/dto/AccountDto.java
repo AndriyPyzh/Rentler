@@ -27,4 +27,6 @@ public class AccountDto {
     private LocalDate dateOfBirth;
 
     private LocalDateTime dateOfRegistration;
+
+    private String avatar;
 }

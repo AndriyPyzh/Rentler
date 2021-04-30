@@ -40,4 +40,5 @@ public class AccountUpdateDto {
     @Past
     private LocalDate dateOfBirth;
 
+    private String avatar;
 }

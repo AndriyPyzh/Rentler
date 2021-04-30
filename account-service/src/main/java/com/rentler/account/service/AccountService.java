@@ -108,6 +108,7 @@ public class AccountService {
 
         account.setFirstName(updateDto.getFirstName());
         account.setLastName(updateDto.getLastName());
+        account.setAvatar(updateDto.getAvatar());
 
         return accountMapper.toDto(accountRepository.save(account));
     }
