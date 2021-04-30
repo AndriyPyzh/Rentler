@@ -42,15 +42,16 @@ const NavBar = (props) => {
                         </NavPopover>
 
                         <NavLink className="btn btn-outline-warning mx-2 list-property-button"
-                                 to="/add-apartment">List a Property</NavLink>
+                                 to="/add-apartmet">List a Property</NavLink>
 
-                        <NavPopover title={ user.user_name } classes="nav-item navbar-avatar no-button m-1 mr-3 ml-4">
+                        { user.data.avatar && <img src={ user.data.avatar } className="navbar-avatar"/> }
+                        <NavPopover title={ user.data.username }
+                                    classes={ "nav-item no-button m-1 mr-3 ml-4 " + (user.data.avatar ? "navbar-avatar-popover no-button" : "navbar-avatar-empty") }>
                             <NavLink className="nav-item nav-link border-bottom"
                                      to="/settings">Account & Settings</NavLink>
                             <Logout classes="nav-item nav-link no-button">Log Out</Logout>
                         </NavPopover>
                     </React.Fragment> }
-
                 </div>
             </div>
         </nav>

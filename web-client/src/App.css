@@ -175,6 +175,21 @@ footer {
 }
 
 .navbar-avatar {
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    border-radius: 100%;
+    position: absolute;
+    z-index: -10;
+    right: 3.2%;
+}
+
+.navbar-avatar-popover {
+    width: 40px;
+    height: 40px;
+}
+
+.navbar-avatar-empty {
     background: url(img/avatar.svg) no-repeat 100% !important;
     background-size: 40px, 40px !important;
     width: 40px;
@@ -658,13 +673,19 @@ a.no-style:link {
     background: #f4f5f7;
 }
 
-.apt-avatar {
+.apt-avatar-empty {
     background: url(img/avatar.svg) no-repeat 100% !important;
     background-size: 50px, 50px !important;
     width: 50px;
     height: 50px;
 }
 
+.apt-avatar {
+    object-fit: cover;
+    border-radius: 50%;
+    width: 50px !important;
+    height: 50px !important;
+}
 
 .apt-h {
     font-size: 48px;

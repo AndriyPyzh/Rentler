@@ -19,6 +19,7 @@ import SettingsForm from "./components/pages/settingsForm";
 import Footer from "./components/shared/footer";
 import NavBar from "./components/shared/navBar";
 import authService from "./services/authService";
+import userService from "./services/userService";
 
 class App extends Component {
     state = {
@@ -26,8 +27,8 @@ class App extends Component {
         footer: true
     };
 
-    componentDidMount() {
-        const user = authService.getCurrentUser();
+    async componentDidMount() {
+        const user = await userService.getCurrentAccount()
         this.setState({ user });
     }
 

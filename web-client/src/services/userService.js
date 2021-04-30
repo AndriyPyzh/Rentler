@@ -18,7 +18,8 @@ export function updateInfo(info) {
         firstName: info.firstName,
         lastName: info.lastName,
         phoneNumber: info.phone,
-        dateOfBirth: info.dateOfBirth
+        dateOfBirth: info.dateOfBirth,
+        avatar: info.avatar
     });
 }
 

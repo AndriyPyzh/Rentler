@@ -43,11 +43,24 @@ class Form extends Component {
         this.doSubmit();
     };
 
-    handleFileChange = ({ target }) => {
-        const img = URL.createObjectURL(target.files[0]);
+    handleFileChange = async ({ target }) => {
+        const img = await this.convertBase64(target.files[0]);
         const { data } = { ...this.state };
         data[target.name] = img;
         this.setState({ data });
+    };
+
+    convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+            fileReader.onerror = (error) => {
+                reject(error);
+            };
+        });
     };
 
     handleChange = ({ currentTarget: input }) => {

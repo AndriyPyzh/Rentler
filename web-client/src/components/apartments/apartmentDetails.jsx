@@ -97,8 +97,8 @@ class ApartmentDetails extends Component {
     }
 
     render() {
-        const { name, type, beds, bath, squareMeters, price, description, owner, amenities } = this.state.apartment;
-        const { firstName, lastName, phoneNumber } = this.state.user;
+        const { name, type, beds, bath, squareMeters, price, description, owner } = this.state.apartment;
+        const { firstName, lastName, phoneNumber, avatar } = this.state.user;
         const { addressStr } = this.state;
         return (
             <div className="d-flex justify-content-center" style={ { marginTop: 60 } }>
@@ -142,10 +142,14 @@ class ApartmentDetails extends Component {
                                 </div>
                             </div>
                             <div className="row" style={ { marginTop: 50, marginBottom: 50 } }>
-                                <div className="col font-weight-bold" style={ { fontSize: 24, height: 55 } }>Contact
-                                    Information
+                                <div className="col font-weight-bold" style={ { fontSize: 24, height: 55 } }>
+                                    Contact Information
                                 </div>
-                                <div className="col-2 apt-avatar"/>
+                                { avatar ?
+                                    <div className="col-2 d-flex flex-row-reverse">
+                                        <img className="apt-avatar" src={ avatar }/>
+                                    </div> :
+                                    <div className="col-2 apt-avatar-empty"/> }
                                 <div className="col" style={ { marginLeft: 10 } }>
                                     <div className="row">
                                         <Link to={ "/profile/" + owner }

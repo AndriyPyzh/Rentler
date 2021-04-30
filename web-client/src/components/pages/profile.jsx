@@ -26,7 +26,8 @@ class Profile extends Component {
             firstName: data.firstName,
             lastName: data.lastName,
             phoneNumber: data.phoneNumber,
-            email: data.email
+            email: data.email,
+            avatar: data.avatar
         });
     };
 
@@ -70,7 +71,7 @@ class Profile extends Component {
                             <div className="d-flex justify-content-center">
                                 { !avatar && <div className="empty-avatar d-flex justify-content-center"/> }
                                 { avatar &&
-                                <img src={ this.state.data.avatar } alt="avatar uploaded" className="avatar"/> }
+                                <img src={ this.state.avatar } alt="avatar uploaded" className="avatar"/> }
                             </div>
                             <div className="font-weight-bold profile-name">{ `${ firstName } ${ lastName }` }</div>
                         </div>

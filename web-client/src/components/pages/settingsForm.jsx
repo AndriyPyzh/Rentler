@@ -37,7 +37,8 @@ class SettingsForm extends Form {
             language: { string: { regex: { base: 'should be a valid phone number' } } }
         }),
         dateOfBirth: Joi.date().allow(null),
-        password: Joi.string().min(8).max(30).label('New Password')
+        password: Joi.string().min(8).max(30).label('New Password'),
+        avatar: Joi.any()
     };
 
     async populateInfo() {
@@ -45,8 +46,8 @@ class SettingsForm extends Form {
         this.setState({ username });
 
         const { data: account } = await userService.getCurrentAccount();
-        let { firstName, lastName, email, phoneNumber: phone, dateOfBirth } = account;
-        const data = { firstName, lastName, email, phone, dateOfBirth };
+        let { firstName, lastName, email, phoneNumber: phone, dateOfBirth, avatar } = account;
+        const data = { firstName, lastName, email, phone, dateOfBirth, avatar };
         this.setState({ data, initState: { ...data } });
     }
 
@@ -57,6 +58,7 @@ class SettingsForm extends Form {
     doSubmit = async () => {
         try {
             const { data: user, username } = this.state;
+            console.log(user);
             await userService.updateInfo(user);
             window.location = `/profile/${ username }`;
         } catch (ex) {
