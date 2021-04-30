@@ -430,6 +430,13 @@ input[type="file"] + label {
     border-radius: 0.2rem 0.2rem 0 0;
 }
 
+.apt-preview {
+    width: 348px;
+    height: 178px;
+    object-fit: cover;
+    border-radius: 0.2rem 0.2rem 0 0;
+}
+
 .apt-initials {
     width: auto;
     height: 80px !important;

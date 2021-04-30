@@ -70,7 +70,8 @@ class ApartmentsList extends Component {
                                beds={ apartment.beds }
                                bath={ apartment.bath }
                                squareMeters={ apartment.squareMeters }
-                               price={ apartment.price }/>)
+                               price={ apartment.price }
+                               photo={ apartment.photos[0] }/>)
                 }
 
                 { showBottomLoader &&
