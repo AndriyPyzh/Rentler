@@ -620,6 +620,22 @@ a.no-style:link {
     left: 0;
 }
 
+.apt-photo-back {
+    object-fit: cover;
+    height: 600px;
+    width: 100%;
+    opacity: 0.3;
+}
+
+.apt-add-back {
+    background-color: #4d4a6e;
+    position: absolute;
+    z-index: -10;
+    height: 600px;
+    min-width: 100%;
+    left: 0;
+}
+
 .amenities-back {
     background: #f4f5f7;
     height: 100px;
@@ -654,6 +670,16 @@ a.no-style:link {
     margin-top: 80px;
     border-radius: 7px;
     box-shadow: 0 14px 24px 0 rgba(50, 48, 58, 0.25);
+}
+
+.del-icon {
+    background: url(img/remove.png) no-repeat 100% !important;
+    background-size: 30px, 30px !important;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: -10px;
+    right: -10px;
 }
 
 .available-from {
@@ -749,4 +775,26 @@ a.no-style:link {
     color: #9c99b6;
     font-size: 14px;
     margin-left: 100px;
+}
+
+.add-photo {
+    width: 210px;
+    height: 210px;
+    background-color: #f5f5f5;
+    margin: 10px;
+    border-radius: 6px;
+    transition: transform .2s;
+    cursor: pointer;
+}
+
+.add-photo:hover {
+    transform: scale(1.06);
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+}
+
+.apt-photo {
+    width: 210px;
+    height: 210px;
+    object-fit: cover;
+    border-radius: 6px;
 }

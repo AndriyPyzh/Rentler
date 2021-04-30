@@ -25,7 +25,8 @@ class AddApartment extends Form {
         amenities: [],
         types: [],
         errors: {},
-        showMessages: {}
+        showMessages: {},
+        photos: [null, null, null]
     };
 
     schema = {
@@ -115,12 +116,30 @@ class AddApartment extends Form {
         );
     };
 
+    handleImageAdding = async ({ target }) => {
+        const img = await this.convertBase64(target.files[0]);
+        const photos = this.state.photos;
+        for (let i = 0; i < photos.length; i++)
+            if (!photos[i]) {
+                photos[i] = img;
+                break;
+            }
+        this.setState({ photos });
+    };
+    deletePhoto = (inx) => {
+        const photos = this.state.photos;
+        photos.splice(inx, 1);
+        photos.push(null);
+        this.setState({ photos });
+    };
+
     doSubmit = async () => {
         const apartment = { ...this.state.data };
         apartment.amenities = this.state.selectedAmenities;
         apartment.petPolicy = this.state.petPolicy;
         apartment.address = { street: apartment.street, city: apartment.city, houseNumber: apartment.houseNumber };
         apartment.floor = -1;
+        apartment.photos = this.state.photos;
         try {
             await apartmentService.addApartment(apartment);
             this.props.history.push('/properties');
@@ -133,12 +152,14 @@ class AddApartment extends Form {
     };
 
     render() {
-        const { amenities, petPolicy } = this.state;
+        const { amenities, petPolicy, photos } = this.state;
         return (
             <div className="d-flex justify-content-center" style={ { marginTop: 60 } }>
                 <ScrollToTop/>
                 <div style={ { width: 940 } }>
-                    <div className="apt-det-back"/>
+                    <div className="apt-add-back">
+                        { photos[0] && <img src={ photos[0] } className="apt-photo-back"/> }
+                    </div>
                     <form onSubmit={ this.handleSubmit } className="row" style={ { marginLeft: 0, marginRight: 0 } }>
                         <div style={ { width: 700, paddingLeft: 10, paddingRight: 10, fontWeight: "bold" } }>
                             <div className="d-flex align-items-center" style={ { height: 300 } }>
@@ -186,7 +207,24 @@ class AddApartment extends Form {
                                     </div>
                                 </div>
                             </div>
-                            <div style={ { marginTop: 100, fontWeight: 'normal' } }>
+                            <div className="row mt-30">
+                                { photos.map((p, inx) => {
+                                    return (p ?
+                                        <div className="add-photo">
+                                            <div className="del-icon" onClick={ () => this.deletePhoto(inx) }/>
+                                            <img src={ p } className="apt-photo"/>
+                                        </div>
+                                        :
+                                        <div
+                                            className="add-photo d-flex justify-content-center align-items-center font-weight-normal">
+                                            <span className="text-gray">Add Photo</span>
+                                            <input type="file" accept="image/*"
+                                                   style={ { width: 210, height: 210, zIndex: 10, cursor: "pointer" } }
+                                                   onChange={ this.handleImageAdding }/>
+                                        </div>);
+                                }) }
+                            </div>
+                            <div style={ { marginTop: 30, fontWeight: 'normal' } }>
                                 <div className="apt-h">Pets Policy</div>
                                 <div>
                                     { petPolicy === 'Cats Allowed' ?

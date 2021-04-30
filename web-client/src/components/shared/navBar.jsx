@@ -42,7 +42,7 @@ const NavBar = (props) => {
                         </NavPopover>
 
                         <NavLink className="btn btn-outline-warning mx-2 list-property-button"
-                                 to="/add-apartmet">List a Property</NavLink>
+                                 to="/add-apartment">List a Property</NavLink>
 
                         { user.data.avatar && <img src={ user.data.avatar } className="navbar-avatar"/> }
                         <NavPopover title={ user.data.username }

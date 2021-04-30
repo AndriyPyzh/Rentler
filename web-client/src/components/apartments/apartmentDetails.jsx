@@ -11,7 +11,8 @@ class ApartmentDetails extends Component {
     state = {
         apartment: {},
         addressStr: '',
-        user: {}
+        user: {},
+        photos: [{}, {}, {}]
     };
 
     async populateApartment() {
@@ -99,7 +100,7 @@ class ApartmentDetails extends Component {
     render() {
         const { name, type, beds, bath, squareMeters, price, description, owner } = this.state.apartment;
         const { firstName, lastName, phoneNumber, avatar } = this.state.user;
-        const { addressStr } = this.state;
+        const { addressStr, photos } = this.state;
         return (
             <div className="d-flex justify-content-center" style={ { marginTop: 60 } }>
                 <ScrollToTop/>
@@ -116,7 +117,7 @@ class ApartmentDetails extends Component {
                                     { name }
                                 </div>
                             </div>
-                            <div style={ { height: 100, color: "white" } }>
+                            <div style={ { height: 80, color: "white" } }>
                                 <div className="d-flex align-items-center">
                                     <div className="beds-icon-white d-inline-flex"/>
                                     <span>Bed: <b>{ beds }</b></span>
@@ -127,7 +128,15 @@ class ApartmentDetails extends Component {
                                     { this.getPetsPolicy() }
                                 </div>
                             </div>
-                            <div style={ { marginTop: 100, marginBottom: 100 } }>
+                            <div className="row">
+                                { photos.map(p =>  {
+                                    return (
+                                        <div className="add-photo">
+
+                                        </div>);
+                                }) }
+                            </div>
+                            <div style={ { marginTop: 50, marginBottom: 100 } }>
                                 <div className="apt-h">{ type } Description</div>
                                 <div style={ { fontSize: 20 } }>{ description }</div>
                             </div>
