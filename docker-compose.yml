@@ -136,7 +136,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 300M
+          memory: 500M
 
   apartment-service:
     container_name: apartment-service
@@ -167,7 +167,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 300M
+          memory: 500M
 
   postgres:
     image: postgres:alpine
