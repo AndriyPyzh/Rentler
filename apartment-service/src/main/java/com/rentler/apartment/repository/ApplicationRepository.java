@@ -11,10 +11,13 @@ import java.util.Optional;
 @Repository
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
 
-    Optional<Application> findFirstByApartmentOrderByPrice(Apartment apartment);
+    Optional<Application> findFirstByApartmentOrderByPriceDesc(Apartment apartment);
 
     List<Application> findAllByOwner(String owner);
 
     List<Application> findAllByApartment(Apartment apartment);
+
+    Integer countAllByApartment(Apartment apartment);
+
 }
 

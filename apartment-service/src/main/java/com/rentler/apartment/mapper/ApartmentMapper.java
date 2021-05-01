@@ -25,13 +25,16 @@ public class ApartmentMapper extends Mapper<Apartment, ApartmentDto> {
     @PostConstruct
     public void setupMapper() {
         mapper.createTypeMap(Apartment.class, ApartmentDto.class)
-                .addMappings(m -> m.skip(ApartmentDto::setHighestPrice)).setPostConverter(toDtoConverter());
+                .addMappings(m -> m.skip(ApartmentDto::setHighestPrice))
+                .addMappings(m -> m.skip(ApartmentDto::setApplicationsCount))
+                .setPostConverter(toDtoConverter());
     }
 
     @Override
     public void mapEntityFields(Apartment source, ApartmentDto destination) {
-        Optional<Application> application = applicationRepository.findFirstByApartmentOrderByPrice(source);
+        Optional<Application> application = applicationRepository.findFirstByApartmentOrderByPriceDesc(source);
         application.ifPresent(value -> destination.setHighestPrice(value.getPrice()));
+        destination.setApplicationsCount(applicationRepository.countAllByApartment(source));
     }
 }
 

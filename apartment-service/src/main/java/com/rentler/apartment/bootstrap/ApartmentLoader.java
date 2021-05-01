@@ -5,7 +5,6 @@ import com.rentler.apartment.dto.ApartmentUpdateDto;
 import com.rentler.apartment.enums.Amenities;
 import com.rentler.apartment.enums.ApartmentType;
 import com.rentler.apartment.enums.PetPolicy;
-import com.rentler.apartment.repository.ApartmentRepository;
 import com.rentler.apartment.service.ApartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -18,13 +17,10 @@ import java.util.Set;
 
 @Component
 public class ApartmentLoader implements ApplicationListener<ApplicationReadyEvent> {
-    private final ApartmentRepository apartmentRepository;
     private final ApartmentService apartmentService;
 
     @Autowired
-    public ApartmentLoader(ApartmentRepository apartmentRepository,
-                           ApartmentService apartmentService) {
-        this.apartmentRepository = apartmentRepository;
+    public ApartmentLoader(ApartmentService apartmentService) {
         this.apartmentService = apartmentService;
     }
 
@@ -44,7 +40,7 @@ public class ApartmentLoader implements ApplicationListener<ApplicationReadyEven
                 .beds(2)
                 .bath(2)
                 .floor(4)
-                .squareMeters(55.5)
+                .squareMeters(55.0)
                 .petPolicy(PetPolicy.NO_PETS)
                 .description("Some description...")
                 .amenities(Set.of(Amenities.GYM, Amenities.PARKING))
@@ -52,7 +48,6 @@ public class ApartmentLoader implements ApplicationListener<ApplicationReadyEven
                 .build();
 
         apartmentService.create(apartment, "andriy");
-
     }
 }
 

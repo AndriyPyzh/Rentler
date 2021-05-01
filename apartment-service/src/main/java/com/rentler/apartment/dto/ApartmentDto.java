@@ -51,4 +51,6 @@ public class ApartmentDto {
     private List<String> photos;
 
     private Integer highestPrice;
+
+    private Integer applicationsCount;
 }
