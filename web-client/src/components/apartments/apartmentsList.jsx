@@ -21,7 +21,7 @@ class ApartmentsList extends Component {
             const { data: newApartments } = await apartmentService.getApartments(page, size);
             if (newApartments.length) {
                 const apartments = [...this.state.apartments, ...newApartments];
-                this.setState({ apartments, showBottomLoader: true, pageable: { page: page + 1, size } });
+                this.setState({ apartments, showBottomLoader: false, pageable: { page: page + 1, size } });
             } else {
                 this.setState({ showBottomLoader: false });
             }
@@ -36,6 +36,7 @@ class ApartmentsList extends Component {
 
     loadMore = async () => {
         if (window.innerHeight + document.documentElement.scrollTop === document.scrollingElement.scrollHeight) {
+            this.setState({ showBottomLoader: true });
             await this.loadApartments();
         }
     };

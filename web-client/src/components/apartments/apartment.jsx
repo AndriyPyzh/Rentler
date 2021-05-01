@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 
-const Apartment = ({ id, title, address, bath, beds, squareMeters, price, photo }) => {
+const Apartment = ({ id, title, address, bath, beds, squareMeters, price, photo, edit }) => {
 
     let formattedPrice = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
@@ -10,6 +10,7 @@ const Apartment = ({ id, title, address, bath, beds, squareMeters, price, photo 
             <div className="d-inline-flex " style={ { width: 370, height: 340, padding: 10, marginRight: 0 } }>
                 <div className="card apartment-card" style={ { width: 350, height: 320 } }>
                     <span className="price d-inline-flex">${ formattedPrice }</span>
+                    { edit && <Link to={ "/edit-apartment/" + id } className="apt-edit d-inline-flex"/> }
                     { photo ?
                         <img src={ photo } className="apt-preview"/> :
                         <div className="no-apartment-image"/>

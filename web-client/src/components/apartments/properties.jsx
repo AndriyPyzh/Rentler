@@ -40,14 +40,34 @@ class Properties extends Component {
         const { apartments } = this.state;
         const showLoader = apartments.length === 0;
         return (
-            <div style={ { marginTop: 130, marginBottom: 80 } }>
+            <div style={ { marginTop: 80, marginBottom: 80 } }>
                 <ScrollToTop/>
                 { showLoader &&
                 <div className="d-flex justify-content-center" style={ { paddingTop: 300 } }>
                     <div className="loader"/>
                 </div>
                 }
-
+                { !showLoader &&
+                <div className="text-center" style={ { fontSize: 34, fontWeight: "bold", marginBottom: 10 } }>My
+                    Properties</div> }
+                { !showLoader &&
+                <Link className="no-style" to={ `/add-apartment` }>
+                    <div className="d-inline-flex " style={ { width: 370, height: 340, padding: 10, marginRight: 0 } }>
+                        <div className="card apartment-card" style={ { width: 350, height: 320 } }>
+                            <div style={ { height: 200 } }>
+                                <div className="plus-button">
+                                    <div className="plus" style={ { paddingTop: 70, marginLeft: 20 } }/>
+                                </div>
+                            </div>
+                            <div style={ { height: 200 } }>
+                                <div className="plus-label">
+                                    Add Property
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Link>
+                }
                 { !showLoader &&
                 apartments.map(apartment =>
                     <Apartment id={ apartment.id }
@@ -58,28 +78,8 @@ class Properties extends Component {
                                bath={ apartment.bath }
                                squareMeters={ apartment.squareMeters }
                                price={ apartment.price }
-                               photo={ apartment.photos[0] }/>)
-                }
-                { !showLoader &&
-                <Link className="no-style" to={ `/add-apartment` }>
-                    <div className="d-inline-flex " style={ { width: 370, height: 340, padding: 10, marginRight: 0 } }>
-                        <div className="card apartment-card" style={ { width: 350, height: 320 } }>
-                            <div style={ { height: 200 } }>
-                                <div className="plus-button">
-                                    <div className="plus" style={ { paddingTop: 70, marginLeft: 20 } }/>
-                                </div>
-                            </div>
-                            <div style={ { height: 90 } }>
-                                <div className="plus-label">
-                                    Add Property
-                                </div>
-                            </div>
-                            <div className="plus-text">Rent your
-                                place faster!
-                            </div>
-                        </div>
-                    </div>
-                </Link>
+                               photo={ apartment.photos[0] }
+                               edit/>)
                 }
 
             </div>

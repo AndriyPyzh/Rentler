@@ -29,11 +29,18 @@ export function addApartment(apartment) {
     });
 }
 
+export function updateApartment(apartment) {
+    return http.put(`${ apiEndpoint }`, {
+        ...apartment
+    });
+}
+
 export default {
     getApartments,
     getById,
     getByUsername,
     getAmenities,
     getTypes,
-    addApartment
+    addApartment,
+    updateApartment
 };

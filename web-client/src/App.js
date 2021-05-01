@@ -7,6 +7,7 @@ import AddApartment from "./components/apartments/addApartment";
 import ApartmentDetails from "./components/apartments/apartmentDetails";
 import Apartments from "./components/apartments/apartments";
 import Applications from "./components/apartments/applications";
+import EditApartment from "./components/apartments/editApartment";
 import Properties from "./components/apartments/properties";
 import AddInfoForm from "./components/auth/addInfoForm";
 import LoginForm from "./components/auth/loginForm";
@@ -18,7 +19,6 @@ import Profile from "./components/pages/profile";
 import SettingsForm from "./components/pages/settingsForm";
 import Footer from "./components/shared/footer";
 import NavBar from "./components/shared/navBar";
-import authService from "./services/authService";
 import userService from "./services/userService";
 
 class App extends Component {
@@ -28,9 +28,13 @@ class App extends Component {
     };
 
     async componentDidMount() {
-        const user = await userService.getCurrentAccount()
-        this.setState({ user });
+        try {
+            const user = await userService.getCurrentAccount();
+            this.setState({ user });
+        } catch (ex) {
+        }
     }
+
 
     hideNavbar = () => {
         this.setState({ navbar: false });
@@ -68,6 +72,8 @@ class App extends Component {
                         <Route path="/settings" component={ SettingsForm }/>
                         <Route path="/applications" component={ Applications }/>
                         <Route path="/properties" component={ Properties }/>
+                        <Route path="/edit-apartment/:id"
+                               render={ props => <EditApartment { ...props }/> }/>
                         <Route path="/apartments/:id"
                                render={ props => <ApartmentDetails { ...props }/> }/>
                         <Route path="/apartments"

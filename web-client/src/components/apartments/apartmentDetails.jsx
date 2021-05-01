@@ -53,11 +53,6 @@ class ApartmentDetails extends Component {
         return price && price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
-    getAmenitiesHeight() {
-        const x = document.getElementById('amenities');
-        return x ? x.clientHeight : 0;
-    }
-
     getAmenities() {
         const { amenities } = this.state.apartment;
         return amenities ? amenities.map(
@@ -97,20 +92,23 @@ class ApartmentDetails extends Component {
     }
 
     render() {
-        const { name, type, beds, bath, squareMeters, price, description, owner, photos } = this.state.apartment;
+        const { name, type, beds, bath, squareMeters, price, description, owner, photos, amenities } = this.state.apartment;
         const { firstName, lastName, phoneNumber, avatar } = this.state.user;
         const { addressStr } = this.state;
         let mt = 100;
         if (photos && photos.length !== 0) {
             mt = 50;
         }
+        let amHeight = 237;
+        if (amenities)
+            amHeight += 40 * Math.floor((amenities.length + 1) / 2);
 
         return (
             <div className="d-flex justify-content-center" style={ { marginTop: 60 } }>
                 <ScrollToTop/>
                 <div style={ { width: 940 } }>
                     { }
-                    <div className={ !(photos && photos[0]) ? "apt-det-back" : "apt-add-back"}>
+                    <div className={ !(photos && photos[0]) ? "apt-det-back" : "apt-add-back" }>
                         { photos && photos[0] && <img src={ photos[0] } className="apt-photo-back"/> }
                     </div>
                     <div className="d-flex justify-content-between" style={ { marginTop: 105 } }>
@@ -120,7 +118,12 @@ class ApartmentDetails extends Component {
                     <div className="row" style={ { marginLeft: 0, marginRight: 0 } }>
                         <div className="" style={ { width: 700, paddingLeft: 10, paddingRight: 10 } }>
                             <div className="d-flex align-items-center" style={ { height: 300 } }>
-                                <div style={ { fontSize: 72, lineHeight: '72px', fontWeight: "bold", color: "white" } }>
+                                <div style={ {
+                                    fontSize: 72,
+                                    lineHeight: '72px',
+                                    fontWeight: "bold",
+                                    color: "white"
+                                } }>
                                     { name }
                                 </div>
                             </div>
@@ -150,7 +153,7 @@ class ApartmentDetails extends Component {
                                 <div style={ { fontSize: 20 } }>{ description }</div>
                             </div>
                             <div id="amenities" className="amenities">
-                                <div className="amenities-back" style={ { height: this.getAmenitiesHeight() } }/>
+                                <div className="amenities-back" style={ { height: amHeight } }/>
                                 <div style={ { paddingTop: 70, paddingBottom: 70 } }>
                                     <div className="apt-h">Amenities
                                     </div>
@@ -187,12 +190,15 @@ class ApartmentDetails extends Component {
                                     </div>
                                 </div>
                                 <div className="d-flex align-items-center"
-                                     style={ { height: 105, paddingTop: 25, paddingBottom: 25 } }>
+                                     style={ { height: 105, paddingTop: 25, paddingBottom: 0 } }>
                                     <div className="w-100">
-                                        <div className="w-100" style={ { color: '#9c99b6', fontSize: 14 } }>price</div>
+                                        <div className="w-100" style={ { color: '#9c99b6', fontSize: 16 } }>price</div>
                                         <div className="w-100 font-weight-bold"
-                                             style={ { fontSize: 24 } }>${ this.formatPrice(price) }</div>
+                                             style={ { fontSize: 28 } }>${ this.formatPrice(price) }</div>
                                     </div>
+                                </div>
+                                <div className="d-flex align-items-center" style={ { paddingBottom: 20 } }>
+                                    {/*<div className="w-100 text-gray">highest offer: ${ this.formatPrice(12000) }</div>*/ }
                                 </div>
                                 <div className="d-flex align-items-center"
                                      style={ { height: 40, backgroundColor: '#f4f5f7' } }>

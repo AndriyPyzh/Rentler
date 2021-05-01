@@ -22,11 +22,11 @@ class AddApartment extends Form {
         },
         selectedAmenities: [],
         petPolicy: 'No Pets',
+        photos: [null, null, null],
         amenities: [],
         types: [],
         errors: {},
-        showMessages: {},
-        photos: [null, null, null]
+        showMessages: {}
     };
 
     schema = {
@@ -35,9 +35,9 @@ class AddApartment extends Form {
         city: Joi.string(),
         houseNumber: Joi.string(),
         type: Joi.string(),
-        beds: Joi.string(),
-        bath: Joi.string(),
-        squareMeters: Joi.string(),
+        beds: Joi.number(),
+        bath: Joi.number(),
+        squareMeters: Joi.number(),
         description: Joi.string(),
         availableFrom: Joi.date().allow(null),
         price: Joi.number()
