@@ -72,8 +72,11 @@ public class Apartment {
     private LocalDate creationDate;
 
     @ElementCollection
-    @Column(columnDefinition="TEXT")
+    @Column(columnDefinition = "TEXT")
     private List<String> photos;
+
+    @OneToMany(mappedBy = "apartment")
+    private List<Application> applications;
 
     @PrePersist
     public void prePersist() {

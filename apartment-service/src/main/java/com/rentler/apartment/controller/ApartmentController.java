@@ -2,6 +2,7 @@ package com.rentler.apartment.controller;
 
 import com.rentler.apartment.dto.ApartmentDto;
 import com.rentler.apartment.dto.ApartmentUpdateDto;
+import com.rentler.apartment.dto.ApplicationDto;
 import com.rentler.apartment.dto.SearchParams;
 import com.rentler.apartment.service.ApartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,14 @@ public class ApartmentController {
                 .body(apartmentService.getById(id));
     }
 
+    @GetMapping("/{id}/applications")
+    public ResponseEntity<List<ApplicationDto>> getApplications(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(apartmentService.getApplicationsByApartmentId(id));
+    }
+
     @GetMapping("/search")
-    public ResponseEntity<List<ApartmentDto>> getByOwner(SearchParams params) {
+    public ResponseEntity<List<ApartmentDto>> getByParams(SearchParams params) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(apartmentService.getByParams(params));
     }

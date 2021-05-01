@@ -49,4 +49,6 @@ public class ApartmentDto {
     private LocalDate creationDate;
 
     private List<String> photos;
+
+    private Integer highestPrice;
 }

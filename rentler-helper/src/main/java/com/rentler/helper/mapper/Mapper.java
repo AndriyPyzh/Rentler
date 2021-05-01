@@ -2,7 +2,6 @@ package com.rentler.helper.mapper;
 
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Objects;
 
@@ -10,12 +9,12 @@ public abstract class Mapper<E, D> {
 
     private final Class<E> entityClass;
     private final Class<D> dtoClass;
-    @Autowired
-    ModelMapper mapper;
+    protected final ModelMapper mapper;
 
     public Mapper(Class<E> entityClass, Class<D> dtoClass) {
         this.entityClass = entityClass;
         this.dtoClass = dtoClass;
+        mapper = new ModelMapper();
     }
 
     public E toEntity(D dto) {
@@ -30,7 +29,7 @@ public abstract class Mapper<E, D> {
                 : mapper.map(entity, dtoClass);
     }
 
-    Converter<E, D> toDtoConverter() {
+    protected Converter<E, D> toDtoConverter() {
         return context -> {
             E source = context.getSource();
             D destination = context.getDestination();
@@ -39,7 +38,7 @@ public abstract class Mapper<E, D> {
         };
     }
 
-    Converter<D, E> toEntityConverter() {
+    protected Converter<D, E> toEntityConverter() {
         return context -> {
             D source = context.getSource();
             E destination = context.getDestination();
@@ -48,10 +47,10 @@ public abstract class Mapper<E, D> {
         };
     }
 
-    void mapEntityFields(E source, D destination) {
+    protected void mapEntityFields(E source, D destination) {
     }
 
-    void mapDtoFields(D source, E destination) {
+    protected void mapDtoFields(D source, E destination) {
     }
 }
 

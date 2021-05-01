@@ -2,6 +2,7 @@ package com.rentler.apartment.service;
 
 import com.rentler.apartment.dto.ApartmentDto;
 import com.rentler.apartment.dto.ApartmentUpdateDto;
+import com.rentler.apartment.dto.ApplicationDto;
 import com.rentler.apartment.dto.SearchParams;
 import com.rentler.apartment.entity.Address;
 import com.rentler.apartment.entity.Apartment;
@@ -9,6 +10,7 @@ import com.rentler.apartment.enums.Amenities;
 import com.rentler.apartment.enums.ApartmentType;
 import com.rentler.apartment.exception.ApartmentNotFoundException;
 import com.rentler.apartment.mapper.ApartmentMapper;
+import com.rentler.apartment.mapper.ApplicationMapper;
 import com.rentler.apartment.repository.ApartmentRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +25,16 @@ import java.util.stream.Collectors;
 public class ApartmentService {
     private final ApartmentRepository apartmentRepository;
     private final ApartmentMapper apartmentMapper;
+    private final ApplicationMapper applicationMapper;
     private final ModelMapper modelMapper;
 
     @Autowired
     public ApartmentService(ApartmentRepository apartmentRepository,
                             ApartmentMapper apartmentMapper,
+                            ApplicationMapper applicationMapper,
                             ModelMapper modelMapper) {
         this.apartmentRepository = apartmentRepository;
+        this.applicationMapper = applicationMapper;
         this.apartmentMapper = apartmentMapper;
         this.modelMapper = modelMapper;
     }
@@ -45,6 +50,15 @@ public class ApartmentService {
         Apartment apartment = apartmentRepository.findById(id)
                 .orElseThrow(() -> new ApartmentNotFoundException("Apartment with such id not found: " + id));
         return apartmentMapper.toDto(apartment);
+    }
+
+    public List<ApplicationDto> getApplicationsByApartmentId(Long id) {
+        Apartment apartment = apartmentRepository.findById(id)
+                .orElseThrow(() -> new ApartmentNotFoundException("Apartment with such id not found: " + id));
+        return apartment.getApplications()
+                .stream()
+                .map(applicationMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     public List<ApartmentDto> getByParams(SearchParams params) {
@@ -88,6 +102,7 @@ public class ApartmentService {
         apartment.setDescription(apartmentDto.getDescription());
         apartment.setAmenities(apartmentDto.getAmenities());
         apartment.setAvailableFrom(apartmentDto.getAvailableFrom());
+        apartment.setPhotos(apartmentDto.getPhotos());
 
         return apartmentMapper.toDto(apartmentRepository.save(apartment));
     }
