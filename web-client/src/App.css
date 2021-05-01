@@ -613,6 +613,29 @@ input[type="file"] + label {
     box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
 }
 
+.apt-applications {
+    background-color: #ee394f;
+    background-size: 32px, 32px;
+    height: 32px;
+    width: 32px;
+    top: 20px;
+    right: 65px;
+    position: absolute;
+    z-index: 50;
+    border-radius: 100px;
+    transition: transform .2s;
+    box-shadow: 0 0 0 5px rgba(255, 60, 80, 0.3);
+    color: white;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.apt-applications:hover {
+    transform: scale(1.3);
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+    color: white;
+}
+
 .apartment-card {
     transition: transform .2s;
 }
@@ -885,4 +908,87 @@ a.no-style:link {
     width: 70px;
     height: 70px;
     margin-top: 50px;
+}
+
+.add-apl {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    background-color: #f2f2f2 !important;
+}
+
+.add-apl-card {
+    position: absolute;
+    top: 15%;
+    background: white;
+    width: 800px;
+    border-radius: 0.25rem;
+    box-shadow: 0 14px 24px 0 rgba(50, 49, 58, 0.25);
+}
+
+.add-apl-title {
+    height: 70px;
+    font-size: 24px;
+    font-weight: bold;
+    border-bottom: 2px solid #7b53c1;
+    color: #7b53c1;
+}
+
+.add-apl-input {
+    height: 46px;
+    width: 150px;
+    font-size: 25px;
+    text-align: center;
+    border: none;
+}
+
+.add-apl-input:focus {
+    outline: none;
+}
+
+.add-apl-all {
+    height: 90px;
+    padding: 0 80px;
+}
+
+.arrow {
+    border: solid #9c99b6;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    height: 18px;
+    width: 18px;
+    padding: 3px;
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
+
+.arrow:hover {
+    border: solid white;
+    border-width: 0 2px 2px 0;
+}
+
+.apl-back {
+    width: 50px;
+    height: 50px;
+    border-radius: 100px;
+    box-shadow: 0 14px 24px 0 rgba(50, 49, 58, 0.25);
+    cursor: pointer;
+}
+
+.apl-back:hover {
+    background-color: #6446b4 !important;
+}
+
+.apl-item {
+    width: 640px;
+    height: 70px;
+    background-color: white;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-right: 0;
 }

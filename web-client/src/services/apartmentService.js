@@ -35,6 +35,15 @@ export function updateApartment(apartment) {
     });
 }
 
+export function getApplications(id) {
+    return http.get(`${ apiEndpoint + id }/applications`);
+}
+
+export function addApplication(application){
+    return http.post(`${ apiEndpoint }applications`, {
+        ...application
+    });}
+
 export default {
     getApartments,
     getById,
@@ -42,5 +51,7 @@ export default {
     getAmenities,
     getTypes,
     addApartment,
-    updateApartment
+    updateApartment,
+    getApplications,
+    addApplication
 };

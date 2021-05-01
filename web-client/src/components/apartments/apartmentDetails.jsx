@@ -6,12 +6,14 @@ import apartmentService from "../../services/apartmentService";
 import logger from "../../services/logService";
 import userService from "../../services/userService";
 import ScrollToTop from "../shared/scrollToTop";
+import AddApplication from "./addApplication";
 
 class ApartmentDetails extends Component {
     state = {
         apartment: {},
         addressStr: '',
-        user: {}
+        user: {},
+        showApplication: false
     };
 
     async populateApartment() {
@@ -48,6 +50,12 @@ class ApartmentDetails extends Component {
             Available From: <b>{ moment(availableFrom).format("MMMM DD") }</b>
         </span>;
     }
+
+    togglePopup = () => {
+        this.setState({
+            showApplication: !this.state.showApplication
+        });
+    };
 
     formatPrice(price) {
         return price && price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -92,7 +100,10 @@ class ApartmentDetails extends Component {
     }
 
     render() {
-        const { name, type, beds, bath, squareMeters, price, description, owner, photos, amenities } = this.state.apartment;
+        const {
+            name, type, beds, bath, squareMeters, price, description, owner, photos, amenities, highestPrice
+        } = this.state.apartment;
+
         const { firstName, lastName, phoneNumber, avatar } = this.state.user;
         const { addressStr } = this.state;
         let mt = 100;
@@ -106,8 +117,15 @@ class ApartmentDetails extends Component {
         return (
             <div className="d-flex justify-content-center" style={ { marginTop: 60 } }>
                 <ScrollToTop/>
+                { this.state.showApplication &&
+                <AddApplication
+                    { ...this.props }
+                    price={price} highestPrice={highestPrice}
+                    close={ this.togglePopup }
+                />
+                }
+                { !this.state.showApplication &&
                 <div style={ { width: 940 } }>
-                    { }
                     <div className={ !(photos && photos[0]) ? "apt-det-back" : "apt-add-back" }>
                         { photos && photos[0] && <img src={ photos[0] } className="apt-photo-back"/> }
                     </div>
@@ -198,14 +216,16 @@ class ApartmentDetails extends Component {
                                     </div>
                                 </div>
                                 <div className="d-flex align-items-center" style={ { paddingBottom: 20 } }>
-                                    {/*<div className="w-100 text-gray">highest offer: ${ this.formatPrice(12000) }</div>*/ }
+                                    { highestPrice && <div className="w-100 text-gray">highest offer:
+                                        ${ this.formatPrice(highestPrice) }</div> }
                                 </div>
                                 <div className="d-flex align-items-center"
                                      style={ { height: 40, backgroundColor: '#f4f5f7' } }>
                                     { this.getAvailableLabel() }
                                 </div>
                                 <div style={ { height: 60 } }>
-                                    <button className="no-button green-button apply-button">
+                                    <button className="no-button green-button apply-button"
+                                            onClick={ this.togglePopup }>
                                         Apply
                                     </button>
                                 </div>
@@ -213,6 +233,7 @@ class ApartmentDetails extends Component {
                         </div>
                     </div>
                 </div>
+                }
             </div>
         );
     }

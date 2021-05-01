@@ -9,7 +9,8 @@ import Apartment from "./apartment";
 
 class Properties extends Component {
     state = {
-        apartments: []
+        apartments: [],
+        showLoader: true
     };
 
     loadApartments = async () => {
@@ -18,9 +19,9 @@ class Properties extends Component {
             const { data: newApartments } = await apartmentService.getByUsername(user_name);
             if (newApartments.length) {
                 const apartments = [...this.state.apartments, ...newApartments];
-                this.setState({ apartments });
+                this.setState({ apartments, showLoader: false });
             } else {
-                this.setState({ showBottomLoader: false });
+                this.setState({ showLoader: false });
             }
         } catch (ex) {
             logger.log(ex);
@@ -37,8 +38,7 @@ class Properties extends Component {
     }
 
     render() {
-        const { apartments } = this.state;
-        const showLoader = apartments.length === 0;
+        const { apartments, showLoader } = this.state;
         return (
             <div style={ { marginTop: 80, marginBottom: 80 } }>
                 <ScrollToTop/>
@@ -79,9 +79,9 @@ class Properties extends Component {
                                squareMeters={ apartment.squareMeters }
                                price={ apartment.price }
                                photo={ apartment.photos[0] }
-                               edit/>)
+                               applicationCount={apartment.applicationsCount}
+                               showEdit/>)
                 }
-
             </div>
         );
     }

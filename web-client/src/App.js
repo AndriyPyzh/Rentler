@@ -6,7 +6,8 @@ import './App.css';
 import AddApartment from "./components/apartments/addApartment";
 import ApartmentDetails from "./components/apartments/apartmentDetails";
 import Apartments from "./components/apartments/apartments";
-import Applications from "./components/apartments/applications";
+import ApartmentApplications from "./components/pages/apartmentApplications";
+import Applications from "./components/pages/applications";
 import EditApartment from "./components/apartments/editApartment";
 import Properties from "./components/apartments/properties";
 import AddInfoForm from "./components/auth/addInfoForm";
@@ -74,8 +75,10 @@ class App extends Component {
                         <Route path="/properties" component={ Properties }/>
                         <Route path="/edit-apartment/:id"
                                render={ props => <EditApartment { ...props }/> }/>
+                        <Route path="/apartments/:id/applications"
+                               render={ props => <ApartmentApplications { ...props }/> }/>
                         <Route path="/apartments/:id"
-                               render={ props => <ApartmentDetails { ...props }/> }/>
+                               render={ props => <ApartmentDetails { ...props }{ ...clearFuncs }/> }/>
                         <Route path="/apartments"
                                render={ props => <Apartments { ...props }{ ...clearFuncs }/> }/>
                         <Route path="/login"
