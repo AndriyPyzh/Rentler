@@ -1,5 +1,6 @@
 package com.rentler.apartment.dto;
 
+import com.rentler.apartment.enums.ApplicationStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,6 +24,8 @@ public class ApplicationDto {
 
     @NotNull
     private Long apartmentId;
+
+    private ApplicationStatus status;
 
     private String owner;
 

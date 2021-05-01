@@ -1,5 +1,7 @@
 package com.rentler.apartment.entity;
 
+import com.rentler.apartment.enums.ApplicationStatus;
+import com.rentler.apartment.enums.PetPolicy;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,6 +33,10 @@ public class Application {
     @ManyToOne
     @JoinColumn(nullable = false)
     private Apartment apartment;
+
+    @Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
+    private ApplicationStatus status;
 
     @PrePersist
     public void prePersist() {

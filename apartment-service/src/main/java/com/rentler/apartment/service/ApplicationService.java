@@ -3,6 +3,7 @@ package com.rentler.apartment.service;
 import com.rentler.apartment.dto.ApplicationDto;
 import com.rentler.apartment.entity.Apartment;
 import com.rentler.apartment.entity.Application;
+import com.rentler.apartment.enums.ApplicationStatus;
 import com.rentler.apartment.exception.ApplicationNotFoundException;
 import com.rentler.apartment.mapper.ApartmentMapper;
 import com.rentler.apartment.mapper.ApplicationMapper;
@@ -34,6 +35,7 @@ public class ApplicationService {
 
     public ApplicationDto create(ApplicationDto applicationDto, String username) {
         Application application = applicationMapper.toEntity(applicationDto);
+        application.setStatus(ApplicationStatus.PENDING);
         application.setOwner(username);
         return applicationMapper.toDto(applicationRepository.save(application));
     }
@@ -45,8 +47,16 @@ public class ApplicationService {
 
         Apartment apartment = apartmentMapper.toEntity(apartmentService.getById(applicationDto.getApartmentId()));
 
-        application.setApartment(apartment);
+        if (applicationDto.getStatus() != null) {
+
+            if (applicationDto.getStatus().equals(ApplicationStatus.APPROVED))
+                rejectAllByApartment(apartment);
+
+            application.setStatus(applicationDto.getStatus());
+        }
+
         application.setPrice(applicationDto.getPrice());
+        application.setApartment(apartment);
 
         return applicationMapper.toDto(applicationRepository.save(application));
     }
@@ -56,5 +66,13 @@ public class ApplicationService {
                 .stream()
                 .map(applicationMapper::toDto)
                 .collect(Collectors.toList());
+    }
+
+
+    private void rejectAllByApartment(Apartment apartment) {
+        applicationRepository.findAllByApartment(apartment).forEach(a -> {
+            a.setStatus(ApplicationStatus.REJECTED);
+            applicationRepository.save(a);
+        });
     }
 }
