@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -29,5 +29,5 @@ public class ApplicationDto {
 
     private String owner;
 
-    private LocalDate creationDate;
+    private LocalDateTime creationDate;
 }

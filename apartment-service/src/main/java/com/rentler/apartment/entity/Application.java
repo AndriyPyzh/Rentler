@@ -1,14 +1,13 @@
 package com.rentler.apartment.entity;
 
 import com.rentler.apartment.enums.ApplicationStatus;
-import com.rentler.apartment.enums.PetPolicy;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -22,7 +21,7 @@ public class Application {
     private Long id;
 
     @Column(nullable = false)
-    private LocalDate creationDate;
+    private LocalDateTime creationDate;
 
     @Column(nullable = false)
     private String owner;
@@ -40,7 +39,7 @@ public class Application {
 
     @PrePersist
     public void prePersist() {
-        creationDate = LocalDate.now();
+        creationDate = LocalDateTime.now();
     }
 }
 

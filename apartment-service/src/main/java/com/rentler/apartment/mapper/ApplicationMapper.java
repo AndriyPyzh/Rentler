@@ -37,7 +37,7 @@ public class ApplicationMapper extends Mapper<Application, ApplicationDto> {
 
     @Override
     public void mapEntityFields(Application source, ApplicationDto destination) {
-        destination.setApartmentId(source.getId());
+        destination.setApartmentId(source.getApartment().getId());
     }
 
     @Override
