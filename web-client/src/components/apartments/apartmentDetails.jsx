@@ -120,7 +120,7 @@ class ApartmentDetails extends Component {
                 { this.state.showApplication &&
                 <AddApplication
                     { ...this.props }
-                    price={price} highestPrice={highestPrice}
+                    price={ price } highestPrice={ highestPrice }
                     close={ this.togglePopup }
                 />
                 }

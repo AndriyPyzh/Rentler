@@ -992,3 +992,23 @@ a.no-style:link {
     margin-left: 20px;
     margin-right: 0;
 }
+
+.black-label {
+    color: #323138;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 24px;
+}
+
+.apl-btn-approved:disabled {
+    color: #fff !important;
+    background-color: #28a745 !important;
+    border-color: #28a745 !important;
+    opacity: 1;
+}
+
+.apl-btn-rejected:disabled {
+    color: #fff !important;
+    background-color: #dc3545 !important;
+    border-color: #dc3545 !important;
+}

@@ -36,7 +36,7 @@ class AddApplication extends Form {
 
     populatePrice = () => {
         const data = this.state.data;
-        data.price = this.props.highestPrice || 1000;
+        data.price = this.props.price;
         this.setState({ data });
     };
 

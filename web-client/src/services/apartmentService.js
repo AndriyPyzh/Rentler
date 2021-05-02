@@ -39,10 +39,17 @@ export function getApplications(id) {
     return http.get(`${ apiEndpoint + id }/applications`);
 }
 
-export function addApplication(application){
+export function addApplication(application) {
     return http.post(`${ apiEndpoint }applications`, {
         ...application
-    });}
+    });
+}
+
+export function updateApplication(application) {
+    return http.put(`${ apiEndpoint }applications`, {
+        ...application
+    });
+}
 
 export default {
     getApartments,
@@ -53,5 +60,6 @@ export default {
     addApartment,
     updateApartment,
     getApplications,
-    addApplication
+    addApplication,
+    updateApplication
 };
