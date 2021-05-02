@@ -80,6 +80,7 @@ class ApartmentApplications extends Component {
             };
             await apartmentService.updateApplication(application);
             await this.populateApplications();
+            await this.populateUsersInfo();
         } catch (ex) {
             logger.log(ex);
             if (ex.response.data.message) {
@@ -138,7 +139,7 @@ class ApartmentApplications extends Component {
                     </div>
                 </div>
                 <div className="text-center my-5 font-weight-bold" style={ { fontSize: 26 } }>Applications</div>
-                <div className="card" style={ { paddingLeft: 60, paddingRight: 60 } }>
+                <div className="card" style={ { paddingLeft: 60, paddingRight: 60, marginBottom: 100 } }>
                     { applications
                         .sort((a, b) => (new Date(a.creationDate)).getTime() > (new Date(b.creationDate)) ? -1 : 1)
                         .map(a => {
