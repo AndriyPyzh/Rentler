@@ -18,8 +18,5 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
     List<Application> findAllByApartment(Apartment apartment);
 
     Integer countAllByApartment(Apartment apartment);
-
-    Optional<Application> findByIdAndOwner(Long id, String owner);
-
 }
 

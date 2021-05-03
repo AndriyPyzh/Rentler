@@ -233,7 +233,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 300M
+          memory: 500M
 
 networks:
   net:

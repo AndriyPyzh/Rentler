@@ -30,10 +30,9 @@ public class ApplicationController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ApplicationDto> updateApplication(@PathVariable Long id,
-                                                            @RequestBody @Valid ApplicationDto applicationDto,
-                                                            Principal principal) {
+                                                            @RequestBody @Valid ApplicationDto applicationDto) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(applicationService.update(id, applicationDto, principal.getName()));
+                .body(applicationService.update(id, applicationDto));
     }
 
     @PostMapping

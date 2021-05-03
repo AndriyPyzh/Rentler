@@ -28,7 +28,7 @@ const NavBar = (props) => {
                     { !user &&
                     <React.Fragment>
                         <NavLink className="btn btn-outline-warning ml-4 mr-3 list-property-button"
-                                 to="/add-apartment">List a Property</NavLink>
+                                 to="/signup">List a Property</NavLink>
                         <NavLink className="nav-item nav-link m-1 mx-2 p-1" to="/login">Log In</NavLink>
                         <NavLink className="nav-item nav-link m-1 mx-2 p-1" to="/signup">Sign Up</NavLink>
                     </React.Fragment> }

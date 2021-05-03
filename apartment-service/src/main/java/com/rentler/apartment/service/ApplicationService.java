@@ -41,8 +41,8 @@ public class ApplicationService {
     }
 
 
-    public ApplicationDto update(Long id, ApplicationDto applicationDto, String username) {
-        Application application = applicationRepository.findByIdAndOwner(id, username)
+    public ApplicationDto update(Long id, ApplicationDto applicationDto) {
+        Application application = applicationRepository.findById(id)
                 .orElseThrow(() -> new ApplicationNotFoundException("Application with such id not found: " + id));
 
         Apartment apartment = apartmentMapper.toEntity(apartmentService.getById(applicationDto.getApartmentId()));

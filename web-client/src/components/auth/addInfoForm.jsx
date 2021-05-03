@@ -35,7 +35,7 @@ class AddInfoForm extends Form {
     doSubmit = async () => {
         try {
             await userService.updateInfo(this.state.data);
-            this.props.history.replace("/apartments");
+            window.location = '/apartments';
         } catch (ex) {
             logger.log(ex);
             if (ex.response)
