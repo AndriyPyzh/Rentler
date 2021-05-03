@@ -51,6 +51,14 @@ export function updateApplication(application) {
     });
 }
 
+export function getApplicationsByOwner() {
+    return http.get(`${ apiEndpoint }applications`);
+}
+
+export function deleteApplication(id) {
+    return http.delete(`${ apiEndpoint }applications/${ id }`);
+}
+
 export default {
     getApartments,
     getById,
@@ -61,5 +69,7 @@ export default {
     updateApartment,
     getApplications,
     addApplication,
-    updateApplication
+    updateApplication,
+    getApplicationsByOwner,
+    deleteApplication
 };

@@ -126,6 +126,7 @@ class AddApartment extends Form {
             }
         this.setState({ photos });
     };
+
     deletePhoto = (inx) => {
         const photos = this.state.photos;
         photos.splice(inx, 1);

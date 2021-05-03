@@ -6,14 +6,14 @@ import './App.css';
 import AddApartment from "./components/apartments/addApartment";
 import ApartmentDetails from "./components/apartments/apartmentDetails";
 import Apartments from "./components/apartments/apartments";
-import ApartmentApplications from "./components/pages/apartmentApplications";
-import Applications from "./components/pages/applications";
 import EditApartment from "./components/apartments/editApartment";
 import Properties from "./components/apartments/properties";
 import AddInfoForm from "./components/auth/addInfoForm";
 import LoginForm from "./components/auth/loginForm";
 import ResetPassword from "./components/auth/resetPassword";
 import SignupForm from "./components/auth/signupForm";
+import ApartmentApplications from "./components/pages/apartmentApplications";
+import Applications from "./components/pages/applications";
 import Home from "./components/pages/home";
 import NotFound from "./components/pages/notFound";
 import Profile from "./components/pages/profile";
@@ -71,7 +71,8 @@ class App extends Component {
                         <Route path="/profile/:username" component={ Profile }/>
                         <Route path="/add-apartment" component={ AddApartment }/>
                         <Route path="/settings" component={ SettingsForm }/>
-                        <Route path="/applications" component={ Applications }/>
+                        <Route path="/applications"
+                               render={ props => <Applications { ...props }{ ...clearFuncs }/> }/>
                         <Route path="/properties" component={ Properties }/>
                         <Route path="/edit-apartment/:id"
                                render={ props => <EditApartment { ...props }/> }/>

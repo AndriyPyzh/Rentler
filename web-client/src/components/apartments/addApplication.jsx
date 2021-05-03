@@ -23,7 +23,7 @@ class AddApplication extends Form {
 
     populateApplications = async () => {
         try {
-            const { data: applications } = await apartmentService.getApplications(this.props.match.params.id);
+            const { data: applications } = await apartmentService.getApplications(this.props.apartmentId);
             this.setState({ applications });
         } catch (ex) {
             logger.log(ex);
@@ -75,10 +75,10 @@ class AddApplication extends Form {
     };
 
     doSubmit = async () => {
-        const application = { apartmentId: this.props.match.params.id, price: this.state.data.price };
+        const application = { apartmentId: this.props.apartmentId, price: this.state.data.price };
         try {
-            await apartmentService.addApplication(application);
             this.props.close();
+            await apartmentService.addApplication(application);
         } catch (ex) {
             if (ex.response && ex.response.status === 400) {
                 toast.error(ex.response.data.message.toString());
@@ -104,7 +104,7 @@ class AddApplication extends Form {
                         <div className="row text-purple" style={ { cursor: "pointer" } }
                              onClick={ this.toggleShowApplications }>
                             <div className="apl-back d-inline-flex">
-                                <i className="arrow" style={ { marginLeft: 20, marginTop: 16 } }/>
+                                <i className="arrow-back" style={ { marginLeft: 20, marginTop: 16 } }/>
                             </div>
                             <div className="d-flex align-items-center ml-3" style={ { fontSize: 14 } }>
                                 Back To Offer

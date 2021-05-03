@@ -79,7 +79,7 @@ class Properties extends Component {
                                squareMeters={ apartment.squareMeters }
                                price={ apartment.price }
                                photo={ apartment.photos[0] }
-                               applicationCount={apartment.applicationsCount}
+                               applicationCount={ apartment.applicationsCount }
                                showEdit/>)
                 }
             </div>

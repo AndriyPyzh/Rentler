@@ -14,7 +14,7 @@ const Apartment = ({ id, title, address, bath, beds, squareMeters, price, photo,
 
                     { applicationCount !== 0 &&
                     <Link to={ `/apartments/${ id }/applications` } className="apt-applications d-inline-flex no-style">
-                        <div style={ { marginLeft: 9, lineHeight: '31px' } }>{ applicationCount }</div>
+                        <div style={ { marginLeft: 8.5, lineHeight: '31px' } }>{ applicationCount }</div>
                     </Link> }
 
                     { photo ?
