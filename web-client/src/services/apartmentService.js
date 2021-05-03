@@ -30,7 +30,7 @@ export function addApartment(apartment) {
 }
 
 export function updateApartment(apartment) {
-    return http.put(`${ apiEndpoint }`, {
+    return http.put(`${ apiEndpoint + apartment.id }`, {
         ...apartment
     });
 }
@@ -46,7 +46,7 @@ export function addApplication(application) {
 }
 
 export function updateApplication(application) {
-    return http.put(`${ apiEndpoint }applications`, {
+    return http.put(`${ apiEndpoint }applications/${ application.id }`, {
         ...application
     });
 }
