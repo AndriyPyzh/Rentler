@@ -86,8 +86,8 @@ public class ApartmentService {
         return apartmentMapper.toDto(apartmentRepository.save(apartment));
     }
 
-    public ApartmentDto update(ApartmentUpdateDto apartmentDto, String username) {
-        Apartment apartment = apartmentRepository.findByIdAndOwner(apartmentDto.getId(), username)
+    public ApartmentDto update(Long id, ApartmentUpdateDto apartmentDto, String username) {
+        Apartment apartment = apartmentRepository.findByIdAndOwner(id, username)
                 .orElseThrow(() -> new ApartmentNotFoundException("Apartment with such id not found: " + apartmentDto.getId()));
 
         apartment.setName(apartmentDto.getName());

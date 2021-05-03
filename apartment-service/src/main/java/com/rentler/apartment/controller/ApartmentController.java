@@ -61,18 +61,18 @@ public class ApartmentController {
                 .body(apartmentService.getApartmentTypes());
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<ApartmentDto> updateApartment(@PathVariable Long id,
+                                                        @RequestBody @Valid ApartmentUpdateDto apartmentUpdateDto,
+                                                        Principal principal) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(apartmentService.update(id, apartmentUpdateDto, principal.getName()));
+    }
+
     @PostMapping
     public ResponseEntity<ApartmentDto> createApartment(@RequestBody @Valid ApartmentUpdateDto apartmentDto,
                                                         Principal principal) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(apartmentService.create(apartmentDto, principal.getName()));
     }
-
-    @PutMapping
-    public ResponseEntity<ApartmentDto> updateApartment(@RequestBody @Valid ApartmentUpdateDto apartmentUpdateDto,
-                                                        Principal principal) {
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(apartmentService.update(apartmentUpdateDto, principal.getName()));
-    }
-
 }

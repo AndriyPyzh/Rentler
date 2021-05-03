@@ -41,9 +41,9 @@ public class ApplicationService {
     }
 
 
-    public ApplicationDto update(ApplicationDto applicationDto) {
-        Application application = applicationRepository.findById(applicationDto.getId())
-                .orElseThrow(() -> new ApplicationNotFoundException("Application with such id not found: " + applicationDto.getId()));
+    public ApplicationDto update(Long id, ApplicationDto applicationDto, String username) {
+        Application application = applicationRepository.findByIdAndOwner(id, username)
+                .orElseThrow(() -> new ApplicationNotFoundException("Application with such id not found: " + id));
 
         Apartment apartment = apartmentMapper.toEntity(apartmentService.getById(applicationDto.getApartmentId()));
 
@@ -74,5 +74,9 @@ public class ApplicationService {
             a.setStatus(ApplicationStatus.REJECTED);
             applicationRepository.save(a);
         });
+    }
+
+    public void delete(Long id) {
+        applicationRepository.deleteById(id);
     }
 }

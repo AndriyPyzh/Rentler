@@ -19,5 +19,7 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
 
     Integer countAllByApartment(Apartment apartment);
 
+    Optional<Application> findByIdAndOwner(Long id, String owner);
+
 }
 

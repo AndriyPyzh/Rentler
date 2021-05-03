@@ -22,17 +22,25 @@ public class ApplicationController {
         this.applicationService = applicationService;
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteApplication(@PathVariable Long id) {
+        applicationService.delete(id);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ApplicationDto> updateApplication(@PathVariable Long id,
+                                                            @RequestBody @Valid ApplicationDto applicationDto,
+                                                            Principal principal) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(applicationService.update(id, applicationDto, principal.getName()));
+    }
+
     @PostMapping
     public ResponseEntity<ApplicationDto> createApplication(@RequestBody @Valid ApplicationDto applicationDto,
                                                             Principal principal) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(applicationService.create(applicationDto, principal.getName()));
-    }
-
-    @PutMapping
-    public ResponseEntity<ApplicationDto> updateApplication(@RequestBody @Valid ApplicationDto applicationDto) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(applicationService.update(applicationDto));
     }
 
     @GetMapping
