@@ -169,6 +169,35 @@ services:
         limits:
           memory: 500M
 
+  notification-service:
+    container_name: notification-service
+    build:
+      context: .
+      dockerfile: ./notification-service/Dockerfile
+    ports:
+      - 8300:8300
+    networks:
+      - net
+    depends_on:
+      config-server:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    environment:
+      spring.cloud.config.uri: http://config-server:8888
+      spring.cloud.config.username: "${CONFIG_SERVICE_USER}"
+      spring.cloud.config.password: "${CONFIG_SERVICE_PASSWORD}"
+      eureka.client.serviceUrl.defaultZone: http://registry-server:8761/eureka
+      spring.zipkin.base-url: http://zipkin-server:9411
+      spring.rabbitmq.host: rabbitmq
+      spring.zipkin.sender.type: rabbit
+    volumes:
+      - ./notification-service/target/notification-service.jar:/app/notification-service.jar
+    deploy:
+      resources:
+        limits:
+          memory: 300M
+
   postgres:
     image: postgres:alpine
     build:
