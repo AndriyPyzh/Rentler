@@ -1,6 +1,7 @@
 package com.rentler.account.service;
 
 import com.rentler.account.client.AuthServiceClient;
+import com.rentler.account.client.NotificationServiceClient;
 import com.rentler.account.dto.AccountCreateDto;
 import com.rentler.account.dto.AccountDto;
 import com.rentler.account.dto.AccountUpdateDto;
@@ -11,6 +12,7 @@ import com.rentler.account.mapper.AccountMapper;
 import com.rentler.account.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,16 +24,20 @@ public class AccountService {
     private final AccountRepository accountRepository;
     private final AccountMapper accountMapper;
     private final AuthServiceClient authServiceClient;
+    private final NotificationServiceClient notificationServiceClient;
 
     @Autowired
     public AccountService(AccountRepository accountRepository,
                           AccountMapper accountMapper,
-                          AuthServiceClient authServiceClient) {
+                          AuthServiceClient authServiceClient,
+                          NotificationServiceClient notificationServiceClient) {
         this.accountRepository = accountRepository;
         this.accountMapper = accountMapper;
         this.authServiceClient = authServiceClient;
+        this.notificationServiceClient = notificationServiceClient;
     }
 
+    @Transactional
     public AccountDto create(AccountCreateDto accountCreateDto) {
         Optional<Account> existing = accountRepository
                 .findByUsername(accountCreateDto.getUsername());
@@ -47,6 +53,12 @@ public class AccountService {
         });
 
         authServiceClient.createUser(accountCreateDto);
+
+        try {
+            notificationServiceClient.sendWelcomeMail(accountCreateDto.getEmail());
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
 
         Account account = Account.builder()
                 .username(accountCreateDto.getUsername())
@@ -70,6 +82,7 @@ public class AccountService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public AccountDto update(AccountUpdateDto updateDto, String username) {
         Account account = accountRepository
                 .findByUsername(username)

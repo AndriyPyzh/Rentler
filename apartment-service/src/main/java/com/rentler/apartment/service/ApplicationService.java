@@ -1,5 +1,6 @@
 package com.rentler.apartment.service;
 
+import com.rentler.apartment.client.NotificationServiceClient;
 import com.rentler.apartment.dto.ApplicationDto;
 import com.rentler.apartment.entity.Apartment;
 import com.rentler.apartment.entity.Application;
@@ -20,16 +21,19 @@ public class ApplicationService {
     private final ApplicationMapper applicationMapper;
     private final ApartmentService apartmentService;
     private final ApartmentMapper apartmentMapper;
+    private final NotificationServiceClient notificationServiceClient;
 
     @Autowired
     public ApplicationService(ApplicationRepository applicationRepository,
                               ApplicationMapper applicationMapper,
                               ApartmentService apartmentService,
-                              ApartmentMapper apartmentMapper) {
+                              ApartmentMapper apartmentMapper,
+                              NotificationServiceClient notificationServiceClient) {
         this.applicationRepository = applicationRepository;
         this.applicationMapper = applicationMapper;
         this.apartmentService = apartmentService;
         this.apartmentMapper = apartmentMapper;
+        this.notificationServiceClient = notificationServiceClient;
     }
 
 
@@ -37,6 +41,11 @@ public class ApplicationService {
         Application application = applicationMapper.toEntity(applicationDto);
         application.setStatus(ApplicationStatus.PENDING);
         application.setOwner(username);
+        try {
+            notificationServiceClient.sendNewApplication(application.getApartment().getOwner());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
         return applicationMapper.toDto(applicationRepository.save(application));
     }
 
@@ -49,8 +58,14 @@ public class ApplicationService {
 
         if (applicationDto.getStatus() != null) {
 
-            if (applicationDto.getStatus().equals(ApplicationStatus.APPROVED))
+            if (applicationDto.getStatus().equals(ApplicationStatus.APPROVED)) {
                 rejectAllByApartment(apartment);
+                try {
+                    notificationServiceClient.sendApplicationApproved(apartment.getOwner());
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
 
             application.setStatus(applicationDto.getStatus());
         }
@@ -73,6 +88,11 @@ public class ApplicationService {
         applicationRepository.findAllByApartment(apartment).forEach(a -> {
             a.setStatus(ApplicationStatus.REJECTED);
             applicationRepository.save(a);
+            try {
+                notificationServiceClient.sendApplicationRejected(apartment.getOwner());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         });
     }
 
