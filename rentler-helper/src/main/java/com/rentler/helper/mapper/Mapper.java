@@ -7,9 +7,9 @@ import java.util.Objects;
 
 public abstract class Mapper<E, D> {
 
+    protected final ModelMapper mapper;
     private final Class<E> entityClass;
     private final Class<D> dtoClass;
-    protected final ModelMapper mapper;
 
     public Mapper(Class<E> entityClass, Class<D> dtoClass) {
         this.entityClass = entityClass;

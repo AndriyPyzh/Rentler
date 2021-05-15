@@ -56,7 +56,7 @@ public class AccountService {
 
         try {
             notificationServiceClient.sendWelcomeMail(accountCreateDto.getEmail());
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 

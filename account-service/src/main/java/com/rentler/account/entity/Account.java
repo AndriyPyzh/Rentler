@@ -40,6 +40,6 @@ public class Account {
     @Column(nullable = false)
     private LocalDateTime dateOfRegistration;
 
-    @Column(columnDefinition="TEXT")
+    @Column(columnDefinition = "TEXT")
     private String avatar;
 }

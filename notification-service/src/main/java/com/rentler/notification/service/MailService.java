@@ -36,7 +36,7 @@ public class MailService {
         }
 
         String subject = String.format("Hello %s %s!", account.getFirstName(), account.getLastName());
-        String text = subject +  "\nThere is a new application on your property!";
+        String text = subject + "\nThere is a new application on your property!";
 
         sendMail(account.getEmail(), subject, text);
     }
@@ -49,7 +49,7 @@ public class MailService {
         }
 
         String subject = String.format("Hello %s %s!", account.getFirstName(), account.getLastName());
-        String text = subject +  "\nYour application was approved!";
+        String text = subject + "\nYour application was approved!";
 
         sendMail(account.getEmail(), subject, text);
     }
@@ -62,7 +62,7 @@ public class MailService {
         }
 
         String subject = String.format("Hello %s %s!", account.getFirstName(), account.getLastName());
-        String text = subject +  "\nYour application was rejected.";
+        String text = subject + "\nYour application was rejected.";
 
         sendMail(account.getEmail(), subject, text);
     }
