@@ -26,7 +26,7 @@ class AddApplication extends Form {
             const { data: applications } = await apartmentService.getApplications(this.props.apartmentId);
             this.setState({ applications });
         } catch (ex) {
-            logger.log(ex);
+            logger.error(ex);
             if (ex.response && ex.response.status === 400) {
                 toast.error(ex.response.data.message.toString());
             } else

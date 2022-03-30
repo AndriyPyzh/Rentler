@@ -34,7 +34,7 @@ class EditApartment extends AddApartment {
                 photos
             });
         } catch (ex) {
-            logger.log(ex);
+            logger.error(ex);
             if (ex.response && ex.response.status === 400) {
                 toast.error(ex.response.data.message.toString());
                 window.location = '/not-found';

@@ -20,6 +20,7 @@ import Profile from "./components/pages/profile";
 import SettingsForm from "./components/pages/settingsForm";
 import Footer from "./components/shared/footer";
 import NavBar from "./components/shared/navBar";
+import authService from "./services/authService";
 import userService from "./services/userService";
 
 class App extends Component {
@@ -29,13 +30,15 @@ class App extends Component {
     };
 
     async componentDidMount() {
-        try {
-            const user = await userService.getCurrentAccount();
-            this.setState({ user });
-        } catch (ex) {
+        if (authService.getToken()) {
+            try {
+                const user = await userService.getCurrentAccount();
+                this.setState({ user });
+            } catch (ex) {
+                await authService.logout();
+            }
         }
     }
-
 
     hideNavbar = () => {
         this.setState({ navbar: false });

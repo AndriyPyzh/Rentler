@@ -19,7 +19,7 @@ class Applications extends Component {
             const { data: applications } = await apartmentService.getApplicationsByOwner();
             this.setState({ applications });
         } catch (ex) {
-            logger.log(ex);
+            logger.error(ex);
             if (ex.response && ex.response.status === 400) {
                 toast.error(ex.response.data.message.toString());
             } else
@@ -70,7 +70,7 @@ class Applications extends Component {
             const applications = this.state.applications.filter(a => a.id !== id);
             this.setState({ applications });
         } catch (ex) {
-            logger.log(ex);
+            logger.error(ex);
             if (ex.response && ex.response.status === 400) {
                 toast.error(ex.response.data.message.toString());
             } else

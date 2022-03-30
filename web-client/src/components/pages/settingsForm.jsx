@@ -62,7 +62,7 @@ class SettingsForm extends Form {
             await userService.updateInfo(user);
             window.location = `/profile/${ username }`;
         } catch (ex) {
-            logger.log(ex);
+            logger.error(ex);
             if (ex.response)
                 toast.error(ex.response.data.message.toString());
             else

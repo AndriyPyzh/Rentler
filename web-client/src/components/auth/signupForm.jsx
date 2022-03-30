@@ -32,7 +32,7 @@ class SignupForm extends Form {
             await authService.login(user.username, user.password);
             window.location = '/confirm';
         } catch (ex) {
-            logger.log(ex);
+            logger.error(ex);
             if (ex.response)
                 toast.error(ex.response.data.message.toString());
             else

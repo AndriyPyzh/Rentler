@@ -28,7 +28,7 @@ class LoginForm extends Form {
             await authService.login(username, password);
             window.location = '/';
         } catch (ex) {
-            logger.log(ex);
+            logger.error(ex);
             if (ex.response && ex.response.status === 400)
                 toast.error("Invalid Username or Password");
             else

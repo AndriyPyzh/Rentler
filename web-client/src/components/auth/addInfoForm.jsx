@@ -37,7 +37,7 @@ class AddInfoForm extends Form {
             await userService.updateInfo(this.state.data);
             window.location = '/apartments';
         } catch (ex) {
-            logger.log(ex);
+            logger.error(ex);
             if (ex.response)
                 toast.error(ex.response.data.message.toString());
             else

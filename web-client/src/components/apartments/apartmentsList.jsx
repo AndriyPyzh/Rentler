@@ -26,7 +26,7 @@ class ApartmentsList extends Component {
                 this.setState({ showBottomLoader: false });
             }
         } catch (ex) {
-            logger.log(ex);
+            logger.error(ex);
             if (ex.response)
                 toast.error(ex.response.data.toString());
             else
