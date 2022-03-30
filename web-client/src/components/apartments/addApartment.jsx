@@ -152,6 +152,16 @@ class AddApartment extends Form {
         }
     };
 
+    nextYear() {
+        let nextYear = new Date();
+        nextYear.setFullYear(nextYear.getFullYear() + 1);
+        return nextYear
+    }
+
+    toString = (date) => {
+        return date.toISOString().split('T')[0];
+    };
+
     render() {
         const { amenities, petPolicy, photos } = this.state;
         return (
@@ -293,8 +303,8 @@ class AddApartment extends Form {
                                 <div style={ { width: 180, marginTop: 20, fontWeight: "bold" } }>
                                     { this.renderInput('price', "Price", "enter price...", 'number', false, { min: 0 }) }
                                     { this.renderInput("availableFrom", "Available From", "enter available from...", "date", true, {
-                                        min: new Date().toISOString().split('T')[0],
-                                        max: "2022-01-01"
+                                        min: this.toString(new Date()),
+                                        max: this.toString(this.nextYear())
                                     }) }
                                 </div>
                             </div>
