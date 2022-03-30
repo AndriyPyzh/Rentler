@@ -213,7 +213,7 @@ services:
       POSTGRES_USER: "${DATASOURCE_USER}"
       POSTGRES_PASSWORD: "${DATASOURCE_PASSWORD}"
     volumes:
-      - /var/lib/postgresql/data
+      - ./postgres/postgres-data:/var/lib/postgresql/data
     deploy:
       resources:
         limits:
@@ -237,7 +237,7 @@ services:
           memory: 300M
 
   rabbitmq:
-    image: rabbitmq:latest
+    image: rabbitmq:management-alpine
     ports:
       - 5672:5672
       - 15672:15672

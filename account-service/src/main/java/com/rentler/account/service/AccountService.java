@@ -1,7 +1,6 @@
 package com.rentler.account.service;
 
 import com.rentler.account.client.AuthServiceClient;
-import com.rentler.account.client.NotificationServiceClient;
 import com.rentler.account.dto.AccountCreateDto;
 import com.rentler.account.dto.AccountDto;
 import com.rentler.account.dto.AccountUpdateDto;
@@ -10,6 +9,8 @@ import com.rentler.account.exception.AccountAlreadyExistsException;
 import com.rentler.account.exception.AccountNotFoundException;
 import com.rentler.account.mapper.AccountMapper;
 import com.rentler.account.repository.AccountRepository;
+import com.rentler.helper.rabbit.RabbitConfig;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,17 +25,17 @@ public class AccountService {
     private final AccountRepository accountRepository;
     private final AccountMapper accountMapper;
     private final AuthServiceClient authServiceClient;
-    private final NotificationServiceClient notificationServiceClient;
+    private final RabbitTemplate template;
 
     @Autowired
     public AccountService(AccountRepository accountRepository,
                           AccountMapper accountMapper,
                           AuthServiceClient authServiceClient,
-                          NotificationServiceClient notificationServiceClient) {
+                          RabbitTemplate template) {
         this.accountRepository = accountRepository;
         this.accountMapper = accountMapper;
         this.authServiceClient = authServiceClient;
-        this.notificationServiceClient = notificationServiceClient;
+        this.template = template;
     }
 
     @Transactional
@@ -54,11 +55,7 @@ public class AccountService {
 
         authServiceClient.createUser(accountCreateDto);
 
-        try {
-            notificationServiceClient.sendWelcomeMail(accountCreateDto.getEmail());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        template.convertAndSend(RabbitConfig.WELCOME_MAILS_QUEUE_NAME, accountCreateDto.getEmail());
 
         Account account = Account.builder()
                 .username(accountCreateDto.getUsername())
@@ -99,18 +96,10 @@ public class AccountService {
 
         if (updateDto.getPhoneNumber() != null) {
 
-            if (account.getPhoneNumber() == null) {
-
-                account.setPhoneNumber(updateDto.getPhoneNumber());
-
-            } else if (!account.getPhoneNumber().equals(updateDto.getPhoneNumber())) {
-
-                Optional<Account> existing = accountRepository.findByPhoneNumber(updateDto.getPhoneNumber());
-                existing.ifPresent(acc -> {
-                    throw new AccountAlreadyExistsException("Account with such phone number already exists: " + updateDto.getPhoneNumber());
-                });
-                account.setPhoneNumber(updateDto.getPhoneNumber());
-            }
+            Optional<Account> existing = accountRepository.findByPhoneNumber(updateDto.getPhoneNumber());
+            existing.ifPresent(acc -> {
+                throw new AccountAlreadyExistsException("Account with such phone number already exists: " + updateDto.getPhoneNumber());
+            });
         }
 
         if (updateDto.getPassword() != null)

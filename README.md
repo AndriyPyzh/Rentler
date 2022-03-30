@@ -53,7 +53,9 @@ http://localhost:8100
 
 http://localhost:8200
 
+### RabbitMQ
 
+http://localhost:15672 (guest/guest)
 
 
 

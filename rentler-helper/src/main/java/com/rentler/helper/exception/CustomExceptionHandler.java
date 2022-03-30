@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import feign.FeignException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RestControllerAdvice
 @AllArgsConstructor
 @Getter
@@ -37,6 +39,8 @@ public class CustomExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     public final ResponseEntity<Object> handleRuntimeException(
             RuntimeException exception, WebRequest request) {
+        log.error(exception.getMessage(), exception);
+
         ExceptionResponse response = new ExceptionResponse(getErrorAttributes(request));
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
@@ -44,6 +48,8 @@ public class CustomExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public final ResponseEntity<Object> handleMethodArgumentNotValidException(
             MethodArgumentNotValidException exception, WebRequest request) {
+        log.error(exception.getMessage(), exception);
+
         Map<String, Object> errorAttributes = getErrorAttributes(request);
 
         ExceptionResponse response = new ExceptionResponse(errorAttributes);
@@ -63,6 +69,8 @@ public class CustomExceptionHandler {
     @ExceptionHandler(FeignException.class)
     public final ResponseEntity<Object> handleFeignException(
             FeignException exception, WebRequest request) throws IOException {
+        log.error(exception.getMessage(), exception);
+
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(new ExceptionResponse(exception.contentUTF8()));
@@ -71,6 +79,7 @@ public class CustomExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public final ResponseEntity<Object> handleHttpMessageNotReadableException(
             HttpMessageNotReadableException exception, WebRequest request) throws IOException {
+        log.error(exception.getMessage(), exception);
 
         if (exception.getCause() instanceof InvalidFormatException) {
             InvalidFormatException ex = (InvalidFormatException) exception.getCause();
