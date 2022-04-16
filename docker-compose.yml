@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   config-server:
+    image: rentler_config-server:latest
     container_name: config-server
     build:
       context: .
@@ -25,6 +26,7 @@ services:
 
 
   registry-server:
+    image: rentler_registry-server:latest
     container_name: registry-server
     build:
       context: .
@@ -48,6 +50,7 @@ services:
           memory: 300M
 
   api-gateway:
+    image: rentler_api-gateway:latest
     container_name: api-gateway
     build:
       context: .
@@ -77,6 +80,7 @@ services:
           memory: 300M
 
   auth-service:
+    image: rentler_auth-service:latest
     container_name: auth-service
     build:
       context: .
@@ -108,6 +112,7 @@ services:
           memory: 300M
 
   account-service:
+    image: rentler_account-service:latest
     container_name: account-service
     build:
       context: .
@@ -139,6 +144,7 @@ services:
           memory: 500M
 
   apartment-service:
+    image: rentler_apartment-service:latest
     container_name: apartment-service
     build:
       context: .
@@ -170,6 +176,7 @@ services:
           memory: 500M
 
   notification-service:
+    image: rentler_notification-service:latest
     container_name: notification-service
     build:
       context: .
@@ -199,7 +206,7 @@ services:
           memory: 300M
 
   postgres:
-    image: postgres:alpine
+    image: rentler_postgres:latest
     build:
       context: .
       dockerfile: ./postgres/Dockerfile
@@ -251,6 +258,7 @@ services:
           memory: 300M
 
   web-client:
+    image: rentler_web-client:latest
     container_name: web-client
     build:
       context: .

@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:16.14.2
 WORKDIR /app/web-client
 COPY ./web-client ./
 RUN npm install --silent
