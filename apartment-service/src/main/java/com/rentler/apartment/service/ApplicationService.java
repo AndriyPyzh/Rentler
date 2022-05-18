@@ -8,16 +8,17 @@ import com.rentler.apartment.exception.ApplicationNotFoundException;
 import com.rentler.apartment.mapper.ApartmentMapper;
 import com.rentler.apartment.mapper.ApplicationMapper;
 import com.rentler.apartment.repository.ApplicationRepository;
-import com.rentler.helper.rabbit.RabbitConfig;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
+import static com.rentler.helper.rabbit.RabbitConfig.*;
+
+@Slf4j
 @Service
 public class ApplicationService {
     private final ApplicationRepository applicationRepository;
@@ -45,7 +46,7 @@ public class ApplicationService {
         application.setStatus(ApplicationStatus.PENDING);
         application.setOwner(username);
 
-        template.convertAndSend(RabbitConfig.APPLICATIONS_NEW_MAILS_QUEUE_NAME, application.getApartment().getOwner());
+        sendNotification(APPLICATIONS_NEW_MAILS_QUEUE_NAME, application.getApartment().getOwner());
 
         return applicationMapper.toDto(applicationRepository.save(application));
     }
@@ -62,7 +63,7 @@ public class ApplicationService {
             if (applicationDto.getStatus().equals(ApplicationStatus.APPROVED)) {
                 rejectAllForApartment(apartment);
 
-                template.convertAndSend(RabbitConfig.APPLICATIONS_APPROVED_MAILS_QUEUE_NAME, application.getApartment().getOwner());
+                sendNotification(APPLICATIONS_APPROVED_MAILS_QUEUE_NAME, application.getApartment().getOwner());
             }
 
             application.setStatus(applicationDto.getStatus());
@@ -87,11 +88,19 @@ public class ApplicationService {
             a.setStatus(ApplicationStatus.REJECTED);
             applicationRepository.save(a);
 
-            template.convertAndSend(RabbitConfig.APPLICATIONS_REJECTED_MAILS_QUEUE_NAME, apartment.getOwner());
+            sendNotification(APPLICATIONS_REJECTED_MAILS_QUEUE_NAME, apartment.getOwner());
         });
     }
 
     public void delete(Long id) {
         applicationRepository.deleteById(id);
+    }
+
+    private void sendNotification(String queueName, Object param) {
+        try {
+            template.convertAndSend(queueName, param);
+        } catch (Exception e) {
+            log.error("failed to publish welcome mail", e);
+        }
     }
 }

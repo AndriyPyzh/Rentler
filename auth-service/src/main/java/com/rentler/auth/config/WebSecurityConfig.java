@@ -50,6 +50,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .accessDeniedHandler((req, resp, exc) -> resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "You don't have authorities."))
                 .and()
                 .authorizeRequests()
+                .antMatchers("/actuator/health").permitAll()
+                .antMatchers("/oauth/token").permitAll()
+                .antMatchers(HttpMethod.GET, "/oauth/check_token").permitAll()
                 .antMatchers(HttpMethod.POST, "/users").permitAll()
                 .anyRequest()
                 .authenticated();

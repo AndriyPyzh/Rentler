@@ -1,0 +1,86 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: regionalpd-storageclass
+provisioner: kubernetes.io/gce-pd
+parameters:
+  type: pd-standard
+  replication-type: regional-pd
+allowedTopologies:
+  - matchLabelExpressions:
+      - key: failure-domain.beta.kubernetes.io/zone
+        values:
+          - us-central1-b
+          - us-central1-c
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: postgresql-pv
+spec:
+  storageClassName: regionalpd-storageclass
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 200Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+spec:
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: gcr.io/decoded-petal-342615/rentler_postgres
+          resources:
+            limits:
+              cpu: "1"
+              memory: "4Gi"
+            requests:
+              cpu: "1"
+              memory: "4Gi"
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgredb
+      volumes:
+        - name: postgredb
+          persistentVolumeClaim:
+            claimName: postgresql-pv
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+spec:
+  ports:
+    - port: 5432
+      targetPort: 5432
+      protocol: TCP
+  selector:
+    app: postgres
+  type: ClusterIP
+

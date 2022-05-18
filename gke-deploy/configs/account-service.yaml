@@ -1,0 +1,85 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  labels:
+    app: account-service
+  name: account-service
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: account-service
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: account-service
+    spec:
+      containers:
+        - image: gcr.io/decoded-petal-342615/rentler_account-service
+          imagePullPolicy: Always
+          name: account-service
+          envFrom:
+            - configMapRef:
+                name: account-service
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: account-service
+  name: account-service
+  namespace: default
+spec:
+  ports:
+    - port: 8100
+      protocol: TCP
+      targetPort: 8100
+  selector:
+    app: account-service
+  type: ClusterIP
+---
+apiVersion: v1
+data:
+  spring.application.name: 'account-service'
+  server.port: '8100'
+  server.servlet.context-path: '/accounts'
+
+  spring.datasource.url: 'jdbc:postgresql://postgres:5432/account_service'
+  spring.datasource.username: 'account_service_user'
+  spring.datasource.password: 'account_service_password'
+
+  spring.jpa.database-platform: 'org.hibernate.dialect.PostgreSQL95Dialect'
+  spring.jpa.show-sql: 'true'
+  spring.jpa.hibernate.ddl-auto: 'create-drop'
+
+  spring.sleuth.sampler.probability: '1.0'
+
+  security.oauth2.client.client-id: 'account-service'
+  security.oauth2.client.client-secret: 'password'
+  security.oauth2.client.grant-type: 'client_credentials'
+  security.oauth2.client.scope: 'server'
+  security.oauth2.client.accessTokenUri: 'http://auth-service:5000/auth/oauth/token'
+  security.oauth2.resource.token-info-uri: 'http://auth-service:5000/auth/oauth/check_token'
+
+  # disable registry and config
+  spring.cloud.config.enabled: 'false'
+  spring.cloud.service-registry.auto-registration.enabled: 'false'
+  eureka.client.enabled: 'false'
+  eureka.client.serviceUrl.registerWithEureka: 'false'
+  spring.zipkin.enabled: 'false'
+
+  AUTH_SERVICE_URL: 'http://auth-service:5000'
+
+kind: ConfigMap
+metadata:
+  name: account-service
+  namespace: default

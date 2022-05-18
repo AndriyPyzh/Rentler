@@ -1,9 +1,8 @@
 import axios from "axios";
 import jwtDecode from "jwt-decode";
-import { apiUrl, authName, authPassword } from "../config.json";
+import config from "../config.js";
 import httpService from "./httpService";
-
-const apiEndpoint = apiUrl + '/auth';
+const apiEndpoint = config.apiUrl + '/auth';
 const tokenKey = 'token';
 
 httpService.setToken(getToken());
@@ -21,8 +20,8 @@ export async function login(username, password) {
         data: bodyFormData,
         headers: { "Content-Type": "multipart/form-data" },
         auth: {
-            username: authName,
-            password: authPassword
+            username: config.authName,
+            password: config.authPassword
         }
     });
 

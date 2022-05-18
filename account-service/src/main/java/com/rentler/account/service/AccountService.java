@@ -10,6 +10,7 @@ import com.rentler.account.exception.AccountNotFoundException;
 import com.rentler.account.mapper.AccountMapper;
 import com.rentler.account.repository.AccountRepository;
 import com.rentler.helper.rabbit.RabbitConfig;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class AccountService {
     private final AccountRepository accountRepository;
@@ -55,7 +57,11 @@ public class AccountService {
 
         authServiceClient.createUser(accountCreateDto);
 
-        template.convertAndSend(RabbitConfig.WELCOME_MAILS_QUEUE_NAME, accountCreateDto.getEmail());
+        try {
+            template.convertAndSend(RabbitConfig.WELCOME_MAILS_QUEUE_NAME, accountCreateDto.getEmail());
+        } catch (Exception e) {
+            log.error("failed to publish welcome mail", e);
+        }
 
         Account account = Account.builder()
                 .username(accountCreateDto.getUsername())

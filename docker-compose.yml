@@ -72,6 +72,10 @@ services:
       spring.zipkin.base-url: http://zipkin-server:9411
       spring.rabbitmq.host: rabbitmq
       spring.zipkin.sender.type: rabbit
+      apartment.service.url: http://apartment-service:8200
+      account.service.url: http://account-service:8100
+      auth.service.url: http://auth-service:5000
+
     volumes:
       - ./api-gateway/target/api-gateway.jar:/app/api-gateway.jar
     deploy:

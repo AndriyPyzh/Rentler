@@ -1,7 +1,7 @@
-import { apiUrl } from "../config.json";
+import config from "../config.js";
 import http from "./httpService";
 
-const apiEndpoint = apiUrl + '/apartments/';
+const apiEndpoint = config.apiUrl + '/apartments/';
 
 export function getApartments(page = 0, size = 9, sort = 'id') {
     return http.get(apiEndpoint, { params: { page, size, sort } });

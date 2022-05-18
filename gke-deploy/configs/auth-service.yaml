@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  labels:
+    app: auth-service
+  name: auth-service
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-service
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: auth-service
+    spec:
+      containers:
+        - image: gcr.io/decoded-petal-342615/rentler_auth-service
+          imagePullPolicy: Always
+          name: auth-service
+          envFrom:
+            - configMapRef:
+                name: auth-service
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: auth-service
+  name: auth-service
+  namespace: default
+spec:
+  ports:
+    - port: 5000
+      protocol: TCP
+      targetPort: 5000
+  selector:
+    app: auth-service
+  type: ClusterIP
+---
+apiVersion: v1
+data:
+  spring.application.name: 'auth-service'
+  server.port: '5000'
+  server.servlet.context-path: '/auth'
+
+  spring.datasource.url: 'jdbc:postgresql://postgres:5432/auth_service'
+  spring.datasource.username: 'auth_service_user'
+  spring.datasource.password: 'auth_service_password'
+
+  spring.jpa.database-platform: 'org.hibernate.dialect.PostgreSQL95Dialect'
+  spring.jpa.show-sql: 'true'
+  spring.jpa.hibernate.ddl-auto: 'create-drop'
+  spring.datasource.initialization-mode: 'always'
+
+  spring.sleuth.sampler.probability: '1.0'
+
+  rentler.secret-key: 'MyKey123MyKey123MyKey123MyKey123MyKey123MyKey123'
+
+  # disable registry and config
+  spring.cloud.config.enabled: 'false'
+  spring.cloud.service-registry.auto-registration.enabled: 'false'
+  eureka.client.enabled: 'false'
+  eureka.client.serviceUrl.registerWithEureka: 'false'
+  spring.zipkin.enabled: 'false'
+
+kind: ConfigMap
+metadata:
+  name: auth-service
+  namespace: default
