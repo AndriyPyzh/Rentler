@@ -1,10 +1,10 @@
 import React from 'react';
-import { Link, NavLink } from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 import Logout from "../auth/logout";
 import NavPopover from "./navPopover";
 
 const NavBar = (props) => {
-    const { user } = props;
+    const {user} = props;
 
     return (
         <nav className="navbar navbar-expand-xl navbar-light bg-light border-bottom fixed-top">
@@ -24,16 +24,16 @@ const NavBar = (props) => {
                            placeholder="&#xF002; Where do you want to leave?"
                     />
                 </form>
-                <div className="navbar-nav d-flex align-items-center border-left" style={ { width: '540px' } }>
-                    { !user &&
+                <div className="navbar-nav d-flex align-items-center border-left" style={{width: '540px'}}>
+                    {!user &&
                     <React.Fragment>
                         <NavLink className="btn btn-outline-warning ml-4 mr-3 list-property-button"
                                  to="/signup">List a Property</NavLink>
                         <NavLink className="nav-item nav-link m-1 mx-2 p-1" to="/login">Log In</NavLink>
                         <NavLink className="nav-item nav-link m-1 mx-2 p-1" to="/signup">Sign Up</NavLink>
-                    </React.Fragment> }
+                    </React.Fragment>}
 
-                    { user &&
+                    {user &&
                     <React.Fragment>
                         <NavPopover text="Properties" classes="nav-item nav-link no-button m-1 mx-2 ml-3 ">
                             <NavLink className="nav-item nav-link border-bottom"
@@ -44,14 +44,14 @@ const NavBar = (props) => {
                         <NavLink className="btn btn-outline-warning mx-2 list-property-button"
                                  to="/add-apartment">List a Property</NavLink>
 
-                        { user.data.avatar && <img src={ user.data.avatar } className="navbar-avatar"/> }
-                        <NavPopover title={ user.data.username }
-                                    classes={ "nav-item no-button m-1 mr-3 ml-4 " + (user.data.avatar ? "navbar-avatar-popover no-button" : "navbar-avatar-empty") }>
+                        {user.data.avatar && <img src={user.data.avatar} className="navbar-avatar"/>}
+                        <NavPopover title={user.data.username}
+                                    classes={"nav-item no-button m-1 mr-3 ml-4 " + (user.data.avatar ? "navbar-avatar-popover no-button" : "navbar-avatar-empty")}>
                             <NavLink className="nav-item nav-link border-bottom"
                                      to="/settings">Account & Settings</NavLink>
                             <Logout classes="nav-item nav-link no-button">Log Out</Logout>
                         </NavPopover>
-                    </React.Fragment> }
+                    </React.Fragment>}
                 </div>
             </div>
         </nav>

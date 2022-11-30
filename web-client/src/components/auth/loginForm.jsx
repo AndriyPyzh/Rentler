@@ -1,7 +1,7 @@
 import Joi from 'joi-browser';
 import React from 'react';
-import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
+import {Link} from "react-router-dom";
+import {toast} from "react-toastify";
 import authService from "../../services/authService";
 import logger from "../../services/logService";
 import Form from "../shared/form";
@@ -24,7 +24,7 @@ class LoginForm extends Form {
 
     doSubmit = async () => {
         try {
-            const { username, password } = this.state.data;
+            const {username, password} = this.state.data;
             await authService.login(username, password);
             window.location = '/';
         } catch (ex) {
@@ -39,21 +39,22 @@ class LoginForm extends Form {
     render() {
         return (
             <AuthPage
-                title={ "Log In" }
-                footer={ <span>Don’t have Rentler account? <Link to={ "/signup" } className="text-purple">Sign up</Link></span> }
-                { ...this.props }
+                title={"Log In"}
+                footer={<span>Don’t have Rentler account? <Link to={"/signup"}
+                                                                className="text-purple">Sign up</Link></span>}
+                {...this.props}
             >
-                <form onSubmit={ this.handleSubmit }>
-                    <div className="card-body" style={ { padding: 40 } }>
-                        { super.renderInput("username", "Username", "enter username...") }
-                        { super.renderInput("password", "Password", "enter password...", "password") }
-                        <div className="text-right " style={ { fontSize: 14 } }>
+                <form onSubmit={this.handleSubmit}>
+                    <div className="card-body" style={{padding: 40}}>
+                        {super.renderInput("username", "Username", "enter username...")}
+                        {super.renderInput("password", "Password", "enter password...", "password")}
+                        <div className="text-right " style={{fontSize: 14}}>
                             <Link to="/reset-password" className="text-purple">
                                 Forgot your password?
                             </Link>
                         </div>
                     </div>
-                    { super.renderButton("Log In", "btn btn-primary auth-button") }
+                    {super.renderButton("Log In", "btn btn-primary auth-button")}
                 </form>
             </AuthPage>
         );

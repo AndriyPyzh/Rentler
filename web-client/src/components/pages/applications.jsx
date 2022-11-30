@@ -1,7 +1,7 @@
 import moment from "moment";
-import React, { Component } from 'react';
-import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
+import React, {Component} from 'react';
+import {Link} from "react-router-dom";
+import {toast} from "react-toastify";
 import apartmentService from "../../services/apartmentService";
 import logger from "../../services/logService";
 import AddApplication from "../apartments/addApplication";
@@ -16,8 +16,8 @@ class Applications extends Component {
 
     populateApplications = async () => {
         try {
-            const { data: applications } = await apartmentService.getApplicationsByOwner();
-            this.setState({ applications });
+            const {data: applications} = await apartmentService.getApplicationsByOwner();
+            this.setState({applications});
         } catch (ex) {
             logger.error(ex);
             if (ex.response && ex.response.status === 400) {
@@ -31,12 +31,12 @@ class Applications extends Component {
         try {
             const applications = this.state.applications;
             for (let i = 0; i < applications.length; i++) {
-                const { data: apartment } = await apartmentService.getById(applications[i].apartmentId);
+                const {data: apartment} = await apartmentService.getById(applications[i].apartmentId);
                 applications[i].name = apartment.name;
                 applications[i].apartmentPrice = apartment.price;
                 applications[i].highestPrice = apartment.highestPrice;
             }
-            this.setState({ applications });
+            this.setState({applications});
         } catch (ex) {
         }
     };
@@ -68,7 +68,7 @@ class Applications extends Component {
         try {
             await apartmentService.deleteApplication(id);
             const applications = this.state.applications.filter(a => a.id !== id);
-            this.setState({ applications });
+            this.setState({applications});
         } catch (ex) {
             logger.error(ex);
             if (ex.response && ex.response.status === 400) {
@@ -84,82 +84,82 @@ class Applications extends Component {
         editApplicationParams.apartmentId = apl.apartmentId;
         editApplicationParams.apartmentPrice = apl.apartmentPrice;
         editApplicationParams.highestPrice = apl.highestPrice;
-        this.setState({ showApplication: true, editApplicationParams });
+        this.setState({showApplication: true, editApplicationParams});
 
     };
 
     hideEdit = async (id) => {
         await this.deleteApplication(id);
         await this.componentDidMount();
-        this.setState({ showApplication: false });
+        this.setState({showApplication: false});
     };
 
     render() {
-        const { applications, showApplication, editApplicationParams } = this.state;
+        const {applications, showApplication, editApplicationParams} = this.state;
         const showApplications = applications.length === 0;
         return (
             <div>
                 <ScrollToTop/>
-                { showApplication &&
+                {showApplication &&
                 <AddApplication
-                    { ...this.props }
-                    apartmentId={ editApplicationParams.apartmentId }
-                    price={ editApplicationParams.apartmentPrice }
-                    highestPrice={ editApplicationParams.highestPrice }
-                    close={ async () => {
+                    {...this.props}
+                    apartmentId={editApplicationParams.apartmentId}
+                    price={editApplicationParams.apartmentPrice}
+                    highestPrice={editApplicationParams.highestPrice}
+                    close={async () => {
                         await this.hideEdit(editApplicationParams.id);
-                    } }
-                /> }
+                    }}
+                />}
 
-                { showApplications &&
+                {showApplications &&
                 <div>
                     <div className="text-center font-weight-bold"
-                         style={ { marginBottom: 20, marginTop: 200, fontSize: 48 } }>
+                         style={{marginBottom: 20, marginTop: 200, fontSize: 48}}>
                         Nothing to See Here Yet
                     </div>
-                    <div className="text-center text-gray" style={ { fontSize: 20 } }>
+                    <div className="text-center text-gray" style={{fontSize: 20}}>
                         Your applications will appear here
                     </div>
                 </div>
                 }
-                { !showApplications &&
-                <div style={ { marginLeft: 130, marginRight: 130, paddingTop: 50 } }>
-                    <div className="text-center my-5 font-weight-bold" style={ { fontSize: 26 } }>Your Applications
+                {!showApplications &&
+                <div style={{marginLeft: 130, marginRight: 130, paddingTop: 50}}>
+                    <div className="text-center my-5 font-weight-bold" style={{fontSize: 26}}>Your Applications
                     </div>
-                    <div className="card" style={ { paddingLeft: 60, paddingRight: 60, marginBottom: 100 } }>
-                        { applications
+                    <div className="card" style={{paddingLeft: 60, paddingRight: 60, marginBottom: 100}}>
+                        {applications
                             .sort((a, b) => (new Date(a.creationDate)).getTime() > (new Date(b.creationDate)) ? -1 : 1)
                             .map(a => {
                                 return (
-                                    <div className="border-bottom d-flex align-items-center" style={ { height: 100 } }>
-                                        <div style={ { width: 235, height: 70 } }>
-                                            <div style={ {
+                                    <div className="border-bottom d-flex align-items-center" style={{height: 100}}>
+                                        <div style={{width: 235, height: 70}}>
+                                            <div style={{
                                                 marginTop: 15,
                                                 fontWeight: 600,
                                                 fontSize: 18
-                                            } }>{ a.name }</div>
-                                            <div style={ { fontSize: 14 } }>
-                                                <Link className="link no-style" to={ `/apartments/${ a.apartmentId }` }>
+                                            }}>{a.name}</div>
+                                            <div style={{fontSize: 14}}>
+                                                <Link className="link no-style" to={`/apartments/${a.apartmentId}`}>
                                                     Property Details
                                                 </Link>
                                             </div>
                                         </div>
                                         <div className="d-inline-flex"
-                                             style={ { width: 120 } }>{ moment(a.creationDate).format("MMMM DD") }</div>
+                                             style={{width: 120}}>{moment(a.creationDate).format("MMMM DD")}</div>
                                         <div className="d-inline-flex black-label"
-                                             style={ { width: 100 } }>${ this.formatPrice(a.price) }</div>
+                                             style={{width: 100}}>${this.formatPrice(a.price)}</div>
                                         <div className="d-flex justify-content-center"
-                                             style={ { width: 170 } }>
-                                            { this.getAplStatus(a) }
+                                             style={{width: 170}}>
+                                            {this.getAplStatus(a)}
                                         </div>
-                                        <div className="apl-edit-icon" onClick={ () => this.showEdit(a) }/>
-                                        <div className="apl-del-icon" onClick={ () => this.deleteApplication(a.id) }/>
+                                        <div className="apl-edit-icon" onClick={() => this.showEdit(a)}/>
+                                        <div className="apl-del-icon" onClick={() => this.deleteApplication(a.id)}/>
 
                                     </div>
                                 );
-                            }) }
+                            })}
                     </div>
-                </div> }
+                </div>}
             </div>
         );
     }

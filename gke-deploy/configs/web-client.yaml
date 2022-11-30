@@ -23,12 +23,12 @@ spec:
         app: web-client
     spec:
       containers:
-      - image: gcr.io/decoded-petal-342615/rentler_web-client
-        imagePullPolicy: Always
-        name: web-client
-        envFrom:
-          - configMapRef:
-              name: web-client
+        - image: gcr.io/decoded-petal-342615/rentler_web-client
+          imagePullPolicy: Always
+          name: web-client
+          envFrom:
+            - configMapRef:
+                name: web-client
       restartPolicy: Always
 ---
 apiVersion: v1

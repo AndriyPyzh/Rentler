@@ -1,5 +1,5 @@
 import React from 'react';
-import { toast } from "react-toastify";
+import {toast} from "react-toastify";
 import apartmentService from "../../services/apartmentService";
 import logger from "../../services/logService";
 import AddApartment from "./addApartment";
@@ -8,7 +8,7 @@ class EditApartment extends AddApartment {
 
     populateApartment = async () => {
         try {
-            const { data: apartment } = await apartmentService.getById(this.props.match.params.id);
+            const {data: apartment} = await apartmentService.getById(this.props.match.params.id);
             const data = {
                 name: apartment.name,
                 street: apartment.address.street,
@@ -44,10 +44,10 @@ class EditApartment extends AddApartment {
     };
 
     doSubmit = async () => {
-        const apartment = { ...this.state.data };
+        const apartment = {...this.state.data};
         apartment.amenities = this.state.selectedAmenities;
         apartment.petPolicy = this.state.petPolicy;
-        apartment.address = { street: apartment.street, city: apartment.city, houseNumber: apartment.houseNumber };
+        apartment.address = {street: apartment.street, city: apartment.city, houseNumber: apartment.houseNumber};
         apartment.floor = -1;
         apartment.photos = this.state.photos;
         apartment.id = this.props.match.params.id;

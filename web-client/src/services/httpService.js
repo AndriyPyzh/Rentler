@@ -1,5 +1,5 @@
 import axios from "axios";
-import { toast } from "react-toastify";
+import {toast} from "react-toastify";
 import logger from "./logService";
 
 axios.interceptors.response.use(null, error => {
@@ -18,7 +18,7 @@ axios.interceptors.response.use(null, error => {
 
 function setToken(token) {
     if (token)
-        axios.defaults.headers.common["Authorization"] = `Bearer ${ token }`;
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 }
 
 export default {

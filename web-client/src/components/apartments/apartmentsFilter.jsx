@@ -30,9 +30,9 @@ class ApartmentsFilter extends Form {
 
     render() {
         return (
-            <form className="bg-light" onSubmit={ this.handleSubmit }>
+            <form className="bg-light" onSubmit={this.handleSubmit}>
                 <h1>Filters</h1>
-                { super.renderButton("Find Properties", "btn btn-primary filter-button full-width fixed-bottom") }
+                {super.renderButton("Find Properties", "btn btn-primary filter-button full-width fixed-bottom")}
             </form>
         );
     }

@@ -1,5 +1,5 @@
 import Joi from "joi-browser";
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import ImageInput from "./imageInput";
 import Input from "./input";
 import Select from "./select";
@@ -12,8 +12,8 @@ class Form extends Component {
     };
 
     validate = () => {
-        const options = { abortEarly: false };
-        const { error } = Joi.validate(this.state.data, this.schema, options);
+        const options = {abortEarly: false};
+        const {error} = Joi.validate(this.state.data, this.schema, options);
 
         if (!error) return null;
 
@@ -25,10 +25,10 @@ class Form extends Component {
         return errors;
     };
 
-    validateProperty = ({ name, value }) => {
-        const obj = { [name]: value };
-        const schema = { [name]: this.schema[name] };
-        const { error } = Joi.validate(obj, schema);
+    validateProperty = ({name, value}) => {
+        const obj = {[name]: value};
+        const schema = {[name]: this.schema[name]};
+        const {error} = Joi.validate(obj, schema);
         return error && error.details[0].message;
     };
 
@@ -37,17 +37,17 @@ class Form extends Component {
         e.preventDefault();
 
         const errors = this.validate();
-        this.setState({ errors: errors || {} });
+        this.setState({errors: errors || {}});
         if (errors) return;
 
         this.doSubmit();
     };
 
-    handleFileChange = async ({ target }) => {
+    handleFileChange = async ({target}) => {
         const img = await this.convertBase64(target.files[0]);
-        const { data } = { ...this.state };
+        const {data} = {...this.state};
         data[target.name] = img;
-        this.setState({ data });
+        this.setState({data});
     };
 
     convertBase64 = (file) => {
@@ -63,8 +63,8 @@ class Form extends Component {
         });
     };
 
-    handleChange = ({ currentTarget: input }) => {
-        const { errors, showMessages } = { ...this.state };
+    handleChange = ({currentTarget: input}) => {
+        const {errors, showMessages} = {...this.state};
         const errorMessages = this.validateProperty(input);
         if (errorMessages) {
             errors[input.name] = errorMessages;
@@ -72,26 +72,26 @@ class Form extends Component {
             delete errors[input.name];
         }
         showMessages[input.name] = true;
-        const data = { ...this.state.data };
+        const data = {...this.state.data};
         data[input.name] = input.value;
-        this.setState({ data, errors, showMessages });
+        this.setState({data, errors, showMessages});
     };
 
     renderInput(name, label, placeholder, type = "text", showText = true, ...attributes) {
-        const { data, errors, showMessages } = this.state;
+        const {data, errors, showMessages} = this.state;
 
         return (
             <Input
-                name={ name }
-                label={ label }
-                type={ type }
-                placeholder={ placeholder }
-                value={ data[name] }
-                onChange={ this.handleChange }
-                error={ errors[name] }
-                showMessage={ showMessages[name] }
-                showText={ showText }
-                attributes={ attributes[0] }
+                name={name}
+                label={label}
+                type={type}
+                placeholder={placeholder}
+                value={data[name]}
+                onChange={this.handleChange}
+                error={errors[name]}
+                showMessage={showMessages[name]}
+                showText={showText}
+                attributes={attributes[0]}
             />
         );
     }
@@ -99,24 +99,24 @@ class Form extends Component {
     renderImageInput(name, label, classes = "") {
         return (
             <ImageInput
-                name={ name }
-                label={ label }
-                onChange={ this.handleFileChange }
-                classes={ classes }
+                name={name}
+                label={label}
+                onChange={this.handleFileChange}
+                classes={classes}
             />
         );
     }
 
     renderSelect(name, label, options) {
-        const { data } = this.state;
+        const {data} = this.state;
 
         return (
             <Select
-                name={ name }
-                value={ data[name] }
-                label={ label }
-                options={ options }
-                onChange={ this.handleChange }
+                name={name}
+                value={data[name]}
+                label={label}
+                options={options}
+                onChange={this.handleChange}
             />
         );
     }
@@ -124,9 +124,9 @@ class Form extends Component {
     renderButton(label, classes = "btn btn-primary") {
         return (
             <button type="submit"
-                    className={ classes }
-                    disabled={ this.validate() }>
-                { label }
+                    className={classes}
+                    disabled={this.validate()}>
+                {label}
             </button>
         );
     }

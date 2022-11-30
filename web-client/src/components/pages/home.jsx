@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+import React, {Component} from 'react';
+import {Link} from "react-router-dom";
 import authService from "../../services/authService";
 
 class Home extends Component {
@@ -14,16 +14,16 @@ class Home extends Component {
                     <div className="home-title d-inline-flex">Renting Done Right. Finally.</div>
                 </div>
                 <form className="d-flex justify-content-center"
-                      onSubmit={ () => this.props.history.push('/apartments') }>
+                      onSubmit={() => this.props.history.push('/apartments')}>
                     <input className="home-input d-flex align-items-center justify-content-center"
                            placeholder="Where do you want to live?"/>
                 </form>
-                <div className="row" style={ { marginTop: 50 } }>
-                    <div className="w-100 text-center" style={ { color: "white", fontWeight: "bold", fontSize: 20 } }>
+                <div className="row" style={{marginTop: 50}}>
+                    <div className="w-100 text-center" style={{color: "white", fontWeight: "bold", fontSize: 20}}>
                         <span>Market your property to millions</span>
                     </div>
                     <div className="w-100 d-flex d-inline-flex justify-content-center mt-3">
-                        { user !== null ?
+                        {user !== null ?
                             <Link to="add-apartment" className="btn btn-primary no-button home-button">List Your
                                 Rental</Link>
                             :
@@ -34,7 +34,7 @@ class Home extends Component {
                 <div className="text-center home-title2">
                     Listing Categories
                 </div>
-                <div className="row text-center" style={ { marginBottom: 100, fontSize: 14 } }>
+                <div className="row text-center" style={{marginBottom: 100, fontSize: 14}}>
                     <div className="col-sm">
                         <div className="w-100 mb-2">
                             <Link to="/apartments" className="link no-style">Apartments for Rent</Link>
@@ -60,10 +60,10 @@ class Home extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="border-top d-flex justify-content-center" style={ { marginBottom: 50 } }>
+                <div className="border-top d-flex justify-content-center" style={{marginBottom: 50}}>
                     <div className="quotes"/>
                 </div>
-                <div style={ { fontSize: 18, marginBottom: 100 } }>
+                <div style={{fontSize: 18, marginBottom: 100}}>
                     <div className="w-100 text-center">Rentler is the real estate platform that offers a digital rental
                         journey.
                     </div>

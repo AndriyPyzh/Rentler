@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { Redirect, Route, Switch } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+import React, {Component} from 'react';
+import {Redirect, Route, Switch} from "react-router-dom";
+import {ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import './App.css';
 import AddApartment from "./components/apartments/addApartment";
@@ -33,7 +33,7 @@ class App extends Component {
         if (authService.getToken()) {
             try {
                 const user = await userService.getCurrentAccount();
-                this.setState({ user });
+                this.setState({user});
             } catch (ex) {
                 await authService.logout();
             }
@@ -41,23 +41,23 @@ class App extends Component {
     }
 
     hideNavbar = () => {
-        this.setState({ navbar: false });
+        this.setState({navbar: false});
     };
 
     showNavbar = () => {
-        this.setState({ navbar: true });
+        this.setState({navbar: true});
     };
 
     hideFooter = () => {
-        this.setState({ footer: false });
+        this.setState({footer: false});
     };
 
     showFooter = () => {
-        this.setState({ footer: true });
+        this.setState({footer: true});
     };
 
     render() {
-        const { navbar, footer } = this.state;
+        const {navbar, footer} = this.state;
         const clearFuncs = {
             hideNavbar: this.hideNavbar,
             showNavbar: this.showNavbar,
@@ -68,37 +68,37 @@ class App extends Component {
         return (
             <React.Fragment>
                 <ToastContainer position="top-center" pauseOnHover/>
-                { navbar && <NavBar user={ this.state.user }/> }
+                {navbar && <NavBar user={this.state.user}/>}
                 <main className="container">
                     <Switch>
-                        <Route path="/profile/:username" component={ Profile }/>
-                        <Route path="/add-apartment" component={ AddApartment }/>
-                        <Route path="/settings" component={ SettingsForm }/>
+                        <Route path="/profile/:username" component={Profile}/>
+                        <Route path="/add-apartment" component={AddApartment}/>
+                        <Route path="/settings" component={SettingsForm}/>
                         <Route path="/applications"
-                               render={ props => <Applications { ...props }{ ...clearFuncs }/> }/>
-                        <Route path="/properties" component={ Properties }/>
+                               render={props => <Applications {...props}{...clearFuncs}/>}/>
+                        <Route path="/properties" component={Properties}/>
                         <Route path="/edit-apartment/:id"
-                               render={ props => <EditApartment { ...props }/> }/>
+                               render={props => <EditApartment {...props}/>}/>
                         <Route path="/apartments/:id/applications"
-                               render={ props => <ApartmentApplications { ...props }/> }/>
+                               render={props => <ApartmentApplications {...props}/>}/>
                         <Route path="/apartments/:id"
-                               render={ props => <ApartmentDetails { ...props }{ ...clearFuncs }/> }/>
+                               render={props => <ApartmentDetails {...props}{...clearFuncs}/>}/>
                         <Route path="/apartments"
-                               render={ props => <Apartments { ...props }{ ...clearFuncs }/> }/>
+                               render={props => <Apartments {...props}{...clearFuncs}/>}/>
                         <Route path="/login"
-                               render={ props => <LoginForm { ...props }{ ...clearFuncs }/> }/>
+                               render={props => <LoginForm {...props}{...clearFuncs}/>}/>
                         <Route path="/signup"
-                               render={ props => <SignupForm { ...props }{ ...clearFuncs }/> }/>
+                               render={props => <SignupForm {...props}{...clearFuncs}/>}/>
                         <Route path="/confirm"
-                               render={ props => <AddInfoForm { ...props }{ ...clearFuncs }/> }/>
+                               render={props => <AddInfoForm {...props}{...clearFuncs}/>}/>
                         <Route path="/reset-password"
-                               render={ props => <ResetPassword { ...props }{ ...clearFuncs }/> }/>
-                        <Route path="/not-found" component={ NotFound }/>
-                        <Route path="/" exact component={ Home }/>
+                               render={props => <ResetPassword {...props}{...clearFuncs}/>}/>
+                        <Route path="/not-found" component={NotFound}/>
+                        <Route path="/" exact component={Home}/>
                         <Redirect to="/not-found"/>
                     </Switch>
                 </main>
-                { footer && <Footer/> }
+                {footer && <Footer/>}
             </React.Fragment>
         );
     }

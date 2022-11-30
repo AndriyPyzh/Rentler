@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { toast } from "react-toastify";
+import React, {Component} from 'react';
+import {toast} from "react-toastify";
 import apartmentService from "../../services/apartmentService";
 import logger from "../../services/logService";
 import ScrollToTop from "../shared/scrollToTop";
@@ -17,13 +17,13 @@ class ApartmentsList extends Component {
 
     loadApartments = async () => {
         try {
-            const { page, size } = this.state.pageable;
-            const { data: newApartments } = await apartmentService.getApartments(page, size);
+            const {page, size} = this.state.pageable;
+            const {data: newApartments} = await apartmentService.getApartments(page, size);
             if (newApartments.length) {
                 const apartments = [...this.state.apartments, ...newApartments];
-                this.setState({ apartments, showBottomLoader: false, pageable: { page: page + 1, size } });
+                this.setState({apartments, showBottomLoader: false, pageable: {page: page + 1, size}});
             } else {
-                this.setState({ showBottomLoader: false });
+                this.setState({showBottomLoader: false});
             }
         } catch (ex) {
             logger.error(ex);
@@ -36,7 +36,7 @@ class ApartmentsList extends Component {
 
     loadMore = async () => {
         if (window.innerHeight + document.documentElement.scrollTop === document.scrollingElement.scrollHeight) {
-            this.setState({ showBottomLoader: true });
+            this.setState({showBottomLoader: true});
             await this.loadApartments();
         }
     };
@@ -51,31 +51,31 @@ class ApartmentsList extends Component {
     }
 
     render() {
-        const { apartments, showBottomLoader } = this.state;
+        const {apartments, showBottomLoader} = this.state;
         const showLoader = apartments.length === 0;
         return (
-            <div style={ { marginTop: 130 } }>
+            <div style={{marginTop: 130}}>
                 <ScrollToTop/>
-                { showLoader &&
-                <div className="d-flex justify-content-center" style={ { paddingTop: 300 } }>
+                {showLoader &&
+                <div className="d-flex justify-content-center" style={{paddingTop: 300}}>
                     <div className="loader"/>
                 </div>
                 }
 
-                { !showLoader &&
+                {!showLoader &&
                 apartments.map(apartment =>
-                    <Apartment id={ apartment.id }
-                               title={ apartment.name }
-                               address={ apartment.address }
-                               amenties={ apartment.amenities }
-                               beds={ apartment.beds }
-                               bath={ apartment.bath }
-                               squareMeters={ apartment.squareMeters }
-                               price={ apartment.price }
-                               photo={ apartment.photos[0] }/>)
+                    <Apartment id={apartment.id}
+                               title={apartment.name}
+                               address={apartment.address}
+                               amenties={apartment.amenities}
+                               beds={apartment.beds}
+                               bath={apartment.bath}
+                               squareMeters={apartment.squareMeters}
+                               price={apartment.price}
+                               photo={apartment.photos[0]}/>)
                 }
 
-                { showBottomLoader &&
+                {showBottomLoader &&
                 <div className="d-flex justify-content-center">
                     <div className="loader"/>
                 </div>

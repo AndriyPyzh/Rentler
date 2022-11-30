@@ -13,21 +13,21 @@ class AuthPage extends EmptyPage {
     }
 
     render() {
-        const { title, footer } = this.props;
+        const {title, footer} = this.props;
         return (
             <div className="auth-form d-flex justify-content-center">
-                <button className="close shadow-sm" onClick={ this.close }/>
+                <button className="close shadow-sm" onClick={this.close}/>
                 <div className="d-flex align-self-center row">
-                    <div className="w-100 text-center" style={ { marginBottom: 20 } }>
-                        <span className="auth-form-title">{ title }</span>
+                    <div className="w-100 text-center" style={{marginBottom: 20}}>
+                        <span className="auth-form-title">{title}</span>
                     </div>
                     <div className="w-100 d-flex justify-content-center">
                         <div className="auth-card card shadow-lg">
-                            { this.props.children }
+                            {this.props.children}
                         </div>
                     </div>
-                    <div className="w-100 text-center mt-3" style={ { fontSize: 14 } }>
-                        { footer }
+                    <div className="w-100 text-center mt-3" style={{fontSize: 14}}>
+                        {footer}
                     </div>
                 </div>
             </div>
