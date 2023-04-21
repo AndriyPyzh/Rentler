@@ -23,7 +23,7 @@ spec:
         app: auth-service
     spec:
       containers:
-        - image: gcr.io/decoded-petal-342615/rentler_auth-service
+        - image: gcr.io/rentler-370619/rentler_auth-service
           imagePullPolicy: Always
           name: auth-service
           envFrom:
@@ -72,6 +72,8 @@ data:
   eureka.client.enabled: 'false'
   eureka.client.serviceUrl.registerWithEureka: 'false'
   spring.zipkin.enabled: 'false'
+
+  spring.rabbitmq.host: "${RABBITMQ_SERVICE_HOST}"
 
 kind: ConfigMap
 metadata:

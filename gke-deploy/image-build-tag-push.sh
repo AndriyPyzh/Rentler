@@ -7,7 +7,7 @@ do
     if  [[ $image == rentler_* ]]
     then
       echo $image
-      docker tag $image gcr.io/decoded-petal-342615/$image
-      docker push gcr.io/decoded-petal-342615/$image
+      docker tag $image gcr.io/rentler-370619/$image
+      docker push gcr.io/rentler-370619/$image
     fi
 done

@@ -1,10 +1,10 @@
-package com.rentler.account;
+package com.rentler.auth;
 
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class AccountServiceApplicationTests {
+public class AuthServiceApplicationTests {
 
     @Test
     public void contextLoads() {

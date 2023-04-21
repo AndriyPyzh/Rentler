@@ -23,7 +23,7 @@ spec:
         app: api-gateway
     spec:
       containers:
-        - image: gcr.io/decoded-petal-342615/rentler_api-gateway
+        - image: gcr.io/rentler-370619/rentler_api-gateway
           imagePullPolicy: Always
           name: api-gateway
           envFrom:
@@ -53,7 +53,6 @@ spec:
     app: api-gateway
   sessionAffinity: None
   type: LoadBalancer
-  loadBalancerIP: 34.134.158.36
 ---
 apiVersion: v1
 data:

@@ -23,12 +23,13 @@ spec:
         app: account-service
     spec:
       containers:
-        - image: gcr.io/decoded-petal-342615/rentler_account-service
+        - image: gcr.io/rentler-370619/rentler_account-service
           imagePullPolicy: Always
           name: account-service
           envFrom:
             - configMapRef:
                 name: account-service
+
       restartPolicy: Always
 ---
 apiVersion: v1
@@ -76,6 +77,8 @@ data:
   eureka.client.enabled: 'false'
   eureka.client.serviceUrl.registerWithEureka: 'false'
   spring.zipkin.enabled: 'false'
+
+  spring.rabbitmq.host: "${RABBITMQ_SERVICE_HOST}"
 
   AUTH_SERVICE_URL: 'http://auth-service:5000'
 

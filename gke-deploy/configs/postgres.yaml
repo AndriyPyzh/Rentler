@@ -46,7 +46,7 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: gcr.io/decoded-petal-342615/rentler_postgres
+          image: gcr.io/rentler-370619/rentler_postgres
           resources:
             limits:
               cpu: "1"

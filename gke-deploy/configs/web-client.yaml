@@ -23,7 +23,7 @@ spec:
         app: web-client
     spec:
       containers:
-        - image: gcr.io/decoded-petal-342615/rentler_web-client
+        - image: gcr.io/rentler-370619/rentler_web-client
           imagePullPolicy: Always
           name: web-client
           envFrom:
@@ -53,11 +53,10 @@ spec:
     app: web-client
   sessionAffinity: None
   type: LoadBalancer
-  loadBalancerIP: 34.68.39.66
 ---
 apiVersion: v1
 data:
-  REACT_APP_API_URL: 'http://34.134.158.36:8765'
+  REACT_APP_API_URL: 'http://34.172.176.66:8765'
 kind: ConfigMap
 metadata:
   name: web-client

@@ -23,7 +23,7 @@ spec:
         app: apartment-service
     spec:
       containers:
-        - image: gcr.io/decoded-petal-342615/rentler_apartment-service
+        - image: gcr.io/rentler-370619/rentler_apartment-service
           imagePullPolicy: Always
           name: apartment-service
           envFrom:
@@ -79,6 +79,8 @@ data:
   eureka.client.enabled: 'false'
   eureka.client.serviceUrl.registerWithEureka: 'false'
   spring.zipkin.enabled: 'false'
+
+  spring.rabbitmq.host: "${RABBITMQ_SERVICE_HOST}"
 
   ACCOUNT_SERVICE_URL: 'http://account-service:8100'
 
