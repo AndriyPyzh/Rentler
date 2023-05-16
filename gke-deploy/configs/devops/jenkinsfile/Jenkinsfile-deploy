@@ -1,8 +1,19 @@
 pipeline{
+    parameters {
+        choice(name: "SERVICE",
+               choices: [
+                    "account-service",
+                    "apartment-service",
+                    "notification-service",
+                    "auth-service",
+                    "api-gateway"
+                    ],
+               description: "service")
+    }
     agent {
 	    kubernetes {
             cloud 'kubernetes'
-            label 'maven'
+            label 'docker'
             yaml '''
             apiVersion: v1
             kind: Pod
@@ -19,8 +30,10 @@ pipeline{
     stages{
         stage("Build") {
     		steps {
-        		container('maven') {
-                    sh "mvn clean package -DskipTests -Pdev -f rentler-helper/pom.xml"
+        		container('docker') {
+                    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+                        sh "docker -v"
+                    }
                 }
     		}
         }
@@ -30,15 +43,6 @@ pipeline{
         		    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
                         sh "mvn verify -Pdev -f rentler-helper/pom.xml"
         		    }
-                }
-    		}
-        }
-        stage("Install") {
-    		steps {
-        		container('maven') {
-        		    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
-                        sh "mvn deploy -DskipTests -Pdev -f rentler-helper/pom.xml"
-                    }
                 }
     		}
         }
