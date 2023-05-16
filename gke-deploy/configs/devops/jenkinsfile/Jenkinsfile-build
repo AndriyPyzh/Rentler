@@ -5,7 +5,7 @@ pipeline{
                     "rentler-helper",
                     "account-service",
                     "apartment-service",
-                    "notification-service"
+                    "notification-service",
                     "auth-service",
                     "api-gateway"
                     ],
