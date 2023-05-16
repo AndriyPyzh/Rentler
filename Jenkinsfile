@@ -25,6 +25,16 @@ pipeline{
                   command:
                     - cat
                   tty: true
+                - name: docker
+                  image: docker:latest
+                  command:
+                    - cat
+                  tty: true
+                - name: docker-compose
+                  image: docker/compose:alpine-1.29.2
+                  command:
+                    - cat
+                  tty: true
             '''
 	    }
 	}
@@ -55,6 +65,33 @@ pipeline{
                     }
                 }
     		}
+        }
+        stage("Build image") {
+    		steps {
+        		container('docker-compose') {
+        		    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+                        sh "docker-compose build $params.SERVICE"
+                    }
+                }
+    		}
+        }
+        stage("Tag Image") {
+            steps {
+                container('docker') {
+                    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+                        sh "docker tag rentler_$params.SERVICE gcr.io/rentler-370619/rentler_$params.SERVICE"
+                    }
+                }
+            }
+        }
+        stage("Push Image") {
+            steps {
+                container('docker') {
+                    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+                        sh "docker push gcr.io/rentler-370619/rentler_$params.SERVICE"
+                    }
+                }
+            }
         }
     }
 }
