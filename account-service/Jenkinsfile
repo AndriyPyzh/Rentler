@@ -16,12 +16,18 @@ pipeline{
             '''
 	    }
 	}
+
     stages{
+        stage('Checkout Git') {
+            steps {
+                 git branch: 'develop', url:'https://github.com/AndriyPyzh/Rentler.git'
+            }
+        }
         stage("Build") {
     		steps {
         		container('maven') {
         		    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
-                        sh "mvn clean package -DskipTests -Pdev -f rentler-helper/pom.xml"
+                        sh "mvn clean package -DskipTests -Pdev -f account-service/pom.xml"
         		    }
                 }
     		}
@@ -30,7 +36,7 @@ pipeline{
     		steps {
         		container('maven') {
         		    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
-                        sh "mvn verify -Pdev -f rentler-helper/pom.xml"
+                        sh "mvn verify -Pdev -f account-service/pom.xml"
         		    }
                 }
     		}
@@ -39,7 +45,7 @@ pipeline{
     		steps {
         		container('maven') {
         		    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
-                        sh "mvn deploy -DskipTests -Pdev -f rentler-helper/pom.xml"
+                        sh "mvn deploy -DskipTests -Pdev -f account-service/pom.xml"
                     }
                 }
     		}
