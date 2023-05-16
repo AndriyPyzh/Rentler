@@ -4,7 +4,10 @@ pipeline{
                choices: [
                     "rentler-helper",
                     "account-service",
-                    "apartment-service"
+                    "apartment-service",
+                    "notification-service"
+                    "auth-service",
+                    "api-gateway"
                     ],
                description: "service")
     }
@@ -29,7 +32,9 @@ pipeline{
         stage("Build") {
     		steps {
         		container('maven') {
-                    sh "mvn clean package -DskipTests -Pdev -f $params.SERVICE/pom.xml"
+        		    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+                        sh "mvn clean package -DskipTests -Pdev -f $params.SERVICE/pom.xml"
+                    }
                 }
     		}
         }
