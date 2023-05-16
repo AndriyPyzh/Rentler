@@ -18,7 +18,7 @@ pipeline{
 	}
 
     stages{
-        stage('checkout git') {
+        stage('Checkout Git') {
             steps {
                  git branch: 'develop', url:'https://github.com/AndriyPyzh/Rentler.git'
             }
@@ -33,19 +33,22 @@ pipeline{
         stage("Test") {
     		steps {
         		container('maven') {
-                    sh "mvn verify -f -Pdev rentler-helper/pom.xml"
+                    sh "mvn verify -Pdev -f rentler-helper/pom.xml"
                 }
     		}
         }
-        stage("Deploy") {
+        stage("Install") {
     		steps {
         		container('maven') {
-                    sh "mvn deploy -DskipTests -Pdev -f rentler-helper/pom.xml"
+        		    withCredentials([file(credentialsId: 'gke-credentials', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+                        sh "mvn deploy -DskipTests -Pdev -f rentler-helper/pom.xml"
+                    }
                 }
     		}
         }
     }
 }
+
 
 
 
