@@ -21,6 +21,7 @@ pipeline{
     		steps {
         		container('maven') {
         		    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+        		        sh "docker -v"
                         sh "mvn clean package -DskipTests -Pdev -f rentler-helper/pom.xml"
         		    }
                 }
