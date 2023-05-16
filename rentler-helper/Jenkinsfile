@@ -18,6 +18,11 @@ pipeline{
 	}
 
     stages{
+        stage('Checkout Git') {
+            steps {
+                 git branch: 'develop', url:'https://github.com/AndriyPyzh/Rentler.git'
+            }
+        }
         stage("Build") {
     		steps {
         		container('maven') {
