@@ -37,21 +37,17 @@ pipeline{
                 container('docker') {
                     withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
                         sh "docker -v"
-                        echo "
-                            version: '3.8'
-                            services:
-                              my-service:
-                                image: my_node:latest
-                                container_name: my_node
-                                build:
-                                  context: .
-                                  dockerfile: Dockerfile
-                            " > docker-compose-1.yaml
+                        echo "version: '3.8'" >> docker-compose-1.yaml
+                        echo "services:" >> docker-compose-1.yaml
+                        echo "  my-service:" >> docker-compose-1.yaml
+                        echo "      image: my_node:latest" >> docker-compose-1.yaml
+                        echo "      container_name: my_node" >> docker-compose-1.yaml
+                        echo "      build:" >> docker-compose-1.yaml
+                        echo "          context: ." >> docker-compose-1.yaml
+                        echo "          dockerfile: Dockerfile" >> docker-compose-1.yaml
 
-                         sh "cat <<EOF >Dockerfile
-                            FROM node:18-alpine
-                            CMD ["node", "-v"]
-                            EOF"
+                        echo "FROM node:18-alpine" >> Dockerfile
+                        echo "CMD ["node", "-v"]" >> Dockerfile
                     }
                 }
                 container('docker-compose') {
