@@ -16,12 +16,11 @@ pipeline{
                     ],
                description: "service")
     }
-    stages{
+    stages {
         stage ('Deploy to GKE') {
             steps {
                 step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'gke-deploy/configs/$params.SERVICE.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
-        		    echo "Deployment Finished ..."
-                }
+        		echo "Deployment Finished ..."
             }
         }
     }
