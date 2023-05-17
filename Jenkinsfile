@@ -62,10 +62,9 @@ pipeline{
     		}
         }
         stage ('Exec Kaniko') {
-            steps { container('kaniko') {
-                sh '''
-                    /kaniko/executor --dockerfile `pwd`/account-service/Dockerfile  --context `pwd`/account-service --destination gcr.io/rentler-370619/rentler_$params.SERVICE
-                    '''
+            steps {
+                container('kaniko') {
+                    sh "/kaniko/executor --dockerfile `pwd`/account-service/Dockerfile  --context `pwd`/account-service --destination gcr.io/rentler-370619/rentler_account-service"
                 }
             }
         }
