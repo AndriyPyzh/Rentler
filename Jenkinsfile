@@ -65,7 +65,7 @@ pipeline{
             steps {
                 sh "ls account-service/target"
                 container('kaniko') {
-                    sh "/kaniko/executor --dockerfile `pwd`/account-service/Dockerfile  --context `pwd`/account-service --destination gcr.io/rentler-370619/rentler_account-service"
+                    sh "/kaniko/executor --context `pwd`/account-service --dockerfile `pwd`/Dockerfile --destination gcr.io/rentler-370619/rentler_account-service"
                 }
             }
         }
