@@ -64,7 +64,6 @@ pipeline{
         stage ('Exec Kaniko') {
             steps { container('kaniko') {
                 sh '''
-                    cat /kaniko/.docker/config.json
                     /kaniko/executor --dockerfile `pwd`/$params.SERVICE/Dockerfile  --context `pwd`/$params.SERVICE --destination gcr.io/rentler-370619/rentler_$params.SERVICE
                     '''
                 }
