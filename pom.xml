@@ -96,7 +96,7 @@
             <repositories>
                 <repository>
                     <id>artifact-registry</id>
-                    <url>artifactregistry://us-central1-maven.pkg.dev/rentler-385708/maven-repository</url>
+                    <url>artifactregistry://us-central1-maven.pkg.dev/rentler-370619/maven-repository</url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>
@@ -108,11 +108,11 @@
             <distributionManagement>
                 <snapshotRepository>
                     <id>artifact-registry</id>
-                    <url>artifactregistry://us-central1-maven.pkg.dev/rentler-385708/maven-repository</url>
+                    <url>artifactregistry://us-central1-maven.pkg.dev/rentler-370619/maven-repository</url>
                 </snapshotRepository>
                 <repository>
                     <id>artifact-registry</id>
-                    <url>artifactregistry://us-central1-maven.pkg.dev/rentler-385708/maven-repository</url>
+                    <url>artifactregistry://us-central1-maven.pkg.dev/rentler-370619/maven-repository</url>
                 </repository>
             </distributionManagement>
         </profile>

@@ -16,11 +16,3 @@ kind: ServiceAccount
 metadata:
   name: jenkins-sa
   namespace: jenkins
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: jenkins-sa-secret
-  annotations:
-    kubernetes.io/service-account.name: jenkins-sa
-type: kubernetes.io/service-account-token
