@@ -30,9 +30,6 @@ pipeline{
                   - sleep
                   args:
                   - 9999999
-                  volumeMounts:
-                  - name: kaniko-secret
-                    mountPath: /kaniko/.docker
             '''
 	    }
 	}
