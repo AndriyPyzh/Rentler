@@ -63,7 +63,7 @@ pipeline{
         }
         stage ('Exec Kaniko') {
             steps {
-                sh "ls account-service"
+                sh "ls account-service/target"
                 container('kaniko') {
                     sh "/kaniko/executor --dockerfile `pwd`/account-service/Dockerfile  --context `pwd`/account-service --destination gcr.io/rentler-370619/rentler_account-service"
                 }
