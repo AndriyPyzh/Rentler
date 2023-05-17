@@ -47,7 +47,7 @@ pipeline{
                         echo "          dockerfile: Dockerfile" >> docker-compose-1.yaml
 
                         echo "FROM node:18-alpine" >> Dockerfile
-                        echo "CMD ["node", "-v"]" >> Dockerfile
+                        echo "CMD [\"node\", \"-v\"]" >> Dockerfile
                     }
                 }
                 container('docker-compose') {
