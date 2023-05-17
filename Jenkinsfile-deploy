@@ -21,9 +21,14 @@ pipeline{
         stage ('Deploy to GKE') {
             steps {
                 withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
-                    withKubeConfig([namespace: "jenkins"]) {
-                        sh "kubectl get services"
-                    }
+                    step([$class: 'KubernetesEngineBuilder',
+                                      projectId: env.PROJECT_ID,
+                                      clusterName: env.CLUSTER_NAME,
+                                      location: env.LOCATION,
+                                      manifestPattern: 'deployment.yaml',
+                                      credentialsId: env.CREDENTIALS_ID,
+                                      verifyDeployments: true])
+                                    }
                 }
         		echo "Deployment Finished ..."
             }
