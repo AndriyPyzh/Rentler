@@ -21,7 +21,7 @@ pipeline{
         stage ('Deploy to GKE') {
             steps {
                 withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
-                    kubeconfig(credentialsId: 'jenkins-sa', serverUrl: '') {
+                    kubeconfig(credentialsId: 'jenkins-sa') {
                         sh "kubectl get services"
                     }
                 }
