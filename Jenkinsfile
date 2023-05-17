@@ -63,9 +63,10 @@ pipeline{
         }
         stage ('Exec Kaniko') {
             steps {
-                sh "ls account-service/target"
                 container('kaniko') {
-                    sh "/kaniko/executor --context `pwd`/account-service --dockerfile `pwd`/Dockerfile --destination gcr.io/rentler-370619/rentler_account-service"
+                    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+                        sh "/kaniko/executor --context `pwd`/account-service --dockerfile `pwd`/account-service/Dockerfile --destination gcr.io/rentler-370619/rentler_account-service"
+                    }
                 }
             }
         }
