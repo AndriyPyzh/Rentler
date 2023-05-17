@@ -22,7 +22,7 @@ pipeline{
             steps {
                 withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
                     withKubeConfig([namespace: "jenkins"]) {
-                        sh 'kubectl get configmap'
+                        sh "kubectl get services"
                     }
                 }
         		echo "Deployment Finished ..."
