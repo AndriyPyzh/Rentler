@@ -24,32 +24,12 @@ pipeline{
                   command:
                     - cat
                   tty: true
-                - name: docker
-                  image: docker:latest
-                  command:
-                    - cat
-                  tty: true
-                - name: docker-compose
-                  image: docker/compose:alpine-1.29.2
-                  command:
-                    - cat
-                  tty: true
             '''
 	    }
 	}
     stages{
         stage("Build") {
     		steps {
-                container('docker') {
-                    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
-                        sh "docker -v"
-                    }
-                }
-                container('docker-compose') {
-                    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
-                        sh "docker-compose -v"
-                    }
-                }
         		container('maven') {
         		    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
                         sh "mvn clean package -DskipTests -Pdev -f $params.SERVICE/pom.xml"
