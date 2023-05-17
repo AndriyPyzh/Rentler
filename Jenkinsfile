@@ -14,7 +14,6 @@ pipeline{
     agent {
 	    kubernetes {
             cloud 'kubernetes'
-            label 'maven'
             yaml '''
             apiVersion: v1
             kind: Pod
@@ -41,6 +40,16 @@ pipeline{
     stages{
         stage("Build") {
     		steps {
+                container('docker') {
+                    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+                        sh "docker -v"
+                    }
+                }
+                container('docker-compose') {
+                    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+                        sh "docker-compose -v"
+                    }
+                }
         		container('maven') {
         		    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
                         sh "mvn clean package -DskipTests -Pdev -f $params.SERVICE/pom.xml"
