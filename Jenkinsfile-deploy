@@ -37,6 +37,7 @@ pipeline{
                 container('docker') {
                     withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
                         sh "docker -v"
+                        sh "docker info"
                         sh "cat Dockerfile"
                         sh "cat docker-compose-1.yaml"
                     }
