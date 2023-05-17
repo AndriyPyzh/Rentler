@@ -61,7 +61,7 @@ pipeline{
                 }
     		}
         }
-        stage ('Exec Kaniko') {
+        stage ('Push Image') {
             steps {
                 container('kaniko') {
                     withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {

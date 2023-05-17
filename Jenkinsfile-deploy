@@ -1,4 +1,10 @@
 pipeline{
+    environment {
+        PROJECT_ID = 'rentler-370619'
+        CLUSTER_NAME = 'rentler-cluster'
+        LOCATION = 'us-central1'
+        CREDENTIALS_ID = 'rentler'
+    }
     parameters {
         choice(name: "SERVICE",
                choices: [
@@ -10,71 +16,11 @@ pipeline{
                     ],
                description: "service")
     }
-    agent {
-	    kubernetes {
-            cloud 'kubernetes'
-            yaml '''
-            apiVersion: v1
-            kind: Pod
-            spec:
-              containers:
-                - name: docker
-                  image: docker:latest
-                  command:
-                    - cat
-                  tty: true
-                - name: docker-compose
-                  image: docker/compose:alpine-1.29.2
-                  command:
-                    - cat
-                  tty: true
-            '''
-	    }
-	}
     stages{
-        stage("Pull Artifact") {
-    		steps {
-                container('docker') {
-                    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
-                        sh "docker -v"
-                        sh "docker info"
-                        sh "cat Dockerfile"
-                        sh "cat docker-compose-1.yaml"
-                    }
-                }
-                container('docker-compose') {
-                    echo "compose start"
-                    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
-                        sh "docker-compose -v"
-                        sh "docker-compose -f docker-compose-1.yaml build my-service"
-                    }
-                }
-    		}
-        }
-        stage("Build image") {
-    		steps {
-        		container('docker-compose') {
-        		    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
-                        sh "docker-compose build $params.SERVICE"
-                    }
-                }
-    		}
-        }
-        stage("Tag Image") {
+        stage ('Deploy to GKE') {
             steps {
-                container('docker') {
-                    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
-                        sh "docker tag rentler_$params.SERVICE gcr.io/rentler-370619/rentler_$params.SERVICE"
-                    }
-                }
-            }
-        }
-        stage("Push Image") {
-            steps {
-                container('docker') {
-                    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
-                        sh "docker push gcr.io/rentler-370619/rentler_$params.SERVICE"
-                    }
+                step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'gke-deploy/configs/$params.SERVICE.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
+        		    echo "Deployment Finished ..."
                 }
             }
         }
