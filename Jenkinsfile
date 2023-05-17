@@ -24,6 +24,15 @@ pipeline{
                   command:
                     - cat
                   tty: true
+                - name: kaniko
+                  image: gcr.io/kaniko-project/executor:debug
+                  command:
+                  - sleep
+                  args:
+                  - 9999999
+                  volumeMounts:
+                  - name: kaniko-secret
+                    mountPath: /kaniko/.docker
             '''
 	    }
 	}
@@ -52,6 +61,8 @@ pipeline{
         		    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
                         sh "mvn deploy -DskipTests -Pdev -f $params.SERVICE/pom.xml"
                     }
+                    sh "cd $params.SERVICE/target"
+                    sh "ls"
                 }
     		}
         }
