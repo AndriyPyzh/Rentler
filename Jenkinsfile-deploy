@@ -23,8 +23,8 @@ pipeline{
                 withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
                     withKubeConfig([credentialsId: 'jenkins-sa']) {
                         sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'
-                        sh 'chmod u+x ./kubectl'
-                        sh './kubectl apply -f gke-deploy/configs/account-service.yaml'
+                        sh "chmod u+x ./kubectl"
+                        sh "./kubectl apply -f gke-deploy/configs/$params.SERVICE.yaml"
                     }
                 }
         		echo "Deployment Finished ..."
