@@ -1,0 +1,45 @@
+pipeline{
+    agent {
+	    kubernetes {
+            cloud 'kubernetes'
+            yaml '''
+            apiVersion: v1
+            kind: Pod
+            spec:
+              containers:
+                - name: node
+                  image: node:16.14.2
+                  command:
+                    - cat
+                  tty: true
+                - name: kaniko
+                  image: gcr.io/kaniko-project/executor:debug
+                  command:
+                  - sleep
+                  args:
+                  - 9999999
+            '''
+	    }
+	}
+    stages{
+        stage("Build") {
+    		steps {
+        		container('node') {
+        		    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+                        sh "npm --prefix ./web-client run build"
+                    }
+                }
+    		}
+        }
+        stage ('Push Image') {
+            steps {
+                container('kaniko') {
+                    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+                        sh "/kaniko/executor --context `pwd` --dockerfile `pwd`/web-client/Dockerfile --destination gcr.io/rentler-370619/rentler_web-client"
+                    }
+                }
+            }
+        }
+    }
+}
+

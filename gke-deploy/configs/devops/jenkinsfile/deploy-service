@@ -1,12 +1,6 @@
 pipeline{
-    environment {
-        PROJECT_ID = 'rentler-370619'
-        CLUSTER_NAME = 'rentler-cluster'
-        LOCATION = 'us-central1'
-        CREDENTIALS_ID = 'gcloud-creds'
-    }
     parameters {
-        choice(name: "SERVICE",
+        choice(name: "service to deploy",
                choices: [
                     "account-service",
                     "apartment-service",

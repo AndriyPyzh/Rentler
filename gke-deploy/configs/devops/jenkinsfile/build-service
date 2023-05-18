@@ -1,6 +1,6 @@
 pipeline{
     parameters {
-        choice(name: "SERVICE",
+        choice(name: "service to build",
                choices: [
                     "rentler-helper",
                     "account-service",
