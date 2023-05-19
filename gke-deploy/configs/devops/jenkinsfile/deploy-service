@@ -1,6 +1,6 @@
 pipeline{
     parameters {
-        choice(name: "service",
+        choice(name: "SERVICE",
                choices: [
                     "account-service",
                     "apartment-service",
