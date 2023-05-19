@@ -7,8 +7,7 @@ pipeline{
                     "notification-service",
                     "auth-service",
                     "api-gateway",
-                    "web-client",
-                    "postgres"
+                    "web-client"
                     ],
                description: "service")
     }
