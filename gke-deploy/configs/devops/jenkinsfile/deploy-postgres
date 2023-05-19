@@ -21,7 +21,7 @@ pipeline{
             steps {
                 container('kaniko') {
                     withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
-                        sh "/kaniko/executor --context `pwd` --dockerfile `pwd`/$params.SERVICE/Dockerfile --destination gcr.io/rentler-370619/rentler_$params.SERVICE"
+                        sh "/kaniko/executor --context `pwd` --dockerfile `pwd`/postgres/Dockerfile --destination gcr.io/rentler-370619/rentler_postgres"
                     }
                 }
             }
@@ -32,8 +32,7 @@ pipeline{
                     withKubeConfig([credentialsId: 'jenkins-sa']) {
                         sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'
                         sh "chmod u+x ./kubectl"
-                        echo "${params.SERVICE}"
-                        sh "./kubectl apply -f gke-deploy/configs/kubernetes/${params.SERVICE}.yaml"
+                        sh "./kubectl apply -f gke-deploy/configs/kubernetes/postgres.yaml"
                     }
                 }
         		echo "Deployment Finished ..."

@@ -1,6 +1,6 @@
 pipeline{
     parameters {
-        choice(name: "service to build",
+        choice(name: "service",
                choices: [
                     "rentler-helper",
                     "account-service",
@@ -9,7 +9,7 @@ pipeline{
                     "auth-service",
                     "api-gateway"
                     ],
-               description: "service")
+               description: "service to build")
     }
     agent {
 	    kubernetes {
@@ -38,7 +38,7 @@ pipeline{
     		steps {
         		container('maven') {
         		    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
-                        sh "mvn clean package -DskipTests -Pdev -f $params.SERVICE/pom.xml"
+                        sh "mvn clean package -DskipTests -Pdev -f $params.service/pom.xml"
                     }
                 }
     		}
@@ -47,7 +47,7 @@ pipeline{
     		steps {
         		container('maven') {
         		    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
-                        sh "mvn verify -Pdev -f $params.SERVICE/pom.xml"
+                        sh "mvn verify -Pdev -f $params.service/pom.xml"
         		    }
                 }
     		}
@@ -56,7 +56,7 @@ pipeline{
     		steps {
         		container('maven') {
         		    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
-                        sh "mvn deploy -DskipTests -Pdev -f $params.SERVICE/pom.xml"
+                        sh "mvn deploy -DskipTests -Pdev -f $params.service/pom.xml"
                     }
                 }
     		}
@@ -65,7 +65,7 @@ pipeline{
             steps {
                 container('kaniko') {
                     withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
-                        sh "/kaniko/executor --context `pwd` --dockerfile `pwd`/$params.SERVICE/Dockerfile --destination gcr.io/rentler-370619/rentler_$params.SERVICE"
+                        sh "/kaniko/executor --context `pwd` --dockerfile `pwd`/$params.service/Dockerfile --destination gcr.io/rentler-370619/rentler_$params.service"
                     }
                 }
             }
