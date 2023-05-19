@@ -14,7 +14,7 @@ kubectl create namespace jenkins
 kubectl apply -f gke-deploy/configs/devops/jenkins-deployment.yaml
 kubectl apply -f gke-deploy/configs/devops/jenkins-service.yaml
 kubectl get pods -n jenkins
-kubectl logs jenkins-5b548b489c-hwvjq -n jenkins
+kubectl logs jenkins-5b548b489c-cn7pl -n jenkins
 
 kubectl create clusterrolebinding jenkins --clusterrole=cluster-admin --serviceaccount=jenkins:jenkins-sa
 kubectl create clusterrolebinding jenkins-default --clusterrole=cluster-admin --serviceaccount=jenkins:default
