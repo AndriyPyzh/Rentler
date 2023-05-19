@@ -27,7 +27,6 @@ pipeline{
         		container('node') {
         		    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
                         sh "npm --prefix ./web-client install"
-                        sh "npm --prefix ./web-client run build"
                     }
                 }
     		}
