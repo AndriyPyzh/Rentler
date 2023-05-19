@@ -20,8 +20,8 @@ pipeline{
                     withKubeConfig([credentialsId: 'jenkins-sa']) {
                         sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'
                         sh "chmod u+x ./kubectl"
-                        echo "${params.service}"
-                        sh "./kubectl apply -f gke-deploy/configs/kubernetes/${params.service}.yaml"
+                        echo "${params.SERVICE}"
+                        sh "./kubectl apply -f gke-deploy/configs/kubernetes/${params.SERVICE}.yaml"
                     }
                 }
         		echo "Deployment Finished ..."

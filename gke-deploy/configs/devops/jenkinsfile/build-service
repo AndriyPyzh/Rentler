@@ -1,6 +1,6 @@
 pipeline{
     parameters {
-        choice(name: "service",
+        choice(name: "SERVICE",
                choices: [
                     "rentler-helper",
                     "account-service",
@@ -38,7 +38,7 @@ pipeline{
     		steps {
         		container('maven') {
         		    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
-                        sh "mvn clean package -DskipTests -Pdev -f $params.service/pom.xml"
+                        sh "mvn clean package -DskipTests -Pdev -f $params.SERVICE/pom.xml"
                     }
                 }
     		}
@@ -47,7 +47,7 @@ pipeline{
     		steps {
         		container('maven') {
         		    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
-                        sh "mvn verify -Pdev -f $params.service/pom.xml"
+                        sh "mvn verify -Pdev -f $params.SERVICE/pom.xml"
         		    }
                 }
     		}
@@ -56,7 +56,7 @@ pipeline{
     		steps {
         		container('maven') {
         		    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
-                        sh "mvn deploy -DskipTests -Pdev -f $params.service/pom.xml"
+                        sh "mvn deploy -DskipTests -Pdev -f $params.SERVICE/pom.xml"
                     }
                 }
     		}
@@ -65,7 +65,7 @@ pipeline{
             steps {
                 container('kaniko') {
                     withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
-                        sh "/kaniko/executor --context `pwd` --dockerfile `pwd`/$params.service/Dockerfile --destination gcr.io/rentler-370619/rentler_$params.service"
+                        sh "/kaniko/executor --context `pwd` --dockerfile `pwd`/$params.SERVICE/Dockerfile --destination gcr.io/rentler-370619/rentler_$params.SERVICE"
                     }
                 }
             }
