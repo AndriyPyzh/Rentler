@@ -2,7 +2,6 @@ pipeline{
     parameters {
         choice(name: "SERVICE",
                choices: [
-                    "rentler-helper",
                     "account-service",
                     "apartment-service",
                     "notification-service",
