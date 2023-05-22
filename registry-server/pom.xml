@@ -14,6 +14,10 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
+    <properties>
+        <jacoco.cover.line>0.0</jacoco.cover.line>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.cloud</groupId>

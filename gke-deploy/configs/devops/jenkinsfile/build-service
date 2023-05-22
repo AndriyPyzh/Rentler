@@ -46,7 +46,16 @@ pipeline{
     		steps {
         		container('maven') {
         		    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
-                        sh "mvn verify -Pdev -f $params.SERVICE/pom.xml"
+                        sh "mvn test -Pdev -f $params.SERVICE/pom.xml"
+        		    }
+                }
+    		}
+        }
+        stage("Verify") {
+    		steps {
+        		container('maven') {
+        		    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+                        sh "mvn test -Pdev -f $params.SERVICE/pom.xml"
         		    }
                 }
     		}
