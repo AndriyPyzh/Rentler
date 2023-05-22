@@ -17,6 +17,7 @@
     <properties>
         <maven.compiler.source>15</maven.compiler.source>
         <maven.compiler.target>15</maven.compiler.target>
+        <jacoco.cover.line>0.0</jacoco.cover.line>
     </properties>
 
     <dependencies>
