@@ -42,7 +42,7 @@ verify_job:
 
 install_job:
   stage: install
-  image: google/cloud-sdk
+  image: robfaber/gcloud-maven
   tags:
     - docker
   script:
