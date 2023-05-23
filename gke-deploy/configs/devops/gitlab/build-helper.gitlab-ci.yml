@@ -1,0 +1,51 @@
+image: maven:3.8.1-openjdk-15
+
+stages:
+  - build
+  - test
+  - verify
+  - install
+
+cache:
+  paths:
+    - .m2/repository
+    - target
+
+build_job:
+  stage: build
+  tags:
+    - docker
+
+  script:
+    - echo "Maven package started"
+    - "mvn clean package -DskipTests -Pdev -f rentler-helper/pom.xml"
+
+
+test_job:
+  stage: test
+  tags:
+    - docker
+
+  script:
+    - echo "Maven test started"
+    - "mvn test -Pdev -f rentler-helper/pom.xml"
+
+package_job:
+  stage: verify
+  tags:
+    - docker
+
+  script:
+    - echo "Maven verify started"
+    - "mvn verify -Pdev -f rentler-helper/pom.xml"
+
+
+Deploy_job:
+  stage: install
+  tags:
+    - docker
+
+  script:
+    - echo "Maven install started"
+    - "mvn deploy -DskipTests -Pdev -f rentler-helper/pom.xml"
+
