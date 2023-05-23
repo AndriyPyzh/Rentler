@@ -47,5 +47,7 @@ Deploy_job:
 
   script:
     - echo "Maven install started"
+    - gcloud auth activate-service-account --key-file $GOOGLE_APPLICATION_CREDENTIALS
+    - gcloud config set project $PROJECT_ID
     - "mvn deploy -DskipTests -Pdev -f rentler-helper/pom.xml"
 
