@@ -42,10 +42,13 @@ verify_job:
 
 install_job:
   stage: install
+  image: google/cloud-sdk
   tags:
     - docker
-
   script:
     - echo "Maven install started"
+    - echo $GOOGLE_APPLICATION_CREDENTIALS > gcloud-service-key.json # Google Cloud service accounts
+    - gcloud auth activate-service-account --key-file gcloud-service-key.json
+    - gcloud config set project $PROJECT_ID
     - "mvn deploy -DskipTests -Pdev -f rentler-helper/pom.xml"
 
