@@ -42,7 +42,7 @@ verify_job:
 
 install_job:
   stage: install
-  image: robfaber/gcloud-maven
+  image: gcr.io/rentler-370619/gcloud-maven
   tags:
     - docker
   script:
