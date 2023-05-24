@@ -2,6 +2,7 @@ image: ap2412/gcloud-maven
 
 stages:
   - check
+  - gcloud-init
   - build
   - test
   - verify
@@ -19,15 +20,34 @@ check_job:
   rules:
     - if: '"$VAR_FOR_CHECK_JOB"'
 
+gcloud_init_job:
+  stage: check
+  script:
+    - echo "gcloud init"
+    - echo $GOOGLE_APPLICATION_CREDENTIALS > gcloud-service-key.json # Google Cloud service accounts
+    - gcloud auth activate-service-account --key-file gcloud-service-key.json
+    - gcloud config set project $PROJECT_ID
+  rules:
+    - if: '$RENTLER_MODULE == "rentler-helper"
+        || $RENTLER_MODULE == "account-service"
+        || $RENTLER_MODULE == "apartment-service"
+        || $RENTLER_MODULE == "notification-service"
+        || $RENTLER_MODULE == "auth-service"
+        || $RENTLER_MODULE == "api-gateway"'
 build_job:
   stage: build
   tags:
     - docker
   script:
     - echo "Maven package started"
-    - "mvn clean package -DskipTests -Pdev -f rentler-helper/pom.xml"
+    - "mvn clean package -DskipTests -Pdev -f $RENTLER_MODULE/pom.xml"
   rules:
-    - if: '$RENTLER_MODULE == "rentler-helper"'
+    - if: '$RENTLER_MODULE == "rentler-helper"
+        || $RENTLER_MODULE == "account-service"
+        || $RENTLER_MODULE == "apartment-service"
+        || $RENTLER_MODULE == "notification-service"
+        || $RENTLER_MODULE == "auth-service"
+        || $RENTLER_MODULE == "api-gateway"'
 
 test_job:
   stage: test
@@ -35,9 +55,14 @@ test_job:
     - docker
   script:
     - echo "Maven test started"
-    - "mvn test -Pdev -f rentler-helper/pom.xml"
+    - "mvn test -Pdev -f $RENTLER_MODULE/pom.xml"
   rules:
-    - if: '$RENTLER_MODULE == "rentler-helper"'
+    - if: '$RENTLER_MODULE == "rentler-helper"
+        || $RENTLER_MODULE == "account-service"
+        || $RENTLER_MODULE == "apartment-service"
+        || $RENTLER_MODULE == "notification-service"
+        || $RENTLER_MODULE == "auth-service"
+        || $RENTLER_MODULE == "api-gateway"'
 
 verify_job:
   stage: verify
@@ -45,9 +70,14 @@ verify_job:
     - docker
   script:
     - echo "Maven verify started"
-    - "mvn verify -Pdev -f rentler-helper/pom.xml"
+    - "mvn verify -Pdev -f $RENTLER_MODULE/pom.xml"
   rules:
-    - if: '$RENTLER_MODULE == "rentler-helper"'
+    - if: '$RENTLER_MODULE == "rentler-helper"
+        || $RENTLER_MODULE == "account-service"
+        || $RENTLER_MODULE == "apartment-service"
+        || $RENTLER_MODULE == "notification-service"
+        || $RENTLER_MODULE == "auth-service"
+        || $RENTLER_MODULE == "api-gateway"'
 
 install_job:
   stage: install
@@ -55,10 +85,13 @@ install_job:
     - docker
   script:
     - echo "Maven install started"
-    - echo $GOOGLE_APPLICATION_CREDENTIALS > gcloud-service-key.json # Google Cloud service accounts
-    - gcloud auth activate-service-account --key-file gcloud-service-key.json
-    - gcloud config set project $PROJECT_ID
-    - "mvn deploy -DskipTests -Pdev -f rentler-helper/pom.xml"
+    - "mvn deploy -DskipTests -Pdev -f $RENTLER_MODULE/pom.xml"
   rules:
-    - if: '$RENTLER_MODULE == "rentler-helper"'
+    - if: '$RENTLER_MODULE == "rentler-helper"
+        || $RENTLER_MODULE == "account-service"
+        || $RENTLER_MODULE == "apartment-service"
+        || $RENTLER_MODULE == "notification-service"
+        || $RENTLER_MODULE == "auth-service"
+        || $RENTLER_MODULE == "api-gateway"'
+
 
