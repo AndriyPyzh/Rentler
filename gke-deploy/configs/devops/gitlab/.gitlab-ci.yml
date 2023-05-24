@@ -13,6 +13,13 @@ cache:
     - .m2/repository
     - target
 
+default:
+  before_script:
+    - echo "gcloud init"
+    - echo $GOOGLE_APPLICATION_CREDENTIALS > gcloud-service-key.json # Google Cloud service accounts
+    - gcloud auth activate-service-account --key-file gcloud-service-key.json
+    - gcloud config set project $PROJECT_ID
+
 check_job:
   stage: check
   script:
@@ -20,20 +27,6 @@ check_job:
   rules:
     - if: '"$VAR_FOR_CHECK_JOB"'
 
-gcloud_init_job:
-  stage: check
-  script:
-    - echo "gcloud init"
-    - echo $GOOGLE_APPLICATION_CREDENTIALS > gcloud-service-key.json # Google Cloud service accounts
-    - gcloud auth activate-service-account --key-file gcloud-service-key.json
-    - gcloud config set project $PROJECT_ID
-  rules:
-    - if: '$RENTLER_MODULE == "rentler-helper"
-        || $RENTLER_MODULE == "account-service"
-        || $RENTLER_MODULE == "apartment-service"
-        || $RENTLER_MODULE == "notification-service"
-        || $RENTLER_MODULE == "auth-service"
-        || $RENTLER_MODULE == "api-gateway"'
 build_job:
   stage: build
   tags:
