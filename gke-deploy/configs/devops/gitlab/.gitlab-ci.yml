@@ -15,29 +15,35 @@ build_job:
   stage: build
   tags:
     - docker
-
   script:
     - echo "Maven package started"
     - "mvn clean package -DskipTests -Pdev -f rentler-helper/pom.xml"
+  rules:
+    - if: '"$RENTLER_MODULE" == "rentler-helper"'
+      when: always
 
 
 test_job:
   stage: test
   tags:
     - docker
-
   script:
     - echo "Maven test started"
     - "mvn test -Pdev -f rentler-helper/pom.xml"
+  rules:
+    - if: '"$RENTLER_MODULE" == "rentler-helper"'
+      when: always
 
 verify_job:
   stage: verify
   tags:
     - docker
-
   script:
     - echo "Maven verify started"
     - "mvn verify -Pdev -f rentler-helper/pom.xml"
+  rules:
+    - if: '"$RENTLER_MODULE" == "rentler-helper"'
+      when: always
 
 
 install_job:
@@ -51,4 +57,7 @@ install_job:
     - gcloud auth activate-service-account --key-file gcloud-service-key.json
     - gcloud config set project $PROJECT_ID
     - "mvn deploy -DskipTests -Pdev -f rentler-helper/pom.xml"
+  rules:
+    - if: '"$RENTLER_MODULE" == "rentler-helper"'
+      when: always
 
