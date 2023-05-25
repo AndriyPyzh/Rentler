@@ -97,8 +97,8 @@ push_image_job:
   script:
     - echo "Kaniko docker image build & push"
     - "/kaniko/executor 
-       --context `pwd` 
-       --dockerfile `pwd`/$RENTLER_MODULE/Dockerfile
+       --context ${CI_PROJECT_DIR} 
+       --dockerfile ${CI_PROJECT_DIR}/$RENTLER_MODULE/Dockerfile
        --destination gcr.io/rentler-370619/rentler_$RENTLER_MODULE"
   rules:
     - if: '$RENTLER_MODULE == "account-service"
