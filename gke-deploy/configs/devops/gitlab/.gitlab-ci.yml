@@ -1,4 +1,8 @@
+variables:
+  GCLOUD_ACCESS_TOKEN: ya29.a0AWY7Ckm28mnyLw_nkeL8VaaZgiQNTFHtKsnJAx1RRzNK9CgmgMY8_Ec2wsDNuuTt_1K35Dq1vHtObdG90gDVHrfnSOa9RPAuK9XlXKdEN3g7y9xmdOX2WhvYK77KdfQ3YpxFgQkVDaATYAupcwg8zusw0AwUkUknJAvHqA8aCgYKAWASARESFQG1tDrp-2-VLoLxYGOBddk7P3yvHA0174
+
 image: ap2412/gcloud-maven
+
 
 stages:
   - check
@@ -94,7 +98,18 @@ push_image_job:
   image:
     name: gcr.io/kaniko-project/executor:v1.9.0-debug
     entrypoint: [ "" ]
-  before_script: []
+  before_script:
+    - "docker_token=$(echo -n \"gclouddockertoken:$GCLOUD_ACCESS_TOKEN\" | base64 | tr -d \"\n\")"
+    - "cat > ~/.docker/config.json <<- EndOfMessage
+        {
+          \"auths\": {
+            \"gcr.io\": {
+              \"auth\": \"$docker_token\",
+              \"email\": \"andriy.pyzh2412@gmail.com\"
+            }
+          }
+        }
+        EndOfMessage"
   tags:
     - docker
   script:
