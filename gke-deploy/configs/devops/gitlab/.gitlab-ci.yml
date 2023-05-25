@@ -25,6 +25,7 @@ check_job:
   stage: check
   script:
     - echo "check job - should always start"
+    - echo "${CI_PROJECT_DIR}"
   rules:
     - if: '"$VAR_FOR_CHECK_JOB"'
 
@@ -95,7 +96,10 @@ push_image_job:
     - docker
   script:
     - echo "Kaniko docker image build & push"
-    - "/kaniko/executor --context `pwd` --dockerfile `pwd`/$RENTLER_MODULE/Dockerfile --destination gcr.io/rentler-370619/rentler_$RENTLER_MODULE"
+    - "/kaniko/executor 
+       --context `pwd` 
+       --dockerfile `pwd`/$RENTLER_MODULE/Dockerfile
+       --destination gcr.io/rentler-370619/rentler_$RENTLER_MODULE"
   rules:
     - if: '$RENTLER_MODULE == "account-service"
         || $RENTLER_MODULE == "apartment-service"
