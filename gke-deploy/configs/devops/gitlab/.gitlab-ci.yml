@@ -99,6 +99,7 @@ push_image_job:
     name: gcr.io/kaniko-project/executor:v1.9.0-debug
     entrypoint: [ "" ]
   before_script:
+    - "mkdir ~/.docker"
     - "docker_token=$(echo -n \"gclouddockertoken:$GCLOUD_ACCESS_TOKEN\" | base64 | tr -d \"\n\")"
     - "cat > ~/.docker/config.json <<- EndOfMessage
         {
