@@ -94,6 +94,7 @@ push_image_job:
   image:
     name: gcr.io/kaniko-project/executor:v1.9.0-debug
     entrypoint: [ "" ]
+  before_script: []
   tags:
     - docker
   script:
