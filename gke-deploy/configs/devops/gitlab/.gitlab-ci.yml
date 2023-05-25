@@ -114,6 +114,7 @@ push_image_job:
     - docker
   script:
     - echo "Kaniko docker image build & push"
+    - "cat ~/.docker/config.json"
     - "/kaniko/executor 
        --context ${CI_PROJECT_DIR} 
        --dockerfile ${CI_PROJECT_DIR}/$RENTLER_MODULE/Dockerfile
