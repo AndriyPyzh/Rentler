@@ -7,6 +7,7 @@ stages:
   - test
   - verify
   - install
+  - push-image
 
 cache:
   paths:
@@ -82,6 +83,21 @@ install_job:
   rules:
     - if: '$RENTLER_MODULE == "rentler-helper"
         || $RENTLER_MODULE == "account-service"
+        || $RENTLER_MODULE == "apartment-service"
+        || $RENTLER_MODULE == "notification-service"
+        || $RENTLER_MODULE == "auth-service"
+        || $RENTLER_MODULE == "api-gateway"'
+
+push_image_job:
+  stage: push-image
+  image: gcr.io/kaniko-project/executor:debug
+  tags:
+    - docker
+  script:
+    - echo "Kaniko docker image build & push"
+    - "/kaniko/executor --context `pwd` --dockerfile `pwd`/$RENTLER_MODULE/Dockerfile --destination gcr.io/rentler-370619/rentler_$RENTLER_MODULE"
+  rules:
+    - if: '$RENTLER_MODULE == "account-service"
         || $RENTLER_MODULE == "apartment-service"
         || $RENTLER_MODULE == "notification-service"
         || $RENTLER_MODULE == "auth-service"
