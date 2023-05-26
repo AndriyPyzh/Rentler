@@ -95,14 +95,13 @@ push_image_job:
     name: gcr.io/kaniko-project/executor:v1.9.0-debug
     entrypoint: [ "" ]
   before_script:
-    - "docker_token=$(echo -n \"gclouddockertoken:$GCLOUD_ACCESS_TOKEN\" | base64 | tr -d \"\n\")"
-    - "echo \"{ \"auths\": { \"gcr.io\": { \"auth\": \"$docker_token\", \"email\": \"andriy.pyzh2412@gmail.com\" } } }\" > /kaniko/.docker/config.json"
+    - "mkdir /kaniko/.docker/"
+    - "cp gke-deploy/configs/devops/gitlab/config.json /kaniko/.docker/"
   tags:
     - docker
   script:
     - echo "Kaniko docker image build & push"
-    - "cd /kaniko"
-    - "ls"
+    - "cat /kaniko/.docker/config.json"
     - "/kaniko/executor 
        --context ${CI_PROJECT_DIR} 
        --dockerfile ${CI_PROJECT_DIR}/$RENTLER_MODULE/Dockerfile
