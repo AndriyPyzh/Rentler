@@ -1,6 +1,7 @@
 FROM ubuntu:latest
 ENV PATH=$PATH:/jdk-15.0.2/bin
 ENV JAVA_HOME=/jdk-15.0.2
+ENV USE_GKE_GCLOUD_AUTH_PLUGIN=True
 RUN apt update
 RUN apt install -y sudo
 RUN apt-get -y install curl
