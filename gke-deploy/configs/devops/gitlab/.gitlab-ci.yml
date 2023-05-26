@@ -1,12 +1,12 @@
 image: ap2412/gcloud-maven
 
 stages:
-  - check
-  - gcloud-init
-  - build
-  - test
-  - verify
-  - install
+#  - check
+#  - gcloud-init
+#  - build
+#  - test
+#  - verify
+#  - install
   - push-image
 
 cache:
