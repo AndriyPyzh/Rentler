@@ -142,6 +142,6 @@ deploy_job:
     - gke-gcloud-auth-plugin --version
     - kubectl config get-contexts
     - kubectl config use-context gke_rentler-370619_us-central1_rentler-cluster
-    - kubectl get pods
+    - kubectl apply -f gke-deploy/configs/kubernetes/$RENTLER_MODULE.yaml
 
 
