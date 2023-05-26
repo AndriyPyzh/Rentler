@@ -26,50 +26,50 @@ check_job:
   rules:
     - if: '"$VAR_FOR_CHECK_JOB"'
 
-#build_job:
-#  stage: build
-#  tags:
-#    - docker
-#  script:
-#    - echo "Maven package started"
-#    - "mvn clean package -DskipTests -Pdev -f $RENTLER_MODULE/pom.xml"
-#  rules:
-#    - if: '$RENTLER_MODULE == "rentler-helper"
-#        || $RENTLER_MODULE == "account-service"
-#        || $RENTLER_MODULE == "apartment-service"
-#        || $RENTLER_MODULE == "notification-service"
-#        || $RENTLER_MODULE == "auth-service"
-#        || $RENTLER_MODULE == "api-gateway"'
-#
-#test_job:
-#  stage: test
-#  tags:
-#    - docker
-#  script:
-#    - echo "Maven test started"
-#    - "mvn test -Pdev -f $RENTLER_MODULE/pom.xml"
-#  rules:
-#    - if: '$RENTLER_MODULE == "rentler-helper"
-#        || $RENTLER_MODULE == "account-service"
-#        || $RENTLER_MODULE == "apartment-service"
-#        || $RENTLER_MODULE == "notification-service"
-#        || $RENTLER_MODULE == "auth-service"
-#        || $RENTLER_MODULE == "api-gateway"'
-#
-#verify_job:
-#  stage: verify
-#  tags:
-#    - docker
-#  script:
-#    - echo "Maven verify started"
-#    - "mvn verify -Pdev -f $RENTLER_MODULE/pom.xml"
-#  rules:
-#    - if: '$RENTLER_MODULE == "rentler-helper"
-#        || $RENTLER_MODULE == "account-service"
-#        || $RENTLER_MODULE == "apartment-service"
-#        || $RENTLER_MODULE == "notification-service"
-#        || $RENTLER_MODULE == "auth-service"
-#        || $RENTLER_MODULE == "api-gateway"'
+build_job:
+  stage: build
+  tags:
+    - docker
+  script:
+    - echo "Maven package started"
+    - "mvn clean package -DskipTests -Pdev -f $RENTLER_MODULE/pom.xml"
+  rules:
+    - if: '$RENTLER_MODULE == "rentler-helper"
+        || $RENTLER_MODULE == "account-service"
+        || $RENTLER_MODULE == "apartment-service"
+        || $RENTLER_MODULE == "notification-service"
+        || $RENTLER_MODULE == "auth-service"
+        || $RENTLER_MODULE == "api-gateway"'
+
+test_job:
+  stage: test
+  tags:
+    - docker
+  script:
+    - echo "Maven test started"
+    - "mvn test -Pdev -f $RENTLER_MODULE/pom.xml"
+  rules:
+    - if: '$RENTLER_MODULE == "rentler-helper"
+        || $RENTLER_MODULE == "account-service"
+        || $RENTLER_MODULE == "apartment-service"
+        || $RENTLER_MODULE == "notification-service"
+        || $RENTLER_MODULE == "auth-service"
+        || $RENTLER_MODULE == "api-gateway"'
+
+verify_job:
+  stage: verify
+  tags:
+    - docker
+  script:
+    - echo "Maven verify started"
+    - "mvn verify -Pdev -f $RENTLER_MODULE/pom.xml"
+  rules:
+    - if: '$RENTLER_MODULE == "rentler-helper"
+        || $RENTLER_MODULE == "account-service"
+        || $RENTLER_MODULE == "apartment-service"
+        || $RENTLER_MODULE == "notification-service"
+        || $RENTLER_MODULE == "auth-service"
+        || $RENTLER_MODULE == "api-gateway"'
 
 install_job:
   stage: install
