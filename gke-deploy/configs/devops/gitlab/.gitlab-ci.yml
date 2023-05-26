@@ -121,7 +121,8 @@ kaniko_auth_job:
         || $RENTLER_MODULE == "notification-service"
         || $RENTLER_MODULE == "auth-service"
         || $RENTLER_MODULE == "api-gateway"
-        || $RENTLER_MODULE == "postgres"'
+        || $RENTLER_MODULE == "postgres"
+        || $RENTLER_MODULE == "web-client"'
 
 kaniko_push_job:
   stage: kaniko-push
@@ -146,7 +147,8 @@ kaniko_push_job:
         || $RENTLER_MODULE == "notification-service"
         || $RENTLER_MODULE == "auth-service"
         || $RENTLER_MODULE == "api-gateway"
-        || $RENTLER_MODULE == "postgres"'
+        || $RENTLER_MODULE == "postgres"
+        || $RENTLER_MODULE == "web-client"'
 
 deploy_job:
   stage: deploy
