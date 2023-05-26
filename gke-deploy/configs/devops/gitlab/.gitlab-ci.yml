@@ -100,16 +100,7 @@ push_image_job:
     entrypoint: [ "" ]
   before_script:
     - "docker_token=$(echo -n \"gclouddockertoken:$GCLOUD_ACCESS_TOKEN\" | base64 | tr -d \"\n\")"
-    - "cat > /kaniko/.docker/config.json <<- EndOfMessage
-        {
-          \"auths\": {
-            \"gcr.io\": {
-              \"auth\": \"$docker_token\",
-              \"email\": \"andriy.pyzh2412@gmail.com\"
-            }
-          }
-        }
-        EndOfMessage"
+    - "echo \"{ \"auths\": { \"gcr.io\": { \"auth\": \"$docker_token\", \"email\": \"andriy.pyzh2412@gmail.com\" } } }\" > /kaniko/.docker/config.json"
   tags:
     - docker
   script:
