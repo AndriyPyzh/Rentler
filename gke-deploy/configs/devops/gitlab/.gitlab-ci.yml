@@ -2,9 +2,9 @@ image: ap2412/rentler-gcloud
 
 stages:
   - check
-#  - build
-#  - test
-#  - verify
+  - build
+  - test
+  - verify
   - install
   - build-web-client
   - kaniko-auth
