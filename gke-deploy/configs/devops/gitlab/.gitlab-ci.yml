@@ -140,7 +140,6 @@ deploy_job:
   stage: deploy
   script:
     - gke-gcloud-auth-plugin --version
-    - kubectl version
     - kubectl config get-contexts
     - kubectl config use-context gke_rentler-370619_us-central1_rentler-cluster
     - kubectl get pods
