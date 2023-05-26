@@ -7,7 +7,7 @@ gcloud container clusters create "rentler-cluster" \
 
 ### get cluster credentials
 
-gcloud container clusters get-credentials rentler --region us-central1
+gcloud container clusters get-credentials rentler-cluster --region us-central1
 
 ### install jenkins with helm
 kubectl create namespace jenkins
