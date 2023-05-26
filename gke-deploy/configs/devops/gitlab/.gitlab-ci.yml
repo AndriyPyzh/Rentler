@@ -10,11 +10,6 @@ stages:
 #  - kaniko-push
   - deploy
 
-cache:
-  paths:
-    - .m2/repository
-    - target
-
 default:
   before_script:
     - echo "gcloud init"
@@ -144,10 +139,11 @@ check_job:
 deploy_job:
   stage: deploy
   image:
-    name: bitnami/kubectl:latest
+    name: google/cloud-sdk
     entrypoint: ['']
-  before_script: []
   script:
+    - gcloud components install kubectl
+    - kubectl version
     - kubectl config get-contexts
     - kubectl config use-context gke_rentler-370619_us-central1_rentler-cluster
     - kubectl get pods
