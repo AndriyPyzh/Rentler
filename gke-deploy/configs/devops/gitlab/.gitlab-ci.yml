@@ -138,11 +138,7 @@ check_job:
 
 deploy_job:
   stage: deploy
-  image:
-    name: google/cloud-sdk
-    entrypoint: ['']
   script:
-    - sudo apt-get -y install kubectl
     - kubectl version
     - kubectl config get-contexts
     - kubectl config use-context gke_rentler-370619_us-central1_rentler-cluster
