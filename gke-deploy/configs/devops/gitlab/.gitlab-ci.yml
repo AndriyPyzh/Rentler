@@ -1,4 +1,4 @@
-image: ap2412/gcloud-maven
+image: ap2412/rentler-gcloud
 
 stages:
   - check
