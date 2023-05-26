@@ -78,7 +78,7 @@ install_job:
   script:
     - echo "Maven install started"
     - "mvn deploy -DskipTests -Pdev -f $RENTLER_MODULE/pom.xml"
-    - "cp /builds/AndriyPyzh/Rentler/$RENTLER_MODULE/target/$RENTLER_MODULE-1.0-SNAPSHOT-jar-with-dependencies.jar $RENTLER_MODULE/target/$RENTLER_MODULE.jar"
+    - "cp /builds/AndriyPyzh/Rentler/$RENTLER_MODULE/target/$RENTLER_MODULE.jar $RENTLER_MODULE/target/$RENTLER_MODULE.jar"
   artifacts:
     paths:
       - ${CI_PROJECT_DIR}/$RENTLER_MODULE/target/$RENTLER_MODULE.jar
@@ -163,5 +163,6 @@ deploy_job:
         || $RENTLER_MODULE == "api-gateway"
         || $RENTLER_MODULE == "postgres"
         || $RENTLER_MODULE == "web-client"'
+
 
 
