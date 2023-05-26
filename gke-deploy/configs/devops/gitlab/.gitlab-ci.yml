@@ -81,10 +81,9 @@ install_job:
   script:
     - echo "Maven install started"
     - "mvn deploy -DskipTests -Pdev -f $RENTLER_MODULE/pom.xml"
-    - "cp /builds/AndriyPyzh/Rentler/$RENTLER_MODULE/target/$RENTLER_MODULE.jar $RENTLER_MODULE/target/$RENTLER_MODULE.jar"
   artifacts:
     paths:
-      - $RENTLER_MODULE/target/$RENTLER_MODULE.jar
+      - /builds/AndriyPyzh/Rentler/$RENTLER_MODULE/target/$RENTLER_MODULE.jar
   rules:
     - if: '$RENTLER_MODULE == "rentler-helper"
         || $RENTLER_MODULE == "account-service"
@@ -130,7 +129,7 @@ kaniko_push_job:
     - echo "Kaniko docker image build & push"
     - cat /kaniko/.docker/config.json
     - "/kaniko/executor 
-       --context ${CI_PROJECT_DIR} 
+       --context /builds/AndriyPyzh/Rentler 
        --dockerfile ${CI_PROJECT_DIR}/$RENTLER_MODULE/Dockerfile
        --destination gcr.io/rentler-370619/rentler_$RENTLER_MODULE"
   rules:
