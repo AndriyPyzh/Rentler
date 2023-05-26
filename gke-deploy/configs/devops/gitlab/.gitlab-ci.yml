@@ -87,7 +87,8 @@ install_job:
         || $RENTLER_MODULE == "apartment-service"
         || $RENTLER_MODULE == "notification-service"
         || $RENTLER_MODULE == "auth-service"
-        || $RENTLER_MODULE == "api-gateway"'
+        || $RENTLER_MODULE == "api-gateway"
+        || $RENTLER_MODULE == "rabbitmq"'
 
 build_web_client_job:
   stage: build-web-client
