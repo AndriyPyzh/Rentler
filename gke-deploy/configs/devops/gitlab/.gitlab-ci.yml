@@ -1,7 +1,7 @@
 image: ap2412/gcloud-maven
 
 stages:
-#  - check
+  - check
 #  - gcloud-init
 #  - build
 #  - test
