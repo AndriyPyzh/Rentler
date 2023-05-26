@@ -5,9 +5,10 @@ stages:
 #  - build
 #  - test
 #  - verify
-#  - install
-#  - kaniko-auth
-#  - kaniko-push
+  - install
+  - build-web-client
+  - kaniko-auth
+  - kaniko-push
   - deploy
 
 default:
@@ -24,7 +25,7 @@ check_job:
     - echo "${CI_PROJECT_DIR}"
   rules:
     - if: '"$VAR_FOR_CHECK_JOB"'
-#
+
 #build_job:
 #  stage: build
 #  tags:
@@ -69,77 +70,96 @@ check_job:
 #        || $RENTLER_MODULE == "notification-service"
 #        || $RENTLER_MODULE == "auth-service"
 #        || $RENTLER_MODULE == "api-gateway"'
-#
-#install_job:
-#  stage: install
-#  tags:
-#    - docker
-#  script:
-#    - echo "Maven install started"
-#    - "mvn deploy -DskipTests -Pdev -f $RENTLER_MODULE/pom.xml"
-#    - "cp /builds/AndriyPyzh/Rentler/$RENTLER_MODULE/target/$RENTLER_MODULE-1.0-SNAPSHOT-jar-with-dependencies.jar $RENTLER_MODULE/target/$RENTLER_MODULE.jar"
-#  artifacts:
-#    paths:
-#      - ${CI_PROJECT_DIR}/$RENTLER_MODULE/target/$RENTLER_MODULE.jar
-#  rules:
-#    - if: '$RENTLER_MODULE == "rentler-helper"
-#        || $RENTLER_MODULE == "account-service"
-#        || $RENTLER_MODULE == "apartment-service"
-#        || $RENTLER_MODULE == "notification-service"
-#        || $RENTLER_MODULE == "auth-service"
-#        || $RENTLER_MODULE == "api-gateway"'
-#
-#kaniko_auth_job:
-#  stage: kaniko-auth
-#  image:
-#    name: gcr.io/google.com/cloudsdktool/google-cloud-cli:latest
-#  before_script: []
-#  variables:
-#    CLOUDSDK_CONFIG: $CI_PROJECT_DIR/gcloud
-#  script:
-#    - echo $GOOGLE_APPLICATION_CREDENTIALS > gcloud-service-key.json
-#    - gcloud auth activate-service-account --key-file gcloud-service-key.json
-#    - token=$(gcloud auth print-access-token)
-#    - docker_token=$(echo -n "gclouddockertoken:$token" | base64 | tr -d "\n")
-#    - echo "{\"auths\":{\"gcr.io\":{\"auth\":\"$docker_token\",\"email\":\"not@val.id\"}}}" > gcloud/config.json
-#  artifacts:
-#    paths:
-#      - gcloud/config.json
-#  rules:
-#    - if: '$RENTLER_MODULE == "account-service"
-#        || $RENTLER_MODULE == "apartment-service"
-#        || $RENTLER_MODULE == "notification-service"
-#        || $RENTLER_MODULE == "auth-service"
-#        || $RENTLER_MODULE == "api-gateway"'
-#
-#kaniko_push_job:
-#  stage: kaniko-push
-#  image:
-#    name: gcr.io/kaniko-project/executor:v1.9.0-debug
-#    entrypoint: [ "" ]
-#  before_script:
-#    - "mkdir -p /kaniko/.docker"
-#    - "cp gcloud/config.json /kaniko/.docker/config.json"
-#  tags:
-#    - docker
-#  script:
-#    - echo "Kaniko docker image build & push"
-#    - cat /kaniko/.docker/config.json
-#    - "/kaniko/executor
-#       --context ${CI_PROJECT_DIR}
-#       --dockerfile ${CI_PROJECT_DIR}/$RENTLER_MODULE/Dockerfile
-#       --destination gcr.io/rentler-370619/rentler_$RENTLER_MODULE"
-#  rules:
-#    - if: '$RENTLER_MODULE == "account-service"
-#        || $RENTLER_MODULE == "apartment-service"
-#        || $RENTLER_MODULE == "notification-service"
-#        || $RENTLER_MODULE == "auth-service"
-#        || $RENTLER_MODULE == "api-gateway"'
+
+install_job:
+  stage: install
+  tags:
+    - docker
+  script:
+    - echo "Maven install started"
+    - "mvn deploy -DskipTests -Pdev -f $RENTLER_MODULE/pom.xml"
+    - "cp /builds/AndriyPyzh/Rentler/$RENTLER_MODULE/target/$RENTLER_MODULE-1.0-SNAPSHOT-jar-with-dependencies.jar $RENTLER_MODULE/target/$RENTLER_MODULE.jar"
+  artifacts:
+    paths:
+      - ${CI_PROJECT_DIR}/$RENTLER_MODULE/target/$RENTLER_MODULE.jar
+  rules:
+    - if: '$RENTLER_MODULE == "rentler-helper"
+        || $RENTLER_MODULE == "account-service"
+        || $RENTLER_MODULE == "apartment-service"
+        || $RENTLER_MODULE == "notification-service"
+        || $RENTLER_MODULE == "auth-service"
+        || $RENTLER_MODULE == "api-gateway"'
+
+build_web_client_job:
+  stage: build-web-client
+  image: node:16.14.2
+  before_script: []
+  script:
+    - npm --prefix ./$RENTLER_MODULE install
+  rules:
+    - if: '$RENTLER_MODULE == "web-client"'
+
+kaniko_auth_job:
+  stage: kaniko-auth
+  image:
+    name: gcr.io/google.com/cloudsdktool/google-cloud-cli:latest
+  before_script: []
+  variables:
+    CLOUDSDK_CONFIG: $CI_PROJECT_DIR/gcloud
+  script:
+    - echo $GOOGLE_APPLICATION_CREDENTIALS > gcloud-service-key.json
+    - gcloud auth activate-service-account --key-file gcloud-service-key.json
+    - token=$(gcloud auth print-access-token)
+    - docker_token=$(echo -n "gclouddockertoken:$token" | base64 | tr -d "\n")
+    - echo "{\"auths\":{\"gcr.io\":{\"auth\":\"$docker_token\",\"email\":\"not@val.id\"}}}" > gcloud/config.json
+  artifacts:
+    paths:
+      - gcloud/config.json
+  rules:
+    - if: '$RENTLER_MODULE == "account-service"
+        || $RENTLER_MODULE == "apartment-service"
+        || $RENTLER_MODULE == "notification-service"
+        || $RENTLER_MODULE == "auth-service"
+        || $RENTLER_MODULE == "api-gateway"
+        || $RENTLER_MODULE == "postgres"'
+
+kaniko_push_job:
+  stage: kaniko-push
+  image:
+    name: gcr.io/kaniko-project/executor:v1.9.0-debug
+    entrypoint: [ "" ]
+  before_script:
+    - "mkdir -p /kaniko/.docker"
+    - "cp gcloud/config.json /kaniko/.docker/config.json"
+  tags:
+    - docker
+  script:
+    - echo "Kaniko docker image build & push"
+    - cat /kaniko/.docker/config.json
+    - "/kaniko/executor
+       --context ${CI_PROJECT_DIR}
+       --dockerfile ${CI_PROJECT_DIR}/$RENTLER_MODULE/Dockerfile
+       --destination gcr.io/rentler-370619/rentler_$RENTLER_MODULE"
+  rules:
+    - if: '$RENTLER_MODULE == "account-service"
+        || $RENTLER_MODULE == "apartment-service"
+        || $RENTLER_MODULE == "notification-service"
+        || $RENTLER_MODULE == "auth-service"
+        || $RENTLER_MODULE == "api-gateway"
+        || $RENTLER_MODULE == "postgres"'
 
 deploy_job:
   stage: deploy
   script:
     - gcloud container clusters get-credentials rentler-cluster --region us-central1
     - kubectl apply -f gke-deploy/configs/kubernetes/$RENTLER_MODULE.yaml
+  rules:
+    - if: '$RENTLER_MODULE == "account-service"
+        || $RENTLER_MODULE == "apartment-service"
+        || $RENTLER_MODULE == "notification-service"
+        || $RENTLER_MODULE == "auth-service"
+        || $RENTLER_MODULE == "api-gateway"
+        || $RENTLER_MODULE == "postgres"
+        || $RENTLER_MODULE == "web-client"'
 
 
