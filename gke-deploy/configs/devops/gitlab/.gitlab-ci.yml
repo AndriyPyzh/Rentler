@@ -81,9 +81,10 @@ install_job:
   script:
     - echo "Maven install started"
     - "mvn deploy -DskipTests -Pdev -f $RENTLER_MODULE/pom.xml"
+    - "cp /builds/AndriyPyzh/Rentler/$RENTLER_MODULE/target/$RENTLER_MODULE.jar $RENTLER_MODULE/target/$RENTLER_MODULE.jar"
   artifacts:
     paths:
-      - /builds/AndriyPyzh/Rentler/$RENTLER_MODULE/target/$RENTLER_MODULE.jar
+      - $RENTLER_MODULE/target/$RENTLER_MODULE.jar
   rules:
     - if: '$RENTLER_MODULE == "rentler-helper"
         || $RENTLER_MODULE == "account-service"
