@@ -87,8 +87,7 @@ install_job:
         || $RENTLER_MODULE == "apartment-service"
         || $RENTLER_MODULE == "notification-service"
         || $RENTLER_MODULE == "auth-service"
-        || $RENTLER_MODULE == "api-gateway"
-        || $RENTLER_MODULE == "rabbitmq"'
+        || $RENTLER_MODULE == "api-gateway"'
 
 build_web_client_job:
   stage: build-web-client
@@ -162,7 +161,9 @@ deploy_job:
         || $RENTLER_MODULE == "auth-service"
         || $RENTLER_MODULE == "api-gateway"
         || $RENTLER_MODULE == "postgres"
-        || $RENTLER_MODULE == "web-client"'
+        || $RENTLER_MODULE == "web-client"
+        || $RENTLER_MODULE == "rabbitmq"'
+
 
 
 
