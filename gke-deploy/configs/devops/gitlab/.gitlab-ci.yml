@@ -94,12 +94,12 @@ gcloud:
   stage: gcloud
   image:
     name: gcr.io/google.com/cloudsdktool/google-cloud-cli:latest
-  environment:
-    name: dev
+  before_script: []
   variables:
     CLOUDSDK_CONFIG: $CI_PROJECT_DIR/gcloud
   script:
-    - gcloud auth activate-service-account --key-file ${GOOGLE_APPLICATION_CREDENTIALS}
+    - echo $GOOGLE_APPLICATION_CREDENTIALS > gcloud-service-key.json
+    - gcloud auth activate-service-account --key-file gcloud-service-key.json
     - token=$(gcloud auth print-access-token)
     - docker_token=$(echo -n "gclouddockertoken:$token" | base64 | tr -d "\n")
     - echo "{\"auths\":{\"gcr.io\":{\"auth\":\"$docker_token\",\"email\":\"not@val.id\"}}}" > gcloud/config.json
