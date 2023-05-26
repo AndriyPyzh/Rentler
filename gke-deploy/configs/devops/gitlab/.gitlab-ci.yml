@@ -95,7 +95,6 @@ push_image_job:
     name: gcr.io/kaniko-project/executor:v1.9.0-debug
     entrypoint: [ "" ]
   before_script:
-    - "mkdir /kaniko/.docker/"
     - "cp gke-deploy/configs/devops/gitlab/config.json /kaniko/.docker/"
   tags:
     - docker
