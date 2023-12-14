@@ -53,6 +53,7 @@ spec:
     app: api-gateway
   sessionAffinity: None
   type: LoadBalancer
+  loadBalancerIP: 34.0.240.189
 ---
 apiVersion: v1
 data:

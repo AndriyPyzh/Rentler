@@ -1,9 +1,9 @@
 ### create cluster
 
 gcloud container clusters create "rentler-cluster" \
-  --region "us-central1" \
+  --region "europe-central2" \
   --machine-type "e2-standard-2" --disk-type "pd-standard" --disk-size "50" \
-  --num-nodes "1" --node-locations "us-central1-b","us-central1-c"
+  --num-nodes "1" --node-locations "europe-central2-a","europe-central2-b"
 
 ### get cluster credentials
 
