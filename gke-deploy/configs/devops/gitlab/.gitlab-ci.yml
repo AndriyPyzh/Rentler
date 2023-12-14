@@ -152,7 +152,7 @@ kaniko_push_job:
 deploy_job:
   stage: deploy
   script:
-    - gcloud container clusters get-credentials rentler-cluster --region us-central1
+    - gcloud container clusters get-credentials rentler-cluster --region europe-central2
     - kubectl apply -f gke-deploy/configs/kubernetes/$RENTLER_MODULE.yaml
   rules:
     - if: '$RENTLER_MODULE == "account-service"
